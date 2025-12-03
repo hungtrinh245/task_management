@@ -1,8 +1,8 @@
-import { Card, Form, Input, Select, Button, Space, message, Spin } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
-import { useTasks } from '../contexts/TaskContext';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Card, Form, Input, Select, Button, Space, message, Spin } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { useTasks } from "../contexts/TaskContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function EditTaskPage() {
   const [form] = Form.useForm();
@@ -15,10 +15,10 @@ export default function EditTaskPage() {
   const task = getTaskById(id);
 
   const genreOptions = [
-    { label: '💻 Development', value: 'Development' },
-    { label: '🎨 Design', value: 'Design' },
-    { label: '🧪 Testing', value: 'Testing' },
-    { label: '📚 Documentation', value: 'Documentation' },
+    { label: "💻 Development", value: "Development" },
+    { label: "🎨 Design", value: "Design" },
+    { label: "🧪 Testing", value: "Testing" },
+    { label: "📚 Documentation", value: "Documentation" },
   ];
 
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function EditTaskPage() {
 
   if (!task && !initialLoading) {
     return (
-      <Card style={{ borderRadius: 8, textAlign: 'center' }}>
-        <p style={{ color: '#ff4d4f', fontSize: 16 }}>Task not found!</p>
-        <Button onClick={() => navigate('/tasks')}>Back to Tasks</Button>
+      <Card style={{ borderRadius: 8, textAlign: "center" }}>
+        <p style={{ color: "#ff4d4f", fontSize: 16 }}>Task not found!</p>
+        <Button onClick={() => navigate("/tasks")}>Back to Tasks</Button>
       </Card>
     );
   }
@@ -46,31 +46,31 @@ export default function EditTaskPage() {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       editTask(parseInt(id), {
         title: values.title,
         director: values.director,
         genre: values.genre,
-        description: values.description || '',
-        dueDate: values.dueDate || '',
+        description: values.description || "",
+        dueDate: values.dueDate || "",
       });
 
-      message.success('Task updated successfully!');
-      navigate('/tasks');
+      message.success("Task updated successfully!");
+      navigate("/tasks");
     } catch {
-      message.error('Failed to update task');
+      message.error("Failed to update task");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto' }}>
+    <div style={{ maxWidth: 800, margin: "0 auto" }}>
       <Spin spinning={initialLoading}>
         <Card
           title={
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <EditOutlined style={{ fontSize: 24 }} />
               <span>Edit Task: {task?.title}</span>
             </div>
@@ -87,8 +87,8 @@ export default function EditTaskPage() {
               label="Task Title"
               name="title"
               rules={[
-                { required: true, message: 'Please enter task title' },
-                { min: 3, message: 'Title must be at least 3 characters' },
+                { required: true, message: "Please enter task title" },
+                { min: 3, message: "Title must be at least 3 characters" },
               ]}
             >
               <Input placeholder="Enter task title" size="large" />
@@ -98,8 +98,11 @@ export default function EditTaskPage() {
               label="Director/Team"
               name="director"
               rules={[
-                { required: true, message: 'Please enter director/team name' },
-                { min: 2, message: 'Director name must be at least 2 characters' },
+                { required: true, message: "Please enter director/team name" },
+                {
+                  min: 2,
+                  message: "Director name must be at least 2 characters",
+                },
               ]}
             >
               <Input placeholder="e.g., John Doe, Dev Team" size="large" />
@@ -108,25 +111,23 @@ export default function EditTaskPage() {
             <Form.Item
               label="Genre/Category"
               name="genre"
-              rules={[{ required: true, message: 'Please select a genre' }]}
+              rules={[{ required: true, message: "Please select a genre" }]}
             >
-              <Select placeholder="Select genre" options={genreOptions} size="large" />
+              <Select
+                placeholder="Select genre"
+                options={genreOptions}
+                size="large"
+              />
             </Form.Item>
 
-            <Form.Item
-              label="Description"
-              name="description"
-            >
+            <Form.Item label="Description" name="description">
               <Input.TextArea
                 placeholder="Enter task description (optional)"
                 rows={4}
               />
             </Form.Item>
 
-            <Form.Item
-              label="Due Date"
-              name="dueDate"
-            >
+            <Form.Item label="Due Date" name="dueDate">
               <Input
                 type="date"
                 placeholder="Select due date (optional)"
@@ -136,10 +137,15 @@ export default function EditTaskPage() {
 
             <Form.Item>
               <Space>
-                <Button type="primary" htmlType="submit" size="large" loading={loading}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  loading={loading}
+                >
                   Update Task
                 </Button>
-                <Button size="large" onClick={() => navigate('/tasks')}>
+                <Button size="large" onClick={() => navigate("/tasks")}>
                   Cancel
                 </Button>
               </Space>

@@ -1,65 +1,86 @@
-import { Card, Row, Col, Statistic, Table, Button, Space, Tag, Empty, Progress } from 'antd';
-import { CheckCircleOutlined, ClockCircleOutlined, FileTextOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useTasks } from '../contexts/TaskContext';
-import { Link } from 'react-router-dom';
+import {
+  Card,
+  Row,
+  Col,
+  Statistic,
+  Table,
+  Button,
+  Space,
+  Tag,
+  Empty,
+  Progress,
+} from "antd";
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  FileTextOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import { useTasks } from "../contexts/TaskContext";
+import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
   const { tasks, deleteTask } = useTasks();
 
   const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(t => t.completed).length;
+  const completedTasks = tasks.filter((t) => t.completed).length;
   const pendingTasks = totalTasks - completedTasks;
-  const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  const completionRate =
+    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   const upcomingTasks = tasks
-    .filter(t => !t.completed && t.dueDate)
+    .filter((t) => !t.completed && t.dueDate)
     .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
     .slice(0, 5);
 
   const columns = [
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
       render: (text, record) => (
-        <span style={{ textDecoration: record.completed ? 'line-through' : 'none' }}>
+        <span
+          style={{ textDecoration: record.completed ? "line-through" : "none" }}
+        >
           {text}
         </span>
       ),
     },
     {
-      title: 'Director',
-      dataIndex: 'director',
-      key: 'director',
+      title: "Director",
+      dataIndex: "director",
+      key: "director",
     },
     {
-      title: 'Genre',
-      dataIndex: 'genre',
-      key: 'genre',
+      title: "Genre",
+      dataIndex: "genre",
+      key: "genre",
       render: (genre) => <Tag color="blue">{genre}</Tag>,
     },
     {
-      title: 'Due Date',
-      dataIndex: 'dueDate',
-      key: 'dueDate',
+      title: "Due Date",
+      dataIndex: "dueDate",
+      key: "dueDate",
     },
     {
-      title: 'Status',
-      dataIndex: 'completed',
-      key: 'status',
+      title: "Status",
+      dataIndex: "completed",
+      key: "status",
       render: (completed) => (
-        <Tag color={completed ? 'green' : 'orange'}>
-          {completed ? 'Completed' : 'Pending'}
+        <Tag color={completed ? "green" : "orange"}>
+          {completed ? "Completed" : "Pending"}
         </Tag>
       ),
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       render: (_, record) => (
         <Space>
           <Link to={`/tasks/${record.id}`}>
-            <Button type="primary" size="small">View</Button>
+            <Button type="primary" size="small">
+              View
+            </Button>
           </Link>
           <Link to={`/tasks/edit/${record.id}`}>
             <Button size="small">Edit</Button>
@@ -68,7 +89,7 @@ export default function DashboardPage() {
             danger
             size="small"
             onClick={() => {
-              if (window.confirm('Delete this task?')) {
+              if (window.confirm("Delete this task?")) {
                 deleteTask(record.id);
               }
             }}
@@ -81,7 +102,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div style={{ background: '#f0f2f5', padding: '24px' }}>
+    <div style={{ background: "#f0f2f5", padding: "24px" }}>
       {/* Stats Cards */}
       <Row gutter={16} style={{ marginBottom: 24 }}>
         <Col xs={24} sm={12} lg={6}>
@@ -90,7 +111,7 @@ export default function DashboardPage() {
               title="Total Tasks"
               value={totalTasks}
               prefix={<FileTextOutlined />}
-              valueStyle={{ color: '#1890ff' }}
+              valueStyle={{ color: "#1890ff" }}
             />
           </Card>
         </Col>
@@ -100,7 +121,7 @@ export default function DashboardPage() {
               title="Completed"
               value={completedTasks}
               prefix={<CheckCircleOutlined />}
-              valueStyle={{ color: '#52c41a' }}
+              valueStyle={{ color: "#52c41a" }}
             />
           </Card>
         </Col>
@@ -110,7 +131,7 @@ export default function DashboardPage() {
               title="Pending"
               value={pendingTasks}
               prefix={<ClockCircleOutlined />}
-              valueStyle={{ color: '#faad14' }}
+              valueStyle={{ color: "#faad14" }}
             />
           </Card>
         </Col>
@@ -120,7 +141,7 @@ export default function DashboardPage() {
               title="Completion Rate"
               value={completionRate}
               suffix="%"
-              valueStyle={{ color: '#722ed1' }}
+              valueStyle={{ color: "#722ed1" }}
             />
           </Card>
         </Col>
@@ -132,12 +153,12 @@ export default function DashboardPage() {
         <Progress
           percent={completionRate}
           strokeColor={{
-            '0%': '#108ee9',
-            '100%': '#87d068',
+            "0%": "#108ee9",
+            "100%": "#87d068",
           }}
-          status={completionRate === 100 ? 'success' : 'active'}
+          status={completionRate === 100 ? "success" : "active"}
         />
-        <p style={{ marginTop: 12, color: '#666' }}>
+        <p style={{ marginTop: 12, color: "#666" }}>
           {completedTasks} of {totalTasks} tasks completed
         </p>
       </Card>
@@ -171,22 +192,22 @@ export default function DashboardPage() {
         {/* Quick Stats */}
         <Col xs={24} lg={8}>
           <Card title="Quick Stats" style={{ borderRadius: 8 }}>
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>Total Tasks:</span>
                 <strong>{totalTasks}</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>Completed:</span>
-                <strong style={{ color: '#52c41a' }}>{completedTasks}</strong>
+                <strong style={{ color: "#52c41a" }}>{completedTasks}</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>Pending:</span>
-                <strong style={{ color: '#faad14' }}>{pendingTasks}</strong>
+                <strong style={{ color: "#faad14" }}>{pendingTasks}</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>Completion:</span>
-                <strong style={{ color: '#722ed1' }}>{completionRate}%</strong>
+                <strong style={{ color: "#722ed1" }}>{completionRate}%</strong>
               </div>
             </Space>
           </Card>

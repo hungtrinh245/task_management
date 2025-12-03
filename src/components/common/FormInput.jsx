@@ -2,7 +2,7 @@
 export default function FormInput({
   label,
   name,
-  type = 'text',
+  type = "text",
   value,
   onChange,
   placeholder,

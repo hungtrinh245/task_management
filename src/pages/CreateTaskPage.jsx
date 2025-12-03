@@ -1,8 +1,8 @@
-import { Card, Form, Input, Select, Button, Space, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useTasks } from '../contexts/TaskContext';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Card, Form, Input, Select, Button, Space, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { useTasks } from "../contexts/TaskContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function CreateTaskPage() {
   const [form] = Form.useForm();
@@ -11,40 +11,40 @@ export default function CreateTaskPage() {
   const [loading, setLoading] = useState(false);
 
   const genreOptions = [
-    { label: '💻 Development', value: 'Development' },
-    { label: '🎨 Design', value: 'Design' },
-    { label: '🧪 Testing', value: 'Testing' },
-    { label: '📚 Documentation', value: 'Documentation' },
+    { label: "💻 Development", value: "Development" },
+    { label: "🎨 Design", value: "Design" },
+    { label: "🧪 Testing", value: "Testing" },
+    { label: "📚 Documentation", value: "Documentation" },
   ];
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       addTask({
         title: values.title,
         director: values.director,
         genre: values.genre,
-        description: values.description || '',
-        dueDate: values.dueDate || '',
+        description: values.description || "",
+        dueDate: values.dueDate || "",
       });
 
-      message.success('Task created successfully!');
-      navigate('/tasks');
+      message.success("Task created successfully!");
+      navigate("/tasks");
     } catch {
-      message.error('Failed to create task');
+      message.error("Failed to create task");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto' }}>
+    <div style={{ maxWidth: 800, margin: "0 auto" }}>
       <Card
         title={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <PlusOutlined style={{ fontSize: 24 }} />
             <span>Create New Task</span>
           </div>
@@ -61,8 +61,8 @@ export default function CreateTaskPage() {
             label="Task Title"
             name="title"
             rules={[
-              { required: true, message: 'Please enter task title' },
-              { min: 3, message: 'Title must be at least 3 characters' },
+              { required: true, message: "Please enter task title" },
+              { min: 3, message: "Title must be at least 3 characters" },
             ]}
           >
             <Input placeholder="Enter task title" size="large" />
@@ -72,8 +72,11 @@ export default function CreateTaskPage() {
             label="Director/Team"
             name="director"
             rules={[
-              { required: true, message: 'Please enter director/team name' },
-              { min: 2, message: 'Director name must be at least 2 characters' },
+              { required: true, message: "Please enter director/team name" },
+              {
+                min: 2,
+                message: "Director name must be at least 2 characters",
+              },
             ]}
           >
             <Input placeholder="e.g., John Doe, Dev Team" size="large" />
@@ -82,25 +85,23 @@ export default function CreateTaskPage() {
           <Form.Item
             label="Genre/Category"
             name="genre"
-            rules={[{ required: true, message: 'Please select a genre' }]}
+            rules={[{ required: true, message: "Please select a genre" }]}
           >
-            <Select placeholder="Select genre" options={genreOptions} size="large" />
+            <Select
+              placeholder="Select genre"
+              options={genreOptions}
+              size="large"
+            />
           </Form.Item>
 
-          <Form.Item
-            label="Description"
-            name="description"
-          >
+          <Form.Item label="Description" name="description">
             <Input.TextArea
               placeholder="Enter task description (optional)"
               rows={4}
             />
           </Form.Item>
 
-          <Form.Item
-            label="Due Date"
-            name="dueDate"
-          >
+          <Form.Item label="Due Date" name="dueDate">
             <Input
               type="date"
               placeholder="Select due date (optional)"
@@ -110,10 +111,15 @@ export default function CreateTaskPage() {
 
           <Form.Item>
             <Space>
-              <Button type="primary" htmlType="submit" size="large" loading={loading}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={loading}
+              >
                 Create Task
               </Button>
-              <Button size="large" onClick={() => navigate('/tasks')}>
+              <Button size="large" onClick={() => navigate("/tasks")}>
                 Cancel
               </Button>
             </Space>
