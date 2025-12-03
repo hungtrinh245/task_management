@@ -227,7 +227,11 @@ export default function TaskListPage() {
           />
         ) : (
           <Empty
-            description={searchText || filterStatus !== "all" ? "No tasks match your filters" : "No tasks yet"}
+            description={
+              searchText || filterStatus !== "all"
+                ? "No tasks match your filters"
+                : "No tasks yet"
+            }
             style={{ marginTop: 48, marginBottom: 48 }}
           >
             {!searchText && filterStatus === "all" && (
