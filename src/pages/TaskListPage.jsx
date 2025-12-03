@@ -21,7 +21,7 @@ import {
 } from "@ant-design/icons";
 import { useTasks } from "../contexts/TaskContext";
 import { Link } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 
 export default function TaskListPage() {
   const { tasks, deleteTask, toggleTask } = useTasks();
@@ -46,6 +46,18 @@ export default function TaskListPage() {
       return matchesSearch && matchesStatus;
     });
   }, [tasks, searchText, filterStatus]);
+
+  // Xử lý thay đổi search - reset trang về 1
+  const handleSearch = useCallback((value) => {
+    setSearchText(value);
+    setCurrentPage(1);
+  }, []);
+
+  // Xử lý thay đổi filter - reset trang về 1
+  const handleFilterStatus = useCallback((value) => {
+    setFilterStatus(value);
+    setCurrentPage(1);
+  }, []);
 
   const completedCount = tasks.filter((t) => t.completed).length;
   const pendingCount = tasks.length - completedCount;
@@ -190,13 +202,13 @@ export default function TaskListPage() {
             placeholder="Search by title, director, or genre..."
             prefix={<SearchOutlined />}
             value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) => handleSearch(e.target.value)}
             style={{ width: "300px" }}
           />
           <Select
             style={{ width: "150px" }}
             value={filterStatus}
-            onChange={setFilterStatus}
+            onChange={handleFilterStatus}
             options={[
               { label: "All Status", value: "all" },
               { label: "Pending", value: "pending" },
