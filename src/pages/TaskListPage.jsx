@@ -27,6 +27,8 @@ export default function TaskListPage() {
   const { tasks, deleteTask, toggleTask } = useTasks();
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
 
   // Lọc tasks dựa vào tìm kiếm và status
   const filteredTasks = useMemo(() => {
@@ -208,7 +210,19 @@ export default function TaskListPage() {
             columns={columns}
             dataSource={filteredTasks}
             rowKey="id"
-            pagination={{ pageSize: 10 }}
+            pagination={{
+              current: currentPage,
+              pageSize: pageSize,
+              total: filteredTasks.length,
+              onChange: (page, size) => {
+                setCurrentPage(page);
+                setPageSize(size);
+              },
+              pageSizeOptions: ["5", "10", "20"],
+              showSizeChanger: true,
+              showTotal: (total) => `Total ${total} tasks`,
+              style: { marginTop: 16 },
+            }}
             size="middle"
           />
         ) : (
