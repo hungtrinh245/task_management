@@ -3,6 +3,8 @@ import {
   HomeOutlined,
   UnorderedListOutlined,
   PlusOutlined,
+  LoginOutlined,
+   ArrowRightOutlined
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 
@@ -22,6 +24,16 @@ export default function MainLayout({ children }) {
       key: "/tasks/create",
       icon: <PlusOutlined />,
       label: <Link to="/tasks/create">Create Task</Link>,
+    },
+     {
+      key: "/auth/register",
+      icon: <ArrowRightOutlined />,
+      label: <Link to="/auth/register">Register</Link>,
+    },
+     {
+      key: "/auth/login",
+      icon: <LoginOutlined />,
+      label: <Link to="/auth/login">Login</Link>,
     },
   ];
 

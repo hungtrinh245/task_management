@@ -121,22 +121,7 @@
       "id": "338e"
     }
   ],
-  "users": [
-    {
-      "id": "44af",
-      "name": "trịnh quốc hưng",
-      "email": "trinhquochung222005@gmail.com",
-      "password": "123456",
-      "createdAt": "2025-12-04T08:10:44.716Z"
-    },
-    {
-      "id": "0c9a",
-      "name": "phạm minh quang",
-      "email": "quang@gmail.com",
-      "password": "$2b$10$ssau5YdLSbPXhW1b.ljhZeI5WhCIwASP0lF83AofLnqQWTvhAQc2q",
-      "createdAt": "2025-12-04T08:23:22.226Z"
-    }
-  ],
+  "users": [],
   "comments": [],
   "attachments": []
 }

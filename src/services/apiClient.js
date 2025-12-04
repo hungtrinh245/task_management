@@ -9,14 +9,14 @@ const apiClient = axios.create({
   },
 });
 
-// Interceptor: tự động thêm token nếu cần (placeholder cho auth)
+// Interceptor: tự động thêm token nếu có (auth token từ localStorage)
 apiClient.interceptors.request.use(
   (config) => {
-    // Nếu có token trong localStorage, gắn vào header
-    // const token = localStorage.getItem('authToken');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    // Lấy token từ localStorage nếu có
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

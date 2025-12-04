@@ -7,6 +7,8 @@ import CreateTaskPage from "./pages/CreateTaskPage";
 import TaskDetailPage from "./pages/TaskDetailPage";
 import EditTaskPage from "./pages/EditTaskPage";
 import NotFound from "./pages/NotFound";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="/tasks/create" element={<CreateTaskPage />} />
             <Route path="/tasks/:id" element={<TaskDetailPage />} />
             <Route path="/tasks/edit/:id" element={<EditTaskPage />} />
+            <Route path="/auth/register" element={<RegisterPage />} />
+            <Route path="/auth/login" element={<LoginPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainLayout>
