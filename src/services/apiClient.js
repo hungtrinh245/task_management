@@ -40,26 +40,26 @@ apiClient.interceptors.response.use(
       const errorMessage = data?.message || data?.error || "Lỗi từ server";
       console.error(`[API Error ${status}]:`, errorMessage);
 
-        // Nếu token không hợp lệ hoặc hết hạn -> tự động logout và chuyển tới trang đăng nhập
-        if (status === 401) {
-          // Nếu backend trả 401 nghĩa là token không hợp lệ hoặc đã hết hạn.
-          // Thông báo cho user, xoá token tại client và điều hướng về trang đăng nhập.
-          if (typeof window !== "undefined") {
-            try {
-              message.warning("Phiên đã hết hạn. Vui lòng đăng nhập lại.");
-            } catch {
-              // message có thể không hoạt động trong môi trường non-DOM
-            }
-          }
+      // Nếu token không hợp lệ hoặc hết hạn -> tự động logout và chuyển tới trang đăng nhập
+      if (status === 401) {
+        // Nếu backend trả 401 nghĩa là token không hợp lệ hoặc đã hết hạn.
+        // Thông báo cho user, xoá token tại client và điều hướng về trang đăng nhập.
+        if (typeof window !== "undefined") {
           try {
-            AuthService.logout();
+            message.warning("Phiên đã hết hạn. Vui lòng đăng nhập lại.");
           } catch {
-            // ignore
+            // message có thể không hoạt động trong môi trường non-DOM
           }
-          // redirect to login page
-          if (typeof window !== "undefined") {
-            window.location.href = "/auth/login";
-          }
+        }
+        try {
+          AuthService.logout();
+        } catch {
+          // ignore
+        }
+        // redirect to login page
+        if (typeof window !== "undefined") {
+          window.location.href = "/auth/login";
+        }
       }
       // 403: forbidden — user authenticated but not authorized for this resource
       if (status === 403) {
@@ -72,7 +72,10 @@ apiClient.interceptors.response.use(
         }
       }
     } else if (error.request) {
-      console.error("[API Error] Không nhận response từ server:", error.message);
+      console.error(
+        "[API Error] Không nhận response từ server:",
+        error.message
+      );
     } else {
       console.error("[API Error] Setup request:", error.message);
     }

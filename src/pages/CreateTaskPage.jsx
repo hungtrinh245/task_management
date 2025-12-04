@@ -162,7 +162,12 @@ export default function CreateTaskPage() {
         }
         style={{ borderRadius: 8 }}
       >
-        <Form form={form} layout="vertical" onFinish={onFinish} autoComplete="off">
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          autoComplete="off"
+        >
           <Form.Item
             label="Task Title"
             name="title"
@@ -208,7 +213,11 @@ export default function CreateTaskPage() {
           </Form.Item>
 
           <Form.Item label="Due Date" name="dueDate">
-            <Input type="date" placeholder="Select due date (optional)" size="large" />
+            <Input
+              type="date"
+              placeholder="Select due date (optional)"
+              size="large"
+            />
           </Form.Item>
 
           <Divider />
@@ -216,91 +225,224 @@ export default function CreateTaskPage() {
           {/* Classification */}
           <h4>📊 Classification</h4>
           <Form.Item label="Status" name="status" initialValue="todo">
-            <Select placeholder="Select status" options={statusOptions} size="large" />
+            <Select
+              placeholder="Select status"
+              options={statusOptions}
+              size="large"
+            />
           </Form.Item>
 
           <Form.Item label="Priority" name="priority" initialValue="medium">
-            <Select placeholder="Select priority" options={priorityOptions} size="large" />
+            <Select
+              placeholder="Select priority"
+              options={priorityOptions}
+              size="large"
+            />
           </Form.Item>
 
           <Form.Item label="Tags / Labels" name="tags">
-            <Select mode="multiple" placeholder="Select tags..." options={availableTags.map((tag) => ({ label: tag, value: tag }))} />
+            <Select
+              mode="multiple"
+              placeholder="Select tags..."
+              options={availableTags.map((tag) => ({ label: tag, value: tag }))}
+            />
           </Form.Item>
 
           <Divider />
 
           {/* Subtasks / Checklist */}
           <h4>✅ Subtasks / Checklist</h4>
-          <Card size="small" style={{ marginBottom: 16, background: "#fafafa" }}>
+          <Card
+            size="small"
+            style={{ marginBottom: 16, background: "#fafafa" }}
+          >
             {subtasks.length > 0 ? (
               <List
                 dataSource={subtasks}
                 renderItem={(subtask) => (
-                  <List.Item key={subtask.id} style={{ padding: "8px 0", display: "flex", alignItems: "center", gap: 8 }}>
-                    <input type="checkbox" checked={subtask.completed} onChange={() => handleToggleSubtask(subtask.id)} style={{ cursor: "pointer" }} />
-                    <span style={{ flex: 1, textDecoration: subtask.completed ? "line-through" : "none", opacity: subtask.completed ? 0.6 : 1 }}>{subtask.title}</span>
-                    <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={() => handleDeleteSubtask(subtask.id)} />
+                  <List.Item
+                    key={subtask.id}
+                    style={{
+                      padding: "8px 0",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={subtask.completed}
+                      onChange={() => handleToggleSubtask(subtask.id)}
+                      style={{ cursor: "pointer" }}
+                    />
+                    <span
+                      style={{
+                        flex: 1,
+                        textDecoration: subtask.completed
+                          ? "line-through"
+                          : "none",
+                        opacity: subtask.completed ? 0.6 : 1,
+                      }}
+                    >
+                      {subtask.title}
+                    </span>
+                    <Button
+                      type="text"
+                      danger
+                      size="small"
+                      icon={<DeleteOutlined />}
+                      onClick={() => handleDeleteSubtask(subtask.id)}
+                    />
                   </List.Item>
                 )}
               />
             ) : (
-              <Empty description="No subtasks yet" style={{ margin: "16px 0" }} />
+              <Empty
+                description="No subtasks yet"
+                style={{ margin: "16px 0" }}
+              />
             )}
           </Card>
 
           <Space style={{ width: "100%", marginBottom: 16 }}>
-            <Input placeholder="Add new subtask..." value={newSubtaskTitle} onChange={(e) => setNewSubtaskTitle(e.target.value)} onPressEnter={handleAddSubtask} size="small" style={{ flex: 1 }} />
-            <Button type="primary" icon={<PlusOutlined />} size="small" onClick={handleAddSubtask}>Add</Button>
+            <Input
+              placeholder="Add new subtask..."
+              value={newSubtaskTitle}
+              onChange={(e) => setNewSubtaskTitle(e.target.value)}
+              onPressEnter={handleAddSubtask}
+              size="small"
+              style={{ flex: 1 }}
+            />
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              size="small"
+              onClick={handleAddSubtask}
+            >
+              Add
+            </Button>
           </Space>
 
           <Divider />
 
           {/* Comments */}
           <h4>💬 Comments (optional)</h4>
-          <Card size="small" style={{ marginBottom: 16, background: "#fafafa" }}>
+          <Card
+            size="small"
+            style={{ marginBottom: 16, background: "#fafafa" }}
+          >
             {comments.length > 0 ? (
-              <List dataSource={comments} renderItem={(comment) => (
-                <List.Item key={comment.id} style={{ padding: "12px 0", borderBottom: "1px solid #e8e8e8" }}>
-                  <div style={{ width: "100%" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                      <strong>{comment.author}</strong>
+              <List
+                dataSource={comments}
+                renderItem={(comment) => (
+                  <List.Item
+                    key={comment.id}
+                    style={{
+                      padding: "12px 0",
+                      borderBottom: "1px solid #e8e8e8",
+                    }}
+                  >
+                    <div style={{ width: "100%" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          marginBottom: 4,
+                        }}
+                      >
+                        <strong>{comment.author}</strong>
+                      </div>
+                      <div
+                        style={{ fontSize: 12, color: "#666", marginBottom: 4 }}
+                      >
+                        {comment.createdAt
+                          ? new Date(comment.createdAt).toLocaleString()
+                          : ""}
+                      </div>
+                      <div>{comment.text}</div>
                     </div>
-                    <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>{comment.createdAt ? new Date(comment.createdAt).toLocaleString() : ""}</div>
-                    <div>{comment.text}</div>
-                  </div>
-                </List.Item>
-              )} />
+                  </List.Item>
+                )}
+              />
             ) : (
-              <Empty description="No comments yet" style={{ margin: "16px 0" }} />
+              <Empty
+                description="No comments yet"
+                style={{ margin: "16px 0" }}
+              />
             )}
           </Card>
 
-          <Space style={{ width: "100%", gap: 0, marginBottom: 16, flexWrap: "wrap" }}>
-            <Input placeholder="Your name" value={newCommentAuthor} onChange={(e) => setNewCommentAuthor(e.target.value)} size="small" style={{ flex: "0 0 20%" }} />
-            <Input.TextArea placeholder="Add comment..." value={newCommentText} onChange={(e) => setNewCommentText(e.target.value)} rows={2} style={{ flex: 1, marginLeft: 8, marginRight: 8 }} />
-            <Button type="primary" icon={<PlusOutlined />} size="small" onClick={handleAddComment}>Add</Button>
+          <Space
+            style={{
+              width: "100%",
+              gap: 0,
+              marginBottom: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <Input
+              placeholder="Your name"
+              value={newCommentAuthor}
+              onChange={(e) => setNewCommentAuthor(e.target.value)}
+              size="small"
+              style={{ flex: "0 0 20%" }}
+            />
+            <Input.TextArea
+              placeholder="Add comment..."
+              value={newCommentText}
+              onChange={(e) => setNewCommentText(e.target.value)}
+              rows={2}
+              style={{ flex: 1, marginLeft: 8, marginRight: 8 }}
+            />
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              size="small"
+              onClick={handleAddComment}
+            >
+              Add
+            </Button>
           </Space>
 
           <Divider />
 
           {/* Attachments */}
           <h4>📎 Attachments (optional)</h4>
-          <Card size="small" style={{ marginBottom: 16, background: "#fafafa" }}>
+          <Card
+            size="small"
+            style={{ marginBottom: 16, background: "#fafafa" }}
+          >
             {attachments.length > 0 ? (
-              <List dataSource={attachments} renderItem={(attachment) => (
-                <List.Item key={attachment.id} style={{ padding: "8px 0" }}>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 500 }}>{attachment.filename}</div>
-                    <div style={{ fontSize: 12, color: "#666" }}>{attachment.filesize ? `${(attachment.filesize/1024).toFixed(2)} KB` : ""}</div>
-                  </div>
-                </List.Item>
-              )} />
+              <List
+                dataSource={attachments}
+                renderItem={(attachment) => (
+                  <List.Item key={attachment.id} style={{ padding: "8px 0" }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 500 }}>
+                        {attachment.filename}
+                      </div>
+                      <div style={{ fontSize: 12, color: "#666" }}>
+                        {attachment.filesize
+                          ? `${(attachment.filesize / 1024).toFixed(2)} KB`
+                          : ""}
+                      </div>
+                    </div>
+                  </List.Item>
+                )}
+              />
             ) : (
-              <Empty description="No attachments" style={{ margin: "16px 0" }} />
+              <Empty
+                description="No attachments"
+                style={{ margin: "16px 0" }}
+              />
             )}
           </Card>
 
-          <Upload beforeUpload={handleAddAttachment} maxCount={1} style={{ marginBottom: 16 }}>
+          <Upload
+            beforeUpload={handleAddAttachment}
+            maxCount={1}
+            style={{ marginBottom: 16 }}
+          >
             <Button icon={<PlusOutlined />}>Upload Attachment</Button>
           </Upload>
 

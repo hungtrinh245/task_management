@@ -140,7 +140,9 @@ export default function EditTaskPage() {
             attachments: attachments,
             completed: true,
           });
-          message.success("Task marked complete because all subtasks are done.");
+          message.success(
+            "Task marked complete because all subtasks are done."
+          );
         } catch (err) {
           console.error("Auto-save on subtasks completion failed:", err);
         }
