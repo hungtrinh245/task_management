@@ -11,6 +11,8 @@ import {
   Checkbox,
   Input,
   Select,
+  Spin,
+  Alert,
 } from "antd";
 import {
   DeleteOutlined,
@@ -19,33 +21,16 @@ import {
   PlusOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { useTasks } from "../contexts/TaskContext";
+import { useTasks } from "../hooks/useTasks";
 import { Link } from "react-router-dom";
 import { useState, useMemo, useCallback } from "react";
 
 export default function TaskListPage() {
-  const { tasks, deleteTask, toggleTask } = useTasks();
+  const { tasks, loading, error, deleteTask, toggleTask } = useTasks();
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-
-  // Lọc tasks dựa vào tìm kiếm và status
-  const filteredTasks = useMemo(() => {
-    return tasks.filter((task) => {
-      const matchesSearch =
-        task.title.toLowerCase().includes(searchText.toLowerCase()) ||
-        task.director.toLowerCase().includes(searchText.toLowerCase()) ||
-        task.genre.toLowerCase().includes(searchText.toLowerCase());
-
-      const matchesStatus =
-        filterStatus === "all" ||
-        (filterStatus === "completed" && task.completed) ||
-        (filterStatus === "pending" && !task.completed);
-
-      return matchesSearch && matchesStatus;
-    });
-  }, [tasks, searchText, filterStatus]);
 
   // Xử lý thay đổi search - reset trang về 1
   const handleSearch = useCallback((value) => {
@@ -59,10 +44,56 @@ export default function TaskListPage() {
     setCurrentPage(1);
   }, []);
 
+  // Lọc tasks dựa vào tìm kiếm và status
+  const filteredTasks = useMemo(() => {
+    const q = searchText.trim().toLowerCase();
+    return tasks.filter((task) => {
+      // Guard fields that may be undefined
+      const title = String(task.title || "").toLowerCase();
+      const director = String(task.director || "").toLowerCase();
+      const genre = String(task.genre || "").toLowerCase();
+
+      const matchesSearch =
+        q === "" ||
+        title.includes(q) ||
+        director.includes(q) ||
+        genre.includes(q);
+
+      const matchesStatus =
+        filterStatus === "all" ||
+        (filterStatus === "completed" && task.completed) ||
+        (filterStatus === "pending" && !task.completed);
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [tasks, searchText, filterStatus]);
+
   const completedCount = tasks.filter((t) => t.completed).length;
   const pendingCount = tasks.length - completedCount;
   const completionRate =
     tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0;
+
+  // Hiển thị loading khi đang lấy dữ liệu
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <Spin size="large" tip="Loading tasks..." />
+      </div>
+    );
+  }
+
+  // Hiển thị error nếu có lỗi
+  if (error) {
+    return (
+      <Alert
+        message="Error"
+        description={error}
+        type="error"
+        showIcon
+        closable
+      />
+    );
+  }
 
   const columns = [
     {
@@ -72,8 +103,8 @@ export default function TaskListPage() {
       width: 50,
       render: (_, record) => (
         <Checkbox
-          checked={record.completed}
-          onChange={() => toggleTask(record.id)}
+          checked={Boolean(record.completed)}
+          onChange={(e) => toggleTask(record.id, e.target.checked)}
         />
       ),
     },

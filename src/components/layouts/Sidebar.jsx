@@ -101,7 +101,7 @@ function Sidebar() {
         } md:translate-x-0`}
       >
         <div className="p-6 text-2xl font-bold border-b border-gray-700 bg-gradient-to-r from-indigo-600 to-purple-600">
-          Task Manager
+        <Link to="/">Task Manager</Link>
         </div>
         <nav className="flex-grow px-2 py-4">
           {navItems.map((item) => (

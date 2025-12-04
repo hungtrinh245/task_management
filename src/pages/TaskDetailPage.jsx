@@ -6,28 +6,34 @@ import {
   Divider,
   Row,
   Col,
-  Spin,
   Descriptions,
+  Empty,
 } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { useTasks } from "../contexts/TaskContext";
+import { useTasks } from "../hooks/useTasks";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function TaskDetailPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { getTaskById, deleteTask } = useTasks();
+
+  // Tìm task trong state (tasks đã được load từ API khi TaskProvider mount)
   const task = getTaskById(id);
 
   if (!task) {
     return (
       <Card style={{ borderRadius: 8, textAlign: "center" }}>
-        <p style={{ color: "#ff4d4f", fontSize: 16 }}>Task not found!</p>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate("/tasks")}>
+        <Empty description="Task not found" />
+        <Button
+          icon={<ArrowLeftOutlined />}
+          onClick={() => navigate("/tasks")}
+          style={{ marginTop: 16 }}
+        >
           Back to Tasks
         </Button>
       </Card>

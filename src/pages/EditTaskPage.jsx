@@ -1,6 +1,6 @@
-import { Card, Form, Input, Select, Button, Space, message, Spin } from "antd";
-import { EditOutlined } from "@ant-design/icons";
-import { useTasks } from "../contexts/TaskContext";
+import { Card, Form, Input, Select, Button, Space, message, Empty } from "antd";
+import { EditOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { useTasks } from "../hooks/useTasks";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -10,8 +10,8 @@ export default function EditTaskPage() {
   const { id } = useParams();
   const { getTaskById, editTask } = useTasks();
   const [loading, setLoading] = useState(false);
-  const [initialLoading, setInitialLoading] = useState(true);
 
+  // Tìm task trong state (tasks đã được load từ API khi TaskProvider mount)
   const task = getTaskById(id);
 
   const genreOptions = [
@@ -21,24 +21,30 @@ export default function EditTaskPage() {
     { label: "📚 Documentation", value: "Documentation" },
   ];
 
+  // Khi task được tìm thấy, set form values
   useEffect(() => {
     if (task) {
       form.setFieldsValue({
         title: task.title,
-        director: task.director,
-        genre: task.genre,
-        description: task.description,
-        dueDate: task.dueDate,
+        director: task.director || "",
+        genre: task.genre || "",
+        description: task.description || "",
+        dueDate: task.dueDate || "",
       });
     }
-    setInitialLoading(false);
   }, [task, form]);
 
-  if (!task && !initialLoading) {
+  if (!task) {
     return (
       <Card style={{ borderRadius: 8, textAlign: "center" }}>
-        <p style={{ color: "#ff4d4f", fontSize: 16 }}>Task not found!</p>
-        <Button onClick={() => navigate("/tasks")}>Back to Tasks</Button>
+        <Empty description="Task not found" />
+        <Button
+          icon={<ArrowLeftOutlined />}
+          onClick={() => navigate("/tasks")}
+          style={{ marginTop: 16 }}
+        >
+          Back to Tasks
+        </Button>
       </Card>
     );
   }
@@ -67,16 +73,15 @@ export default function EditTaskPage() {
 
   return (
     <div style={{ maxWidth: 800, margin: "0 auto" }}>
-      <Spin spinning={initialLoading}>
-        <Card
-          title={
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <EditOutlined style={{ fontSize: 24 }} />
-              <span>Edit Task: {task?.title}</span>
-            </div>
-          }
-          style={{ borderRadius: 8 }}
-        >
+      <Card
+        title={
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <EditOutlined style={{ fontSize: 24 }} />
+            <span>Edit Task: {task.title}</span>
+          </div>
+        }
+        style={{ borderRadius: 8 }}
+      >
           <Form
             form={form}
             layout="vertical"
@@ -152,7 +157,6 @@ export default function EditTaskPage() {
             </Form.Item>
           </Form>
         </Card>
-      </Spin>
-    </div>
-  );
-}
+      </div>
+    );
+  }

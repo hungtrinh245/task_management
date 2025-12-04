@@ -1,104 +1,159 @@
-// src/contexts/TaskContext.jsx
-import { createContext, useContext, useCallback, useMemo } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
-
-const TaskContext = createContext();
-
-const DEFAULT_TASKS = [
-  {
-    id: 1,
-    title: "Hoàn thành bản thiết kế UI",
-    director: "UX Team",
-    genre: "Design",
-    description: "Tạo bản mockup cho trang chính và trang cài đặt.",
-    dueDate: "2025-12-10",
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Nghiên cứu Custom Hooks",
-    director: "Dev Team",
-    genre: "Development",
-    description: "Đọc tài liệu về useMemo và useCallback.",
-    dueDate: "2025-12-05",
-    completed: true,
-  },
-  {
-    id: 3,
-    title: "Viết tài liệu Giai đoạn 1",
-    director: "Documentation",
-    genre: "Documentation",
-    description: "Tổng hợp các file code đã hoàn thiện CRUD.",
-    dueDate: "2025-11-28",
-    completed: false,
-  },
-];
-
-export const useTasks = () => {
-  return useContext(TaskContext);
-};
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import TaskService from '../services/TaskService';
+import { TaskContext } from './TaskContextDefinition';
 
 export const TaskProvider = ({ children }) => {
-  // Sử dụng useLocalStorage hook để lưu tasks vào localStorage
-  const [tasks, setTasks] = useLocalStorage("tasks_data", DEFAULT_TASKS);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Sử dụng useCallback để memoize các hàm CRUD - tránh tạo function mới mỗi lần render
-  const addTask = useCallback(
-    (taskData) => {
-      const newTask = { id: Date.now(), ...taskData, completed: false };
-      setTasks((prevTasks) => [newTask, ...prevTasks]);
-    },
-    [setTasks]
-  );
+  /**
+   * Lấy danh sách tasks từ server
+   */
+  const fetchTasks = useCallback(async (params = {}) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await TaskService.getTasks(params);
+      const taskList = Array.isArray(response) ? response : response.data || [];
+      setTasks(taskList);
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi tải tasks';
+      setError(errorMsg);
+      console.error('fetchTasks error:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  const toggleTask = useCallback(
-    (id) => {
+  /**
+   * Thêm task mới
+   */
+  const addTask = useCallback(async (taskData) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const newTask = await TaskService.createTask(taskData);
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+      return newTask;
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi tạo task';
+      setError(errorMsg);
+      console.error('addTask error:', err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  /**
+   * Cập nhật task
+   */
+  const editTask = useCallback(async (id, updates) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const updatedTask = await TaskService.updateTask(id, updates);
       setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === id ? { ...task, completed: !task.completed } : task
-        )
+        prevTasks.map((task) => (task.id === id ? updatedTask : task))
       );
-    },
-    [setTasks]
-  );
+      return updatedTask;
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi cập nhật task';
+      setError(errorMsg);
+      console.error('editTask error:', err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  const editTask = useCallback(
-    (id, updatedData) => {
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === id ? { ...task, ...updatedData } : task
-        )
-      );
-    },
-    [setTasks]
-  );
-
-  const deleteTask = useCallback(
-    (id) => {
+  /**
+   * Xoá task
+   */
+  const deleteTask = useCallback(async (id) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await TaskService.deleteTask(id);
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
-    },
-    [setTasks]
-  );
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi xoá task';
+      setError(errorMsg);
+      console.error('deleteTask error:', err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  const getTaskById = useCallback(
-    (id) => {
-      return tasks.find((task) => task.id === parseInt(id));
-    },
-    [tasks]
-  );
+  /**
+   * Toggle trạng thái hoàn thành của task
+   */
+  const toggleTask = useCallback(async (id, completed) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const updatedTask = await TaskService.toggleTaskCompletion(id, completed);
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === id ? updatedTask : task))
+      );
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi toggle task';
+      setError(errorMsg);
+      console.error('toggleTask error:', err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  // Sử dụng useMemo để memoize value object - tránh tạo object mới mỗi lần render
-  const value = useMemo(
+  /**
+   * Lấy task từ state dựa trên ID (synchronous - từ state đã load)
+   */
+  const getTaskById = useCallback((id) => {
+    const taskId = String(id); // Chuyển về string để so sánh
+    return tasks.find((task) => String(task.id) === taskId);
+  }, [tasks]);
+
+  /**
+   * Fetch task từ API (async - dùng khi cần đồng bộ)
+   */
+  const fetchTaskById = useCallback(async (id) => {
+    try {
+      const task = await TaskService.getTaskById(id);
+      return task;
+    } catch (err) {
+      console.error('fetchTaskById error:', err);
+      throw err;
+    }
+  }, []);
+
+  // Memoize context value để tránh re-render không cần thiết
+  const contextValue = useMemo(
     () => ({
       tasks,
+      loading,
+      error,
+      fetchTasks,
       addTask,
-      toggleTask,
       editTask,
       deleteTask,
+      toggleTask,
       getTaskById,
+      fetchTaskById,
     }),
-    [tasks, addTask, toggleTask, editTask, deleteTask, getTaskById]
+    [tasks, loading, error, fetchTasks, addTask, editTask, deleteTask, toggleTask, getTaskById, fetchTaskById]
   );
 
-  return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
+  // Fetch danh sách tasks từ API khi component mount
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  return (
+    <TaskContext.Provider value={contextValue}>
+      {children}
+    </TaskContext.Provider>
+  );
 };

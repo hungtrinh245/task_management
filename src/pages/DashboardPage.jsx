@@ -9,6 +9,8 @@ import {
   Tag,
   Empty,
   Progress,
+  Spin,
+  Alert,
 } from "antd";
 import {
   CheckCircleOutlined,
@@ -16,11 +18,33 @@ import {
   FileTextOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { useTasks } from "../contexts/TaskContext";
+import { useTasks } from "../hooks/useTasks";
 import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
-  const { tasks, deleteTask } = useTasks();
+  const { tasks, loading, error, deleteTask } = useTasks();
+
+  // Hiển thị loading khi đang lấy dữ liệu
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <Spin size="large" tip="Loading tasks..." />
+      </div>
+    );
+  }
+
+  // Hiển thị error nếu có lỗi
+  if (error) {
+    return (
+      <Alert
+        message="Error"
+        description={error}
+        type="error"
+        showIcon
+        closable
+      />
+    );
+  }
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((t) => t.completed).length;

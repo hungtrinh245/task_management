@@ -1,0 +1,65 @@
+{
+  "tasks": [
+    {
+      "title": "Learn React Context",
+      "director": "Dev",
+      "genre": "Development",
+      "description": "Understand how to use React Context for state management",
+      "dueDate": "2025-12-31",
+      "updatedAt": "2025-12-04T04:18:06.215Z",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "title": "Setup Tailwind CSS",
+      "description": "Configure Tailwind CSS for the project",
+      "completed": true,
+      "status": "done",
+      "createdAt": "2025-11-25T08:30:00Z",
+      "updatedAt": "2025-12-02T14:20:00Z",
+      "dueDate": "2025-12-01T00:00:00Z"
+    },
+    {
+      "title": "Implement Ant Design",
+      "director": "Design ",
+      "genre": "Design",
+      "description": "Integrate Ant Design components into the project",
+      "dueDate": "2025-12-22",
+      "updatedAt": "2025-12-04T04:09:39.339Z",
+      "id": "3"
+    },
+    {
+      "id": "b977",
+      "title": "fdf",
+      "director": "dfdf",
+      "genre": "Development",
+      "description": "dfdf",
+      "dueDate": "2025-12-31",
+      "completed": false,
+      "createdAt": "2025-12-04T04:00:55.445Z",
+      "updatedAt": "2025-12-04T04:01:01.347Z"
+    },
+    {
+      "id": "a8cc",
+      "title": "design database ",
+      "director": "Dev A",
+      "genre": "Development",
+      "description": "disign db project task management",
+      "dueDate": "2025-12-03",
+      "completed": true,
+      "createdAt": "2025-12-04T04:07:58.441Z",
+      "updatedAt": "2025-12-04T04:17:22.398Z"
+    },
+    {
+      "id": "9258",
+      "title": "test case ",
+      "director": "Teter",
+      "genre": "Testing",
+      "description": "test db ",
+      "dueDate": "2025-12-05",
+      "completed": false,
+      "createdAt": "2025-12-04T04:09:22.785Z",
+      "updatedAt": "2025-12-04T04:09:22.785Z"
+    }
+  ]
+}
