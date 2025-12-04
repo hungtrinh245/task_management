@@ -9,6 +9,8 @@ import EditTaskPage from "./pages/EditTaskPage";
 import NotFound from "./pages/NotFound";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
 
 function App() {
   return (
@@ -16,13 +18,62 @@ function App() {
       <TaskProvider>
         <MainLayout>
           <Routes>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/tasks" element={<TaskListPage />} />
-            <Route path="/tasks/create" element={<CreateTaskPage />} />
-            <Route path="/tasks/:id" element={<TaskDetailPage />} />
-            <Route path="/tasks/edit/:id" element={<EditTaskPage />} />
-            <Route path="/auth/register" element={<RegisterPage />} />
-            <Route path="/auth/login" element={<LoginPage />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <DashboardPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/tasks"
+              element={
+                <PrivateRoute>
+                  <TaskListPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/tasks/create"
+              element={
+                <PrivateRoute>
+                  <CreateTaskPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/tasks/:id"
+              element={
+                <PrivateRoute>
+                  <TaskDetailPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/tasks/edit/:id"
+              element={
+                <PrivateRoute>
+                  <EditTaskPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/auth/register"
+              element={
+                <PublicRoute>
+                  <RegisterPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/auth/login"
+              element={
+                <PublicRoute>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainLayout>

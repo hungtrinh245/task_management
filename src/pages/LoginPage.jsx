@@ -3,6 +3,11 @@ import { Form, Input, Button, Card, message } from "antd";
 import { Link } from "react-router-dom";
 import AuthService from "../services/AuthService";
 
+// LoginPage: simple login form
+// - Submits credentials to AuthService.login()
+// - AuthService stores token in localStorage (for dev, may be a mock token)
+// - On success the page redirects to the app root
+
 const LoginPage = () => {
   const [form] = Form.useForm();
 

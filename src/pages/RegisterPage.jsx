@@ -3,6 +3,10 @@ import { Form, Input, Button, Card, message } from "antd";
 import { useNavigate, Link } from "react-router-dom";
 import AuthService from "../services/AuthService";
 
+// RegisterPage: collects name, email and password
+// - Password is hashed client-side before being sent (for local json-server storage)
+// - On success it redirects the user to the login page
+
 const RegisterPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();

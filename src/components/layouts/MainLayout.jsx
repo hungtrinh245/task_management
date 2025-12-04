@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button, Modal, Dropdown, Avatar } from "antd";
 import {
   HomeOutlined,
   UnorderedListOutlined,
@@ -6,13 +6,46 @@ import {
   LoginOutlined,
    ArrowRightOutlined
 } from "@ant-design/icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import AuthService from "../../services/AuthService";
+// MainLayout: application shell containing Sider + Header + Content
+// - Shows navigation links in the Sider
+// - Displays a user menu in the Header when authenticated
+// - Logout goes through a confirmation modal and clears auth state
+import { LogoutOutlined } from "@ant-design/icons";
 
 const { Header, Sider, Content } = Layout;
 
 export default function MainLayout({ children }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
+  const showLogoutConfirm = () => {
+    Modal.confirm({
+      title: "Xác nhận đăng xuất",
+      content: "Bạn có chắc muốn đăng xuất khỏi hệ thống không?",
+      okText: "Đăng xuất",
+      cancelText: "Hủy",
+      onOk() {
+        AuthService.logout();
+        navigate("/auth/login");
+      },
+    });
+  };
+
+  // Get current user (may be null). We read this synchronously from localStorage.
+  const user = AuthService.getUser();
+  const userName = user?.name || user?.email || "User";
+
+  // Dropdown menu for user actions (profile, logout)
+  // Use the `menu` prop with an items array (Antd v5) to avoid overlay children issues
+  const userMenuItems = [
+    { key: "profile", label: userName },
+    { type: "divider" },
+    { key: "logout", label: "Logout", onClick: showLogoutConfirm },
+  ];
+
+  // Build Sider menu items. We hide auth routes when the user is logged in
   const menuItems = [
     { key: "/", icon: <HomeOutlined />, label: <Link to="/">Dashboard</Link> },
     {
@@ -25,17 +58,21 @@ export default function MainLayout({ children }) {
       icon: <PlusOutlined />,
       label: <Link to="/tasks/create">Create Task</Link>,
     },
-     {
+  ];
+
+  if (!AuthService.isAuthenticated()) {
+    // Only show register/login links when not authenticated
+    menuItems.push({
       key: "/auth/register",
       icon: <ArrowRightOutlined />,
       label: <Link to="/auth/register">Register</Link>,
-    },
-     {
+    });
+    menuItems.push({
       key: "/auth/login",
       icon: <LoginOutlined />,
       label: <Link to="/auth/login">Login</Link>,
-    },
-  ];
+    });
+  }
 
   const selectedKey =
     menuItems.find((item) =>
@@ -93,6 +130,17 @@ export default function MainLayout({ children }) {
           >
             Task Management System
           </h1>
+          <div style={{ marginLeft: "auto", display: "flex", gap: 12 }}>
+            {/* Show user avatar + dropdown when authenticated */}
+            {AuthService.isAuthenticated() ? (
+              <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+                <Button>
+                  <Avatar style={{ marginRight: 8 }}>{userName[0]}</Avatar>
+                  {userName}
+                </Button>
+              </Dropdown>
+            ) : null}
+          </div>
         </Header>
 
         <Content style={{ margin: "24px 16px", minHeight: 360 }}>

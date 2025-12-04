@@ -107,21 +107,59 @@ export default function EditTaskPage() {
         title: newSubtaskTitle,
         completed: false,
       };
-      setSubtasks([...subtasks, newSubtask]);
+      const next = [...subtasks, newSubtask];
+      setSubtasks(next);
+      syncStatusWithSubtasks(next);
       setNewSubtaskTitle("");
     }
   };
 
+  // Whenever subtasks change, if all subtasks are completed we can auto-set
+  // the task status to `done`. This keeps status in sync with the checklist.
+  const syncStatusWithSubtasks = (nextSubtasks) => {
+    if (!nextSubtasks || nextSubtasks.length === 0) return;
+    const allDone = nextSubtasks.every((s) => s.completed === true);
+    if (allDone) {
+      // Update the form field so user sees the change in the UI
+      form.setFieldsValue({ status: "done" });
+      // Persist change immediately: mark task as done on server
+      (async () => {
+        try {
+          const values = form.getFieldsValue();
+          await editTask(id, {
+            title: values.title || task.title,
+            director: values.director || task.director,
+            genre: values.genre || task.genre,
+            description: values.description || task.description || "",
+            dueDate: values.dueDate || task.dueDate || "",
+            status: "done",
+            priority: values.priority || task.priority || "medium",
+            tags: values.tags || task.tags || [],
+            subtasks: nextSubtasks,
+            comments: comments,
+            attachments: attachments,
+            completed: true,
+          });
+          message.success("Task marked complete because all subtasks are done.");
+        } catch (err) {
+          console.error("Auto-save on subtasks completion failed:", err);
+        }
+      })();
+    }
+  };
+
   const handleToggleSubtask = (subtaskId) => {
-    setSubtasks(
-      subtasks.map((s) =>
-        s.id === subtaskId ? { ...s, completed: !s.completed } : s
-      )
+    const next = subtasks.map((s) =>
+      s.id === subtaskId ? { ...s, completed: !s.completed } : s
     );
+    setSubtasks(next);
+    syncStatusWithSubtasks(next);
   };
 
   const handleDeleteSubtask = (subtaskId) => {
-    setSubtasks(subtasks.filter((s) => s.id !== subtaskId));
+    const next = subtasks.filter((s) => s.id !== subtaskId);
+    setSubtasks(next);
+    syncStatusWithSubtasks(next);
   };
 
   const handleAddComment = () => {
@@ -162,18 +200,32 @@ export default function EditTaskPage() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
+      // Determine completed based on status or subtasks
+      let status = values.status || "todo";
+      let completed = false;
+      if (subtasks && subtasks.length > 0) {
+        const allDone = subtasks.every((s) => s.completed === true);
+        if (allDone) {
+          status = "done";
+          completed = true;
+        }
+      } else {
+        completed = status === "done";
+      }
+
       await editTask(id, {
         title: values.title,
         director: values.director,
         genre: values.genre,
         description: values.description || "",
         dueDate: values.dueDate || "",
-        status: values.status || "todo",
+        status,
         priority: values.priority || "medium",
         tags: values.tags || [],
         subtasks,
         comments,
         attachments,
+        completed,
       });
 
       message.success("Task updated successfully!");
