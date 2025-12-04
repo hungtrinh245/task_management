@@ -1,5 +1,23 @@
-import { Card, Form, Input, Select, Button, Space, message, Empty, Table, Divider, List, Upload } from "antd";
-import { EditOutlined, ArrowLeftOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  Card,
+  Form,
+  Input,
+  Select,
+  Button,
+  Space,
+  message,
+  Empty,
+  Table,
+  Divider,
+  List,
+  Upload,
+} from "antd";
+import {
+  EditOutlined,
+  ArrowLeftOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useTasks } from "../hooks/useTasks";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -18,7 +36,14 @@ const priorityOptions = [
   { label: "⚡ Urgent", value: "urgent" },
 ];
 
-const availableTags = ["important", "bug", "feature", "enhancement", "documentation", "testing"];
+const availableTags = [
+  "important",
+  "bug",
+  "feature",
+  "enhancement",
+  "documentation",
+  "testing",
+];
 
 export default function EditTaskPage() {
   const [form] = Form.useForm();
@@ -268,7 +293,10 @@ export default function EditTaskPage() {
 
           {/* Subtasks Section */}
           <h4>✅ Subtasks / Checklist</h4>
-          <Card size="small" style={{ marginBottom: 16, background: "#fafafa" }}>
+          <Card
+            size="small"
+            style={{ marginBottom: 16, background: "#fafafa" }}
+          >
             {subtasks.length > 0 ? (
               <List
                 dataSource={subtasks}
@@ -340,7 +368,10 @@ export default function EditTaskPage() {
 
           {/* Comments Section */}
           <h4>💬 Comments</h4>
-          <Card size="small" style={{ marginBottom: 16, background: "#fafafa" }}>
+          <Card
+            size="small"
+            style={{ marginBottom: 16, background: "#fafafa" }}
+          >
             {comments.length > 0 ? (
               <List
                 dataSource={comments}
@@ -369,7 +400,9 @@ export default function EditTaskPage() {
                           onClick={() => handleDeleteComment(comment.id)}
                         />
                       </div>
-                      <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>
+                      <div
+                        style={{ fontSize: 12, color: "#666", marginBottom: 4 }}
+                      >
                         {comment.createdAt
                           ? new Date(comment.createdAt).toLocaleString()
                           : ""}
@@ -387,7 +420,14 @@ export default function EditTaskPage() {
             )}
           </Card>
 
-          <Space style={{ width: "100%", gap: 0, marginBottom: 16, flexWrap: "wrap" }}>
+          <Space
+            style={{
+              width: "100%",
+              gap: 0,
+              marginBottom: 16,
+              flexWrap: "wrap",
+            }}
+          >
             <Input
               placeholder="Your name"
               value={newCommentAuthor}
@@ -416,15 +456,15 @@ export default function EditTaskPage() {
 
           {/* Attachments Section */}
           <h4>📎 Attachments</h4>
-          <Card size="small" style={{ marginBottom: 16, background: "#fafafa" }}>
+          <Card
+            size="small"
+            style={{ marginBottom: 16, background: "#fafafa" }}
+          >
             {attachments.length > 0 ? (
               <List
                 dataSource={attachments}
                 renderItem={(attachment) => (
-                  <List.Item
-                    key={attachment.id}
-                    style={{ padding: "8px 0" }}
-                  >
+                  <List.Item key={attachment.id} style={{ padding: "8px 0" }}>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: 500 }}>
                         {attachment.filename}
@@ -440,9 +480,7 @@ export default function EditTaskPage() {
                       danger
                       size="small"
                       icon={<DeleteOutlined />}
-                      onClick={() =>
-                        handleDeleteAttachment(attachment.id)
-                      }
+                      onClick={() => handleDeleteAttachment(attachment.id)}
                     />
                   </List.Item>
                 )}
@@ -460,9 +498,7 @@ export default function EditTaskPage() {
             maxCount={1}
             style={{ marginBottom: 16 }}
           >
-            <Button icon={<PlusOutlined />}>
-              Upload Attachment
-            </Button>
+            <Button icon={<PlusOutlined />}>Upload Attachment</Button>
           </Upload>
 
           <Divider />

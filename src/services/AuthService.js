@@ -32,12 +32,17 @@ const AuthService = {
     } catch {
       // fallback: attempt to get users and simulate login
       // Note: json-server doesn't authenticate; this is a simple simulation
-      const users = await apiClient.get(`/users?email=${encodeURIComponent(payload.email)}`);
+      const users = await apiClient.get(
+        `/users?email=${encodeURIComponent(payload.email)}`
+      );
       const user = Array.isArray(users) ? users[0] : users;
-      
+
       if (user) {
         // Compare plain text password with hashed password
-        const isPasswordValid = await bcrypt.compare(payload.password, user.password);
+        const isPasswordValid = await bcrypt.compare(
+          payload.password,
+          user.password
+        );
         if (isPasswordValid) {
           // Generate mock token and save to localStorage
           const mockToken = `mock-token-${Date.now()}`;

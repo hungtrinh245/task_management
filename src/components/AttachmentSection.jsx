@@ -1,7 +1,15 @@
 import { Card, Upload, Button, List, Empty, Space, Tag } from "antd";
-import { DeleteOutlined, DownloadOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
-export default function AttachmentSection({ attachments = [], onAddAttachment, onDeleteAttachment }) {
+export default function AttachmentSection({
+  attachments = [],
+  onAddAttachment,
+  onDeleteAttachment,
+}) {
   const handleUpload = (info) => {
     if (info.file) {
       onAddAttachment({
@@ -14,7 +22,10 @@ export default function AttachmentSection({ attachments = [], onAddAttachment, o
   };
 
   return (
-    <Card title={`Attachments (${attachments.length})`} style={{ marginTop: 16 }}>
+    <Card
+      title={`Attachments (${attachments.length})`}
+      style={{ marginTop: 16 }}
+    >
       {attachments.length > 0 ? (
         <List
           dataSource={attachments}

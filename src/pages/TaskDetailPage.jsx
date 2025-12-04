@@ -65,9 +65,7 @@ export default function TaskDetailPage() {
   }
 
   const isOverdue =
-    task.dueDate &&
-    new Date(task.dueDate) < new Date() &&
-    !task.completed;
+    task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
 
   const handleDelete = () => {
     Modal.confirm({
@@ -92,7 +90,9 @@ export default function TaskDetailPage() {
               icon={<ArrowLeftOutlined />}
               onClick={() => navigate("/tasks")}
             />
-            <span style={{ fontSize: 18, fontWeight: "bold" }}>{task.title}</span>
+            <span style={{ fontSize: 18, fontWeight: "bold" }}>
+              {task.title}
+            </span>
           </div>
         }
         extra={
@@ -147,7 +147,9 @@ export default function TaskDetailPage() {
 
           <Descriptions.Item label="Due Date">
             <span>
-              {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "Not set"}
+              {task.dueDate
+                ? new Date(task.dueDate).toLocaleDateString()
+                : "Not set"}
               {isOverdue && (
                 <Tag color="red" style={{ marginLeft: 8 }}>
                   ⚠️ Overdue
@@ -171,17 +173,30 @@ export default function TaskDetailPage() {
 
           {/* Status */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", marginBottom: 8, fontWeight: 500 }}>
+            <label
+              style={{ display: "block", marginBottom: 8, fontWeight: 500 }}
+            >
               Status
             </label>
-            <Tag color={task.status === "done" ? "green" : task.status === "review" ? "orange" : "blue"}>
-              {statusOptions.find((s) => s.value === task.status)?.label || "Todo"}
+            <Tag
+              color={
+                task.status === "done"
+                  ? "green"
+                  : task.status === "review"
+                  ? "orange"
+                  : "blue"
+              }
+            >
+              {statusOptions.find((s) => s.value === task.status)?.label ||
+                "Todo"}
             </Tag>
           </div>
 
           {/* Priority */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", marginBottom: 8, fontWeight: 500 }}>
+            <label
+              style={{ display: "block", marginBottom: 8, fontWeight: 500 }}
+            >
               Priority
             </label>
             <Tag
@@ -195,13 +210,16 @@ export default function TaskDetailPage() {
                   : "blue"
               }
             >
-              {priorityOptions.find((p) => p.value === task.priority)?.label || "Medium"}
+              {priorityOptions.find((p) => p.value === task.priority)?.label ||
+                "Medium"}
             </Tag>
           </div>
 
           {/* Tags/Labels */}
           <div>
-            <label style={{ display: "block", marginBottom: 8, fontWeight: 500 }}>
+            <label
+              style={{ display: "block", marginBottom: 8, fontWeight: 500 }}
+            >
               Tags / Labels
             </label>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -226,7 +244,9 @@ export default function TaskDetailPage() {
             <Card size="small" style={{ borderRadius: 4, textAlign: "center" }}>
               <div style={{ fontSize: 14, color: "#666" }}>Created</div>
               <div style={{ marginTop: 4, fontSize: 12 }}>
-                {task.createdAt ? new Date(task.createdAt).toLocaleDateString() : "N/A"}
+                {task.createdAt
+                  ? new Date(task.createdAt).toLocaleDateString()
+                  : "N/A"}
               </div>
             </Card>
           </Col>
@@ -234,7 +254,9 @@ export default function TaskDetailPage() {
             <Card size="small" style={{ borderRadius: 4, textAlign: "center" }}>
               <div style={{ fontSize: 14, color: "#666" }}>Last Updated</div>
               <div style={{ marginTop: 4, fontSize: 12 }}>
-                {task.updatedAt ? new Date(task.updatedAt).toLocaleDateString() : "N/A"}
+                {task.updatedAt
+                  ? new Date(task.updatedAt).toLocaleDateString()
+                  : "N/A"}
               </div>
             </Card>
           </Col>
@@ -243,7 +265,8 @@ export default function TaskDetailPage() {
               <div style={{ fontSize: 14, color: "#666" }}>Status</div>
               <div style={{ marginTop: 4 }}>
                 <Tag color={task.status === "done" ? "green" : "blue"}>
-                  {statusOptions.find((s) => s.value === task.status)?.label || "Todo"}
+                  {statusOptions.find((s) => s.value === task.status)?.label ||
+                    "Todo"}
                 </Tag>
               </div>
             </Card>
@@ -261,7 +284,8 @@ export default function TaskDetailPage() {
                       : "blue"
                   }
                 >
-                  {priorityOptions.find((p) => p.value === task.priority)?.label || "Medium"}
+                  {priorityOptions.find((p) => p.value === task.priority)
+                    ?.label || "Medium"}
                 </Tag>
               </div>
             </Card>
@@ -271,7 +295,9 @@ export default function TaskDetailPage() {
 
       {/* Checklist - Display Only */}
       <Card
-        title={`Checklist (${(task.subtasks || []).filter((s) => s.completed).length}/${(task.subtasks || []).length})`}
+        title={`Checklist (${
+          (task.subtasks || []).filter((s) => s.completed).length
+        }/${(task.subtasks || []).length})`}
         style={{ marginTop: 16 }}
       >
         {task.subtasks && task.subtasks.length > 0 ? (
@@ -279,7 +305,9 @@ export default function TaskDetailPage() {
             <div style={{ marginBottom: 16, fontSize: 12, color: "#666" }}>
               Progress:{" "}
               {Math.round(
-                ((task.subtasks.filter((s) => s.completed).length / task.subtasks.length) * 100)
+                (task.subtasks.filter((s) => s.completed).length /
+                  task.subtasks.length) *
+                  100
               )}
               %
             </div>
@@ -299,7 +327,9 @@ export default function TaskDetailPage() {
                   <span
                     style={{
                       flex: 1,
-                      textDecoration: subtask.completed ? "line-through" : "none",
+                      textDecoration: subtask.completed
+                        ? "line-through"
+                        : "none",
                       opacity: subtask.completed ? 0.6 : 1,
                     }}
                   >
@@ -318,7 +348,13 @@ export default function TaskDetailPage() {
       {/* Comments - Display Only */}
       <Card title="Comments" style={{ marginTop: 16 }}>
         {/* Add comment button in card header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <div />
           <Button type="link" onClick={() => setIsModalVisible(true)}>
             Add Comment
@@ -353,7 +389,9 @@ export default function TaskDetailPage() {
                     </div>
                   }
                 />
-                <div style={{ padding: "8px 0", width: "100%" }}>{comment.text}</div>
+                <div style={{ padding: "8px 0", width: "100%" }}>
+                  {comment.text}
+                </div>
               </List.Item>
             )}
           />
@@ -377,7 +415,8 @@ export default function TaskDetailPage() {
                 return;
               }
               setModalLoading(true);
-              const author = (values.author && values.author.trim()) || "Anonymous";
+              const author =
+                (values.author && values.author.trim()) || "Anonymous";
               const newComment = {
                 id: Date.now().toString(),
                 author,
@@ -410,7 +449,11 @@ export default function TaskDetailPage() {
             <Form.Item name="author" label="Name (optional)">
               <Input placeholder="Your name" />
             </Form.Item>
-            <Form.Item name="text" label="Comment" rules={[{ required: true, message: 'Please enter a comment' }]}> 
+            <Form.Item
+              name="text"
+              label="Comment"
+              rules={[{ required: true, message: "Please enter a comment" }]}
+            >
               <Input.TextArea rows={4} />
             </Form.Item>
           </Form>
@@ -425,7 +468,9 @@ export default function TaskDetailPage() {
             renderItem={(attachment) => (
               <List.Item key={attachment.id}>
                 <div>
-                  <div style={{ fontWeight: 500 }}>{attachment.filename || "File"}</div>
+                  <div style={{ fontWeight: 500 }}>
+                    {attachment.filename || "File"}
+                  </div>
                   <div style={{ fontSize: 12, color: "#666" }}>
                     {attachment.filesize
                       ? `${(attachment.filesize / 1024).toFixed(2)} KB`

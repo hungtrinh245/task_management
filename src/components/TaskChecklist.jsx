@@ -2,7 +2,12 @@ import { Card, Checkbox, Button, Input, Space, List, Empty } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-export default function TaskChecklist({ subtasks = [], onAddSubtask, onToggleSubtask, onDeleteSubtask }) {
+export default function TaskChecklist({
+  subtasks = [],
+  onAddSubtask,
+  onToggleSubtask,
+  onDeleteSubtask,
+}) {
   const [newSubtaskTitle, setNewSubtaskTitle] = useState("");
 
   const handleAddSubtask = () => {
@@ -13,10 +18,16 @@ export default function TaskChecklist({ subtasks = [], onAddSubtask, onToggleSub
   };
 
   const completedCount = subtasks.filter((s) => s.completed).length;
-  const progress = subtasks.length > 0 ? Math.round((completedCount / subtasks.length) * 100) : 0;
+  const progress =
+    subtasks.length > 0
+      ? Math.round((completedCount / subtasks.length) * 100)
+      : 0;
 
   return (
-    <Card title={`Checklist (${completedCount}/${subtasks.length})`} style={{ marginTop: 16 }}>
+    <Card
+      title={`Checklist (${completedCount}/${subtasks.length})`}
+      style={{ marginTop: 16 }}
+    >
       {subtasks.length > 0 && (
         <div style={{ marginBottom: 16, fontSize: 12, color: "#666" }}>
           Progress: {progress}%

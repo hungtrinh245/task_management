@@ -15,7 +15,8 @@ const LoginPage = () => {
         window.location.href = "/";
       }
     } catch (err) {
-      const apiMessage = err?.response?.data?.message || err?.message || "Lỗi khi đăng nhập";
+      const apiMessage =
+        err?.response?.data?.message || err?.message || "Lỗi khi đăng nhập";
       message.error(apiMessage);
     }
   };

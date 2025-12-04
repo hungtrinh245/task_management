@@ -10,10 +10,7 @@
       "completed": false,
       "status": "inprogress",
       "priority": "medium",
-      "tags": [
-        "feature",
-        "learning"
-      ],
+      "tags": ["feature", "learning"],
       "createdAt": "2025-12-01T10:00:00Z",
       "updatedAt": "2025-12-04T04:18:06.215Z",
       "attachments": [],
@@ -59,10 +56,7 @@
       "completed": true,
       "status": "done",
       "priority": "high",
-      "tags": [
-        "setup",
-        "design"
-      ],
+      "tags": ["setup", "design"],
       "createdAt": "2025-11-25T08:30:00Z",
       "updatedAt": "2025-12-02T14:20:00Z",
       "dueDate": "2025-12-01T00:00:00Z",
@@ -80,10 +74,7 @@
       "completed": false,
       "status": "todo",
       "priority": "medium",
-      "tags": [
-        "feature",
-        "ui"
-      ],
+      "tags": ["feature", "ui"],
       "createdAt": "2025-12-02T09:00:00Z",
       "updatedAt": "2025-12-04T04:09:39.339Z",
       "attachments": [],
@@ -98,9 +89,7 @@
       "dueDate": "2025-12-05",
       "status": "inprogress",
       "priority": "medium",
-      "tags": [
-        "bug"
-      ],
+      "tags": ["bug"],
       "subtasks": [
         {
           "id": "1764833697916",

@@ -15,7 +15,8 @@ const RegisterPage = () => {
       navigate("/auth/login");
     } catch (err) {
       // Extract message if provided by API
-      const apiMessage = err?.response?.data?.message || err?.message || "Lỗi khi đăng ký";
+      const apiMessage =
+        err?.response?.data?.message || err?.message || "Lỗi khi đăng ký";
       message.error(apiMessage);
     }
   };
