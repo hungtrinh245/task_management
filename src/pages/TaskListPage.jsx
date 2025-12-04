@@ -59,10 +59,14 @@ export default function TaskListPage() {
         director.includes(q) ||
         genre.includes(q);
 
+      const isOverdue =
+        task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
+
       const matchesStatus =
         filterStatus === "all" ||
         (filterStatus === "completed" && task.completed) ||
-        (filterStatus === "pending" && !task.completed);
+        (filterStatus === "pending" && !task.completed && !isOverdue) ||
+        (filterStatus === "overdue" && isOverdue) ;
 
       return matchesSearch && matchesStatus;
     });
@@ -150,11 +154,12 @@ export default function TaskListPage() {
       title: "Status",
       dataIndex: "completed",
       key: "status",
-      render: (completed) => (
-        <Tag color={completed ? "green" : "orange"}>
-          {completed ? "✓ Completed" : "Pending"}
-        </Tag>
-      ),
+      render: (_, record) => {
+        if (record.completed) return <Tag color="green">✓ Completed</Tag>;
+        const overdue = record.dueDate && new Date(record.dueDate) < new Date() && !record.completed;
+        if (overdue) return <Tag color="red">Overdue</Tag>;
+        return <Tag color="orange">Pending</Tag>;
+      },
     },
     {
       title: "Actions",
@@ -251,6 +256,7 @@ export default function TaskListPage() {
               { label: "All Status", value: "all" },
               { label: "Pending", value: "pending" },
               { label: "Completed", value: "completed" },
+              { label: "Overdue", value: "overdue" },
             ]}
           />
         </Space>

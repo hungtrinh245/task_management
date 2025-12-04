@@ -54,8 +54,11 @@ export default function DashboardPage() {
   }
 
   const totalTasks = tasks.length;
+  const now = new Date();
   const completedTasks = tasks.filter((t) => t.completed).length;
-  const pendingTasks = totalTasks - completedTasks;
+  const isTaskOverdue = (t) => t.dueDate && new Date(t.dueDate) < now && !t.completed;
+  const overdueTasks = tasks.filter((t) => isTaskOverdue(t)).length;
+  const pendingTasks = tasks.filter((t) => !t.completed && !isTaskOverdue(t)).length;
   const completionRate =
     totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
@@ -95,13 +98,14 @@ export default function DashboardPage() {
     },
     {
       title: "Status",
-      dataIndex: "completed",
+      dataIndex: "status",
       key: "status",
-      render: (completed) => (
-        <Tag color={completed ? "green" : "orange"}>
-          {completed ? "Completed" : "Pending"}
-        </Tag>
-      ),
+      render: (_, record) => {
+        if (record.completed) return <Tag color="green">Completed</Tag>;
+        const overdue = record.dueDate && new Date(record.dueDate) < now && !record.completed;
+        if (overdue) return <Tag color="red">Overdue</Tag>;
+        return <Tag color="orange">Pending</Tag>;
+      },
     },
     {
       title: "Actions",
@@ -169,10 +173,10 @@ export default function DashboardPage() {
         <Col xs={24} sm={12} lg={6}>
           <Card bordered={false} style={{ borderRadius: 8 }}>
             <Statistic
-              title="Completion Rate"
-              value={completionRate}
-              suffix="%"
-              valueStyle={{ color: "#722ed1" }}
+              title="Overdue"
+              value={overdueTasks}
+              prefix={<ClockCircleOutlined />}
+              valueStyle={{ color: "#f5222d" }}
             />
           </Card>
         </Col>
@@ -235,6 +239,10 @@ export default function DashboardPage() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>Pending:</span>
                 <strong style={{ color: "#faad14" }}>{pendingTasks}</strong>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span>Overdue:</span>
+                <strong style={{ color: "#f5222d" }}>{overdueTasks}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>Completion:</span>

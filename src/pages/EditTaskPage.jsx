@@ -27,6 +27,7 @@ const statusOptions = [
   { label: "⏳ In Progress", value: "inprogress" },
   { label: "🔍 Review", value: "review" },
   { label: "✅ Complete", value: "done" },
+  { label: "⚠️ Quá hạn", value: "overdue" },
 ];
 
 const priorityOptions = [
@@ -213,6 +214,11 @@ export default function EditTaskPage() {
         }
       } else {
         completed = status === "done";
+      }
+
+      // If due date is in the past and task not completed, mark as overdue
+      if (!completed && values.dueDate && new Date(values.dueDate) < new Date()) {
+        status = "overdue";
       }
 
       await editTask(id, {

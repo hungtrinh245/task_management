@@ -1,22 +1,17 @@
 {
   "tasks": [
     {
-      "id": "1",
       "title": "Learn React Context",
       "director": "Dev",
       "genre": "Development",
       "description": "Understand how to use React Context for state management",
       "dueDate": "2025-12-31",
-      "completed": false,
-      "status": "inprogress",
+      "status": "done",
       "priority": "medium",
       "tags": [
         "feature",
         "learning"
       ],
-      "createdAt": "2025-12-01T10:00:00Z",
-      "updatedAt": "2025-12-04T08:40:13.779Z",
-      "attachments": [],
       "subtasks": [
         {
           "id": "s1",
@@ -26,7 +21,7 @@
         {
           "id": "s2",
           "title": "Build example app",
-          "completed": false
+          "completed": true
         }
       ],
       "comments": [
@@ -48,7 +43,11 @@
           "text": "This is a test comment from automation",
           "createdAt": "2025-12-04T14:41:52.4723027+07:00"
         }
-      ]
+      ],
+      "attachments": [],
+      "completed": false,
+      "updatedAt": "2025-12-04T10:07:44.564Z",
+      "id": "1"
     },
     {
       "id": "2",
@@ -158,6 +157,44 @@
       "completed": true,
       "updatedAt": "2025-12-04T09:17:54.265Z",
       "id": "0f85"
+    },
+    {
+      "id": "e606",
+      "title": "Development add feature new ",
+      "director": "Dev B",
+      "genre": "Development",
+      "description": "Add feature authentication. ",
+      "dueDate": "2025-12-06",
+      "status": "inprogress",
+      "priority": "medium",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdAt": "2025-12-04T09:37:51.751Z",
+      "updatedAt": "2025-12-04T09:37:51.751Z"
+    },
+    {
+      "id": "ea43",
+      "title": "trhtyh",
+      "director": "yythyj",
+      "genre": "Development",
+      "description": "yuyjyj",
+      "dueDate": "2025-12-03",
+      "status": "overdue",
+      "priority": "medium",
+      "tags": [
+        "bug"
+      ],
+      "subtasks": [],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdAt": "2025-12-04T10:23:03.739Z",
+      "updatedAt": "2025-12-04T10:23:03.739Z"
     }
   ],
   "users": [
