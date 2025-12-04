@@ -1,6 +1,6 @@
-import apiClient from './apiClient';
+import apiClient from "./apiClient";
 
-const BASE_ENDPOINT = '/tasks';
+const BASE_ENDPOINT = "/tasks";
 
 const TaskService = {
   /**
@@ -14,7 +14,7 @@ const TaskService = {
       // json-server trả mảng trực tiếp
       return Array.isArray(response) ? response : response.data || [];
     } catch (error) {
-      console.error('TaskService.getTasks error:', error);
+      console.error("TaskService.getTasks error:", error);
       throw error;
     }
   },
@@ -49,7 +49,7 @@ const TaskService = {
       });
       return response;
     } catch (error) {
-      console.error('TaskService.createTask error:', error);
+      console.error("TaskService.createTask error:", error);
       throw error;
     }
   },

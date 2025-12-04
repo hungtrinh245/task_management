@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import TaskService from '../services/TaskService';
-import { TaskContext } from './TaskContextDefinition';
+import React, { useState, useCallback, useMemo, useEffect } from "react";
+import TaskService from "../services/TaskService";
+import { TaskContext } from "./TaskContextDefinition";
 
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
@@ -18,9 +18,10 @@ export const TaskProvider = ({ children }) => {
       const taskList = Array.isArray(response) ? response : response.data || [];
       setTasks(taskList);
     } catch (err) {
-      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi tải tasks';
+      const errorMsg =
+        err.response?.data?.message || err.message || "Lỗi khi tải tasks";
       setError(errorMsg);
-      console.error('fetchTasks error:', err);
+      console.error("fetchTasks error:", err);
     } finally {
       setLoading(false);
     }
@@ -37,9 +38,10 @@ export const TaskProvider = ({ children }) => {
       setTasks((prevTasks) => [...prevTasks, newTask]);
       return newTask;
     } catch (err) {
-      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi tạo task';
+      const errorMsg =
+        err.response?.data?.message || err.message || "Lỗi khi tạo task";
       setError(errorMsg);
-      console.error('addTask error:', err);
+      console.error("addTask error:", err);
       throw err;
     } finally {
       setLoading(false);
@@ -59,9 +61,10 @@ export const TaskProvider = ({ children }) => {
       );
       return updatedTask;
     } catch (err) {
-      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi cập nhật task';
+      const errorMsg =
+        err.response?.data?.message || err.message || "Lỗi khi cập nhật task";
       setError(errorMsg);
-      console.error('editTask error:', err);
+      console.error("editTask error:", err);
       throw err;
     } finally {
       setLoading(false);
@@ -78,9 +81,10 @@ export const TaskProvider = ({ children }) => {
       await TaskService.deleteTask(id);
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
     } catch (err) {
-      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi xoá task';
+      const errorMsg =
+        err.response?.data?.message || err.message || "Lỗi khi xoá task";
       setError(errorMsg);
-      console.error('deleteTask error:', err);
+      console.error("deleteTask error:", err);
       throw err;
     } finally {
       setLoading(false);
@@ -99,9 +103,10 @@ export const TaskProvider = ({ children }) => {
         prevTasks.map((task) => (task.id === id ? updatedTask : task))
       );
     } catch (err) {
-      const errorMsg = err.response?.data?.message || err.message || 'Lỗi khi toggle task';
+      const errorMsg =
+        err.response?.data?.message || err.message || "Lỗi khi toggle task";
       setError(errorMsg);
-      console.error('toggleTask error:', err);
+      console.error("toggleTask error:", err);
       throw err;
     } finally {
       setLoading(false);
@@ -111,10 +116,13 @@ export const TaskProvider = ({ children }) => {
   /**
    * Lấy task từ state dựa trên ID (synchronous - từ state đã load)
    */
-  const getTaskById = useCallback((id) => {
-    const taskId = String(id); // Chuyển về string để so sánh
-    return tasks.find((task) => String(task.id) === taskId);
-  }, [tasks]);
+  const getTaskById = useCallback(
+    (id) => {
+      const taskId = String(id); // Chuyển về string để so sánh
+      return tasks.find((task) => String(task.id) === taskId);
+    },
+    [tasks]
+  );
 
   /**
    * Fetch task từ API (async - dùng khi cần đồng bộ)
@@ -124,7 +132,7 @@ export const TaskProvider = ({ children }) => {
       const task = await TaskService.getTaskById(id);
       return task;
     } catch (err) {
-      console.error('fetchTaskById error:', err);
+      console.error("fetchTaskById error:", err);
       throw err;
     }
   }, []);
@@ -143,7 +151,18 @@ export const TaskProvider = ({ children }) => {
       getTaskById,
       fetchTaskById,
     }),
-    [tasks, loading, error, fetchTasks, addTask, editTask, deleteTask, toggleTask, getTaskById, fetchTaskById]
+    [
+      tasks,
+      loading,
+      error,
+      fetchTasks,
+      addTask,
+      editTask,
+      deleteTask,
+      toggleTask,
+      getTaskById,
+      fetchTaskById,
+    ]
   );
 
   // Fetch danh sách tasks từ API khi component mount
@@ -152,8 +171,6 @@ export const TaskProvider = ({ children }) => {
   }, [fetchTasks]);
 
   return (
-    <TaskContext.Provider value={contextValue}>
-      {children}
-    </TaskContext.Provider>
+    <TaskContext.Provider value={contextValue}>{children}</TaskContext.Provider>
   );
 };

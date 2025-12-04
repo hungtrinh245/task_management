@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Tạo instance axios với cấu hình mặc định
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000',
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:4000",
   timeout: 10000, // timeout 10 giây
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -36,14 +36,17 @@ apiClient.interceptors.response.use(
     if (error.response) {
       // Server trả về status code lỗi
       const { status, data } = error.response;
-      const errorMessage = data?.message || data?.error || 'Lỗi từ server';
+      const errorMessage = data?.message || data?.error || "Lỗi từ server";
       console.error(`[API Error ${status}]:`, errorMessage);
     } else if (error.request) {
       // Request được gửi nhưng không nhận response
-      console.error('[API Error] Không nhận response từ server:', error.message);
+      console.error(
+        "[API Error] Không nhận response từ server:",
+        error.message
+      );
     } else {
       // Lỗi khi setup request
-      console.error('[API Error] Setup request:', error.message);
+      console.error("[API Error] Setup request:", error.message);
     }
     return Promise.reject(error);
   }

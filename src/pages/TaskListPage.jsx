@@ -76,7 +76,14 @@ export default function TaskListPage() {
   // Hiển thị loading khi đang lấy dữ liệu
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+        }}
+      >
         <Spin size="large" tip="Loading tasks..." />
       </div>
     );
