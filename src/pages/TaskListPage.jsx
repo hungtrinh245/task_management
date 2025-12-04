@@ -66,7 +66,7 @@ export default function TaskListPage() {
         filterStatus === "all" ||
         (filterStatus === "completed" && task.completed) ||
         (filterStatus === "pending" && !task.completed && !isOverdue) ||
-        (filterStatus === "overdue" && isOverdue) ;
+        (filterStatus === "overdue" && isOverdue);
 
       return matchesSearch && matchesStatus;
     });
@@ -156,7 +156,10 @@ export default function TaskListPage() {
       key: "status",
       render: (_, record) => {
         if (record.completed) return <Tag color="green">✓ Completed</Tag>;
-        const overdue = record.dueDate && new Date(record.dueDate) < new Date() && !record.completed;
+        const overdue =
+          record.dueDate &&
+          new Date(record.dueDate) < new Date() &&
+          !record.completed;
         if (overdue) return <Tag color="red">Overdue</Tag>;
         return <Tag color="orange">Pending</Tag>;
       },

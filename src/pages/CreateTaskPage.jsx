@@ -129,7 +129,11 @@ export default function CreateTaskPage() {
       }
 
       // If due date is in the past and task not completed, mark as overdue
-      if (!completed && values.dueDate && new Date(values.dueDate) < new Date()) {
+      if (
+        !completed &&
+        values.dueDate &&
+        new Date(values.dueDate) < new Date()
+      ) {
         status = "overdue";
       }
 

@@ -181,13 +181,13 @@ export default function TaskDetailPage() {
             </label>
             <Tag
               color={
-                  task.status === "done"
-                    ? "green"
-                    : task.status === "overdue"
-                    ? "red"
-                    : task.status === "review"
-                    ? "orange"
-                    : "blue"
+                task.status === "done"
+                  ? "green"
+                  : task.status === "overdue"
+                  ? "red"
+                  : task.status === "review"
+                  ? "orange"
+                  : "blue"
               }
             >
               {statusOptions.find((s) => s.value === task.status)?.label ||
