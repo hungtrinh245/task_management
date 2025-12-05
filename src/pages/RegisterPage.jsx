@@ -1,10 +1,11 @@
 import React from "react";
-import { Form, Input, Button, Card, message } from "antd";
+import { Form, Input, Button, Card, message, Select, Alert } from "antd";
 import { useNavigate, Link } from "react-router-dom";
 import AuthService from "../services/AuthService";
 
-// RegisterPage: collects name, email and password
+// RegisterPage: collects name, email, password and role
 // - Password is hashed client-side before being sent (for local json-server storage)
+// - Role determines access level: manager (can create/assign tasks) or employee (can view own tasks)
 // - On success it redirects the user to the login page
 
 const RegisterPage = () => {
@@ -12,9 +13,9 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
-    const { name, email, password } = values;
+    const { name, email, password, role } = values;
     try {
-      await AuthService.register({ name, email, password });
+      await AuthService.register({ name, email, password, role });
       message.success("Đăng ký thành công. Vui lòng đăng nhập.");
       navigate("/auth/login");
     } catch (err) {
@@ -28,6 +29,13 @@ const RegisterPage = () => {
   return (
     <div className="flex items-center justify-center h-full p-6">
       <Card title="Tạo tài khoản" style={{ width: 420 }}>
+        <Alert
+          message="Chọn role phù hợp"
+          description="Manager: Có quyền tạo và gán task. Employee: Xem và cập nhật task của mình."
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
             label="Họ và tên"
@@ -80,6 +88,22 @@ const RegisterPage = () => {
             <Input.Password placeholder="Nhập lại mật khẩu" />
           </Form.Item>
 
+          <Form.Item
+            label="Vai trò (Role)"
+            name="role"
+            rules={[{ required: true, message: "Vui lòng chọn vai trò" }]}
+            initialValue="employee"
+          >
+            <Select>
+              <Select.Option value="manager">
+                👔 Manager - Tạo & gán task
+              </Select.Option>
+              <Select.Option value="employee">
+                👤 Employee - Xem & cập nhật task
+              </Select.Option>
+            </Select>
+          </Form.Item>
+
           <Form.Item>
             <Button type="primary" htmlType="submit" block>
               Đăng ký
@@ -97,3 +121,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+

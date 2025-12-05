@@ -17,9 +17,20 @@ import {
   ClockCircleOutlined,
   FileTextOutlined,
   DeleteOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 import { useTasks } from "../hooks/useTasks";
 import { Link } from "react-router-dom";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 export default function DashboardPage() {
   const { tasks, loading, error, deleteTask } = useTasks();
@@ -70,6 +81,29 @@ export default function DashboardPage() {
     .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
     .slice(0, 5);
 
+  // Compute task distribution by assignee
+  const tasksByAssignee = tasks.reduce((acc, task) => {
+    const assignee = task.assignee || "Unassigned";
+    if (!acc[assignee]) {
+      acc[assignee] = { assignee, total: 0, completed: 0, pending: 0 };
+    }
+    acc[assignee].total += 1;
+    if (task.completed) {
+      acc[assignee].completed += 1;
+    } else {
+      acc[assignee].pending += 1;
+    }
+    return acc;
+  }, {});
+
+  // Convert to array for chart
+  const assigneeChartData = Object.values(tasksByAssignee).map((item) => ({
+    name: item.assignee,
+    "Total": item.total,
+    "Completed": item.completed,
+    "Pending": item.pending,
+  }));
+
   const columns = [
     {
       title: "Title",
@@ -98,6 +132,14 @@ export default function DashboardPage() {
       title: "Due Date",
       dataIndex: "dueDate",
       key: "dueDate",
+    },
+    {
+      title: "Assigned To",
+      dataIndex: "assignee",
+      key: "assignee",
+      render: (assignee) => (
+        <Tag color="purple">{assignee || "Not assigned"}</Tag>
+      ),
     },
     {
       title: "Status",
@@ -200,6 +242,27 @@ export default function DashboardPage() {
         <p style={{ marginTop: 12, color: "#666" }}>
           {completedTasks} of {totalTasks} tasks completed
         </p>
+      </Card>
+
+      {/* Task Distribution by Assignee Chart */}
+      <Card style={{ marginBottom: 24, borderRadius: 8 }}>
+        <h3 style={{ marginBottom: 16 }}>📊 Task Distribution by Assignee</h3>
+        {assigneeChartData.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={assigneeChartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Total" fill="#1890ff" />
+              <Bar dataKey="Completed" fill="#52c41a" />
+              <Bar dataKey="Pending" fill="#faad14" />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <Empty description="No assignee data" />
+        )}
       </Card>
 
       {/* Upcoming Tasks */}

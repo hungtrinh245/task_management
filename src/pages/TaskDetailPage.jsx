@@ -142,6 +142,10 @@ export default function TaskDetailPage() {
             <Tag color="blue">{task.director || "Not assigned"}</Tag>
           </Descriptions.Item>
 
+          <Descriptions.Item label="Assigned To">
+            <Tag color="purple">{task.assignee || "Not assigned"}</Tag>
+          </Descriptions.Item>
+
           <Descriptions.Item label="Genre/Category">
             <Tag color="cyan">{task.genre || "Not set"}</Tag>
           </Descriptions.Item>

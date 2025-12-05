@@ -46,6 +46,8 @@
       ],
       "attachments": [],
       "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
       "updatedAt": "2025-12-04T10:07:44.564Z",
       "id": "1"
     },
@@ -62,6 +64,8 @@
         "setup",
         "design"
       ],
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
       "createdAt": "2025-11-25T08:30:00Z",
       "updatedAt": "2025-12-02T14:20:00Z",
       "dueDate": "2025-12-01T00:00:00Z",
@@ -83,6 +87,8 @@
         "feature",
         "ui"
       ],
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "pending",
       "createdAt": "2025-12-02T09:00:00Z",
       "updatedAt": "2025-12-04T04:09:39.339Z",
       "attachments": [],
@@ -203,6 +209,7 @@
       "name": "trịnh quốc hưng",
       "email": "trinhquochung222005@gmail.com",
       "password": "123456",
+      "role": "manager",
       "createdAt": "2025-12-04T08:10:44.716Z"
     },
     {
@@ -210,6 +217,7 @@
       "name": "phạm minh quang",
       "email": "quang@gmail.com",
       "password": "$2b$10$ssau5YdLSbPXhW1b.ljhZeI5WhCIwASP0lF83AofLnqQWTvhAQc2q",
+      "role": "employee",
       "createdAt": "2025-12-04T08:23:22.226Z"
     }
   ],

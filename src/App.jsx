@@ -3,6 +3,7 @@ import MainLayout from "./components/layouts/MainLayout";
 import { TaskProvider } from "./contexts/TaskContext";
 import DashboardPage from "./pages/DashboardPage";
 import TaskListPage from "./pages/TaskListPage";
+import MyTasksPage from "./pages/MyTasksPage";
 import CreateTaskPage from "./pages/CreateTaskPage";
 import TaskDetailPage from "./pages/TaskDetailPage";
 import EditTaskPage from "./pages/EditTaskPage";
@@ -31,6 +32,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <TaskListPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/my-tasks"
+              element={
+                <PrivateRoute>
+                  <MyTasksPage />
                 </PrivateRoute>
               }
             />

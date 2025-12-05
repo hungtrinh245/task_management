@@ -14,19 +14,42 @@ import {
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useTasks } from "../hooks/useTasks";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AuthService from "../services/AuthService";
+import UserService from "../services/UserService";
 
 export default function CreateTaskPage() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { addTask } = useTasks();
   const [loading, setLoading] = useState(false);
+  const [assigneeOptions, setAssigneeOptions] = useState([]);
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtaskTitle, setNewSubtaskTitle] = useState("");
   const [comments, setComments] = useState([]);
   const [newCommentText, setNewCommentText] = useState("");
   const [newCommentAuthor, setNewCommentAuthor] = useState("");
   const [attachments, setAttachments] = useState([]);
+
+  // Get current logged-in user
+  const currentUser = AuthService.getUser();
+  // Use user's name if available; fallback to email or empty string
+  const currentUserName = currentUser?.name || currentUser?.email || "";
+  const currentUserRole = currentUser?.role || "employee"; // Default role is employee
+  const isManager = currentUserRole === "manager";
+
+  // Load assignee options from database
+  useEffect(() => {
+    const loadAssignees = async () => {
+      const users = await UserService.getAllUsers();
+      const options = users.map((user) => ({
+        label: `👤 ${user.name}`,
+        value: user.name,
+      }));
+      setAssigneeOptions(options);
+    };
+    loadAssignees();
+  }, []);
 
   const genreOptions = [
     { label: "💻 Development", value: "Development" },
@@ -145,11 +168,14 @@ export default function CreateTaskPage() {
         dueDate: values.dueDate || "",
         status,
         priority: values.priority || "medium",
+        assignee: values.assignee || currentUserName, // Auto-assign to self if not manager
         tags: values.tags || [],
         subtasks,
         comments,
         attachments,
         completed,
+        createdBy: currentUserName, // Track who created this task
+        approvalStatus: isManager ? "approved" : "pending", // Manager tasks auto-approved, employee tasks pending
       });
 
       message.success("Task created successfully!");
@@ -177,6 +203,9 @@ export default function CreateTaskPage() {
           layout="vertical"
           onFinish={onFinish}
           autoComplete="off"
+          initialValues={{
+            assignee: currentUserName,
+          }}
         >
           <Form.Item
             label="Task Title"
@@ -249,6 +278,21 @@ export default function CreateTaskPage() {
               size="large"
             />
           </Form.Item>
+
+          {isManager ? (
+            <Form.Item label="👔 Assign To (Manager only)" name="assignee">
+              <Select
+                placeholder="Select person to assign"
+                options={assigneeOptions}
+                allowClear
+                size="large"
+              />
+            </Form.Item>
+          ) : (
+            <Form.Item hidden name="assignee" initialValue={currentUserName}>
+              <Input type="hidden" />
+            </Form.Item>
+          )}
 
           <Form.Item label="Tags / Labels" name="tags">
             <Select

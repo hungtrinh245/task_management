@@ -18,6 +18,7 @@ const AuthService = {
       name: payload.name,
       email: payload.email,
       password: hashedPassword, // Store hashed password, not plain text
+      role: payload.role || "employee", // Default role is employee
       createdAt: new Date().toISOString(),
     };
 

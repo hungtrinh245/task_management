@@ -5,6 +5,7 @@ import {
   PlusOutlined,
   LoginOutlined,
   ArrowRightOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
@@ -51,7 +52,12 @@ export default function MainLayout({ children }) {
     {
       key: "/tasks",
       icon: <UnorderedListOutlined />,
-      label: <Link to="/tasks">Tasks</Link>,
+      label: <Link to="/tasks">All Tasks</Link>,
+    },
+    {
+      key: "/my-tasks",
+      icon: <UserOutlined />,
+      label: <Link to="/my-tasks">My Tasks</Link>,
     },
     {
       key: "/tasks/create",
@@ -74,10 +80,16 @@ export default function MainLayout({ children }) {
     });
   }
 
-  const selectedKey =
-    menuItems.find((item) =>
-      location.pathname.includes(item.key.replace("/", ""))
-    )?.key || "/";
+  const selectedKey = (() => {
+    // Exact match: /my-tasks
+    if (location.pathname === "/my-tasks") return "/my-tasks";
+    // Exact match: /tasks/create, /tasks/:id, /tasks/edit/:id
+    if (location.pathname.startsWith("/tasks")) return "/tasks";
+    // Exact match: /
+    if (location.pathname === "/") return "/";
+    // Default
+    return "/";
+  })();
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

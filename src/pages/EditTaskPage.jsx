@@ -21,6 +21,8 @@ import {
 import { useTasks } from "../hooks/useTasks";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import AuthService from "../services/AuthService";
+import UserService from "../services/UserService";
 
 const statusOptions = [
   { label: "📋 Todo", value: "todo" },
@@ -52,12 +54,19 @@ export default function EditTaskPage() {
   const { id } = useParams();
   const { getTaskById, editTask } = useTasks();
   const [loading, setLoading] = useState(false);
+  const [assigneeOptions, setAssigneeOptions] = useState([]);
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtaskTitle, setNewSubtaskTitle] = useState("");
   const [comments, setComments] = useState([]);
   const [newCommentText, setNewCommentText] = useState("");
   const [newCommentAuthor, setNewCommentAuthor] = useState("");
   const [attachments, setAttachments] = useState([]);
+
+  // Get current logged-in user
+  const currentUser = AuthService.getUser();
+  const currentUserRole = currentUser?.role || "employee"; // Default role is employee
+  const isManager = currentUserRole === "manager";
+  const currentUserName = currentUser?.name || currentUser?.email || "";
 
   const task = getTaskById(id);
 
@@ -67,6 +76,19 @@ export default function EditTaskPage() {
     { label: "🧪 Testing", value: "Testing" },
     { label: "📚 Documentation", value: "Documentation" },
   ];
+
+  // Load assignee options from database
+  useEffect(() => {
+    const loadAssignees = async () => {
+      const users = await UserService.getAllUsers();
+      const options = users.map((user) => ({
+        label: `👤 ${user.name}`,
+        value: user.name,
+      }));
+      setAssigneeOptions(options);
+    };
+    loadAssignees();
+  }, []);
 
   useEffect(() => {
     if (task) {
@@ -78,6 +100,7 @@ export default function EditTaskPage() {
         dueDate: task.dueDate || "",
         status: task.status || "todo",
         priority: task.priority || "medium",
+        assignee: task.assignee || "",
         tags: task.tags || [],
       });
       setSubtasks(task.subtasks || []);
@@ -233,11 +256,14 @@ export default function EditTaskPage() {
         dueDate: values.dueDate || "",
         status,
         priority: values.priority || "medium",
+        assignee: isManager ? (values.assignee || "") : task.assignee, // Only manager can reassign
         tags: values.tags || [],
         subtasks,
         comments,
         attachments,
         completed,
+        createdBy: task.createdBy || currentUserName, // Keep original creator
+        approvalStatus: task.approvalStatus || "pending", // Keep original approval status
       });
 
       message.success("Task updated successfully!");
@@ -341,6 +367,32 @@ export default function EditTaskPage() {
               size="large"
             />
           </Form.Item>
+
+          {isManager ? (
+            <Form.Item label="👔 Assign To (Manager only)" name="assignee">
+              <Select
+                placeholder="Select person to assign"
+                options={assigneeOptions}
+                allowClear
+                size="large"
+              />
+            </Form.Item>
+          ) : (
+            <div
+              style={{
+                padding: "8px 12px",
+                background: "#f5f5f5",
+                borderRadius: 4,
+                marginBottom: 16,
+              }}
+            >
+              <strong>Assigned to:</strong> {task?.assignee || "Not assigned"}
+              <br />
+              <small style={{ color: "#999" }}>
+                (Employees cannot reassign tasks)
+              </small>
+            </div>
+          )}
 
           <Form.Item label="Tags / Labels" name="tags">
             <Select
