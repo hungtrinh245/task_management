@@ -11,12 +11,14 @@ import {
   Divider,
   List,
   Upload,
+  Alert,
 } from "antd";
 import {
   EditOutlined,
   ArrowLeftOutlined,
   DeleteOutlined,
   PlusOutlined,
+  LockOutlined,
 } from "@ant-design/icons";
 import { useTasks } from "../hooks/useTasks";
 import { useNavigate, useParams } from "react-router-dom";
@@ -292,22 +294,52 @@ export default function EditTaskPage() {
           onFinish={onFinish}
           autoComplete="off"
         >
+          {!isManager && (
+            <Alert
+              message="Limited Edit Permissions"
+              description="As an employee, you can only update the task status, subtasks, comments, and attachments. Other fields are managed by your manager."
+              type="info"
+              showIcon
+              style={{ marginBottom: 16 }}
+            />
+          )}
+
           {/* Basic Information Section */}
           <h4 style={{ marginTop: 0 }}>📋 Basic Information</h4>
 
           <Form.Item
-            label="Task Title"
+            label={
+              !isManager ? (
+                <span>
+                  Task Title <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                </span>
+              ) : (
+                "Task Title"
+              )
+            }
             name="title"
             rules={[
               { required: true, message: "Please enter task title" },
               { min: 3, message: "Title must be at least 3 characters" },
             ]}
           >
-            <Input placeholder="Enter task title" size="large" />
+            <Input
+              placeholder="Enter task title"
+              size="large"
+              disabled={!isManager}
+            />
           </Form.Item>
 
           <Form.Item
-            label="Director/Team"
+            label={
+              !isManager ? (
+                <span>
+                  Director/Team <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                </span>
+              ) : (
+                "Director/Team"
+              )
+            }
             name="director"
             rules={[
               { required: true, message: "Please enter director/team name" },
@@ -317,11 +349,23 @@ export default function EditTaskPage() {
               },
             ]}
           >
-            <Input placeholder="e.g., John Doe, Dev Team" size="large" />
+            <Input
+              placeholder="e.g., John Doe, Dev Team"
+              size="large"
+              disabled={!isManager}
+            />
           </Form.Item>
 
           <Form.Item
-            label="Genre/Category"
+            label={
+              !isManager ? (
+                <span>
+                  Genre/Category <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                </span>
+              ) : (
+                "Genre/Category"
+              )
+            }
             name="genre"
             rules={[{ required: true, message: "Please select a genre" }]}
           >
@@ -329,21 +373,46 @@ export default function EditTaskPage() {
               placeholder="Select genre"
               options={genreOptions}
               size="large"
+              disabled={!isManager}
             />
           </Form.Item>
 
-          <Form.Item label="Description" name="description">
+          <Form.Item
+            label={
+              !isManager ? (
+                <span>
+                  Description <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                </span>
+              ) : (
+                "Description"
+              )
+            }
+            name="description"
+          >
             <Input.TextArea
               placeholder="Enter task description (optional)"
               rows={4}
+              disabled={!isManager}
             />
           </Form.Item>
 
-          <Form.Item label="Due Date" name="dueDate">
+          <Form.Item
+            label={
+              !isManager ? (
+                <span>
+                  Due Date <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                </span>
+              ) : (
+                "Due Date"
+              )
+            }
+            name="dueDate"
+          >
             <Input
               type="date"
               placeholder="Select due date (optional)"
               size="large"
+              disabled={!isManager}
             />
           </Form.Item>
 
@@ -360,11 +429,23 @@ export default function EditTaskPage() {
             />
           </Form.Item>
 
-          <Form.Item label="Priority" name="priority">
+          <Form.Item
+            label={
+              !isManager ? (
+                <span>
+                  Priority <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                </span>
+              ) : (
+                "Priority"
+              )
+            }
+            name="priority"
+          >
             <Select
               placeholder="Select priority"
               options={priorityOptions}
               size="large"
+              disabled={!isManager}
             />
           </Form.Item>
 
@@ -394,7 +475,18 @@ export default function EditTaskPage() {
             </div>
           )}
 
-          <Form.Item label="Tags / Labels" name="tags">
+          <Form.Item
+            label={
+              !isManager ? (
+                <span>
+                  Tags / Labels <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                </span>
+              ) : (
+                "Tags / Labels"
+              )
+            }
+            name="tags"
+          >
             <Select
               mode="multiple"
               placeholder="Select tags..."
@@ -402,6 +494,7 @@ export default function EditTaskPage() {
                 label: tag,
                 value: tag,
               }))}
+              disabled={!isManager}
             />
           </Form.Item>
 

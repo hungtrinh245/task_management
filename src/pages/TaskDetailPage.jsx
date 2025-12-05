@@ -15,6 +15,7 @@ import {
   Form,
   Input,
   message,
+  Alert,
 } from "antd";
 import {
   EditOutlined,
@@ -22,6 +23,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 import { useTasks } from "../hooks/useTasks";
+import AuthService from "../services/AuthService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const statusOptions = [
@@ -43,6 +45,11 @@ export default function TaskDetailPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { getTaskById, deleteTask, editTask } = useTasks();
+
+  // Get current user
+  const currentUser = AuthService.getUser();
+  const currentUserRole = currentUser?.role || "employee";
+  const isManager = currentUserRole === "manager";
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -105,13 +112,26 @@ export default function TaskDetailPage() {
             >
               Edit
             </Button>
-            <Button danger icon={<DeleteOutlined />} onClick={handleDelete}>
-              Delete
-            </Button>
+            {isManager && (
+              <Button danger icon={<DeleteOutlined />} onClick={handleDelete}>
+                Delete
+              </Button>
+            )}
           </Space>
         }
         style={{ borderRadius: 8 }}
       >
+        {/* Role-based Info Message */}
+        {!isManager && (
+          <Alert
+            message="View Only"
+            description="You can view task details, update status, add comments, and manage your subtasks. Contact your manager to modify task information."
+            type="info"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+        )}
+
         {/* Basic Info */}
         <Descriptions
           bordered

@@ -22,6 +22,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { useTasks } from "../hooks/useTasks";
+import AuthService from "../services/AuthService";
 import { Link } from "react-router-dom";
 import { useState, useMemo, useCallback } from "react";
 
@@ -32,6 +33,12 @@ export default function TaskListPage() {
   const [filterAssignee, setFilterAssignee] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+
+  // Get current user
+  const currentUser = AuthService.getUser();
+  const currentUserRole = currentUser?.role || "employee";
+  const currentUserName = currentUser?.name || currentUser?.email || "";
+  const isManager = currentUserRole === "manager";
 
   const assigneeOptions = [
     { label: "👤 Nguyễn Văn A", value: "Nguyễn Văn A" },
@@ -85,9 +92,12 @@ export default function TaskListPage() {
       const matchesAssignee =
         filterAssignee === "all" || task.assignee === filterAssignee;
 
-      return matchesSearch && matchesStatus && matchesAssignee;
+      // Employee can only see tasks assigned to them
+      const matchesRole = isManager || task.assignee === currentUserName;
+
+      return matchesSearch && matchesStatus && matchesAssignee && matchesRole;
     });
-  }, [tasks, searchText, filterStatus, filterAssignee]);
+  }, [tasks, searchText, filterStatus, filterAssignee, isManager, currentUserName]);
 
   const completedCount = tasks.filter((t) => t.completed).length;
   const pendingCount = tasks.length - completedCount;
@@ -287,15 +297,17 @@ export default function TaskListPage() {
               { label: "Overdue", value: "overdue" },
             ]}
           />
-          <Select
-            style={{ width: "180px" }}
-            value={filterAssignee}
-            onChange={handleFilterAssignee}
-            options={[
-              { label: "All Assignees", value: "all" },
-              ...assigneeOptions,
-            ]}
-          />
+          {isManager && (
+            <Select
+              style={{ width: "180px" }}
+              value={filterAssignee}
+              onChange={handleFilterAssignee}
+              options={[
+                { label: "All Assignees", value: "all" },
+                ...assigneeOptions,
+              ]}
+            />
+          )}
         </Space>
 
         {filteredTasks.length > 0 ? (

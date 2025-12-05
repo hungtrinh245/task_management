@@ -201,17 +201,42 @@
       "completed": false,
       "createdAt": "2025-12-04T10:23:03.739Z",
       "updatedAt": "2025-12-04T10:23:03.739Z"
+    },
+    {
+      "id": "134e",
+      "title": "build feature,login, logout ",
+      "director": "Dev A",
+      "genre": "Development",
+      "description": "fdfdg",
+      "dueDate": "2025-12-06",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "phạm minh quang",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1764905034703",
+          "title": "writing docs, business analytis",
+          "completed": false
+        },
+        {
+          "id": "1764905058199",
+          "title": "create form",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-05T03:24:36.720Z",
+      "updatedAt": "2025-12-05T03:24:36.720Z"
     }
   ],
   "users": [
-    {
-      "id": "44af",
-      "name": "trịnh quốc hưng",
-      "email": "trinhquochung222005@gmail.com",
-      "password": "123456",
-      "role": "manager",
-      "createdAt": "2025-12-04T08:10:44.716Z"
-    },
     {
       "id": "0c9a",
       "name": "phạm minh quang",
@@ -219,6 +244,14 @@
       "password": "$2b$10$ssau5YdLSbPXhW1b.ljhZeI5WhCIwASP0lF83AofLnqQWTvhAQc2q",
       "role": "employee",
       "createdAt": "2025-12-04T08:23:22.226Z"
+    },
+    {
+      "id": "aa52",
+      "name": "trịnh quốc hưng",
+      "email": "trinhquochung222005@gmail.com",
+      "password": "$2b$10$3wafEij91KPCE9Ix.P7QkekEOkIh2M.FWR3ifMNmZEYVfYKJ5ZWjS",
+      "role": "manager",
+      "createdAt": "2025-12-05T03:19:13.914Z"
     }
   ],
   "comments": [],
