@@ -280,7 +280,7 @@ export default function EditTaskPage() {
         dueDate: values.dueDate || "",
         status,
         priority: values.priority || "medium",
-        assignee: isManager ? (values.assignee || "") : task.assignee, // Only manager can reassign
+        assignee: isManager ? values.assignee || "" : task.assignee, // Only manager can reassign
         tags: values.tags || [],
         subtasks,
         comments,
@@ -347,7 +347,8 @@ export default function EditTaskPage() {
             label={
               !isManager ? (
                 <span>
-                  Task Title <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                  Task Title{" "}
+                  <LockOutlined style={{ marginLeft: 4, color: "red" }} />
                 </span>
               ) : (
                 "Task Title"
@@ -370,7 +371,8 @@ export default function EditTaskPage() {
             label={
               !isManager ? (
                 <span>
-                  Director/Team <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                  Director/Team{" "}
+                  <LockOutlined style={{ marginLeft: 4, color: "red" }} />
                 </span>
               ) : (
                 "Director/Team"
@@ -396,7 +398,8 @@ export default function EditTaskPage() {
             label={
               !isManager ? (
                 <span>
-                  Genre/Category <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                  Genre/Category{" "}
+                  <LockOutlined style={{ marginLeft: 4, color: "red" }} />
                 </span>
               ) : (
                 "Genre/Category"
@@ -417,7 +420,8 @@ export default function EditTaskPage() {
             label={
               !isManager ? (
                 <span>
-                  Description <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                  Description{" "}
+                  <LockOutlined style={{ marginLeft: 4, color: "red" }} />
                 </span>
               ) : (
                 "Description"
@@ -436,7 +440,8 @@ export default function EditTaskPage() {
             label={
               !isManager ? (
                 <span>
-                  Due Date <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                  Due Date{" "}
+                  <LockOutlined style={{ marginLeft: 4, color: "red" }} />
                 </span>
               ) : (
                 "Due Date"
@@ -469,7 +474,8 @@ export default function EditTaskPage() {
             label={
               !isManager ? (
                 <span>
-                  Priority <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                  Priority{" "}
+                  <LockOutlined style={{ marginLeft: 4, color: "red" }} />
                 </span>
               ) : (
                 "Priority"
@@ -515,7 +521,8 @@ export default function EditTaskPage() {
             label={
               !isManager ? (
                 <span>
-                  Tags / Labels <LockOutlined style={{ marginLeft: 4, color: "red" }} />
+                  Tags / Labels{" "}
+                  <LockOutlined style={{ marginLeft: 4, color: "red" }} />
                 </span>
               ) : (
                 "Tags / Labels"

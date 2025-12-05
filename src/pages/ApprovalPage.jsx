@@ -189,7 +189,9 @@ export default function ApprovalPage() {
         }
         return (
           <Tag color={record.approvalStatus === "approved" ? "green" : "red"}>
-            {record.approvalStatus === "approved" ? "✅ Approved" : "❌ Rejected"}
+            {record.approvalStatus === "approved"
+              ? "✅ Approved"
+              : "❌ Rejected"}
           </Tag>
         );
       },
@@ -253,11 +255,10 @@ export default function ApprovalPage() {
       </Card>
 
       {/* All Tasks History */}
-      <Card
-        title="📋 All Tasks History"
-        style={{ borderRadius: 8 }}
-      >
-        {pendingTasks.length > 0 || approvedTasks.length > 0 || rejectedTasks.length > 0 ? (
+      <Card title="📋 All Tasks History" style={{ borderRadius: 8 }}>
+        {pendingTasks.length > 0 ||
+        approvedTasks.length > 0 ||
+        rejectedTasks.length > 0 ? (
           <Table
             columns={columns}
             dataSource={[...pendingTasks, ...approvedTasks, ...rejectedTasks]}

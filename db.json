@@ -8,10 +8,7 @@
       "dueDate": "2025-12-31",
       "status": "done",
       "priority": "medium",
-      "tags": [
-        "feature",
-        "learning"
-      ],
+      "tags": ["feature", "learning"],
       "subtasks": [
         {
           "id": "s1",
@@ -60,10 +57,7 @@
       "completed": true,
       "status": "done",
       "priority": "high",
-      "tags": [
-        "setup",
-        "design"
-      ],
+      "tags": ["setup", "design"],
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "approved",
       "createdAt": "2025-11-25T08:30:00Z",
@@ -83,10 +77,7 @@
       "completed": false,
       "status": "todo",
       "priority": "medium",
-      "tags": [
-        "feature",
-        "ui"
-      ],
+      "tags": ["feature", "ui"],
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "rejected",
       "createdAt": "2025-12-02T09:00:00Z",
@@ -103,9 +94,7 @@
       "dueDate": "2025-12-05",
       "status": "inprogress",
       "priority": "medium",
-      "tags": [
-        "bug"
-      ],
+      "tags": ["bug"],
       "subtasks": [
         {
           "id": "1764833697916",
@@ -140,10 +129,7 @@
       "dueDate": "2025-12-05",
       "status": "done",
       "priority": "high",
-      "tags": [
-        "testing",
-        "bug"
-      ],
+      "tags": ["testing", "bug"],
       "subtasks": [
         {
           "id": "1764839774357",
@@ -173,9 +159,7 @@
       "dueDate": "2025-12-06",
       "status": "inprogress",
       "priority": "medium",
-      "tags": [
-        "feature"
-      ],
+      "tags": ["feature"],
       "subtasks": [],
       "comments": [],
       "attachments": [],
@@ -192,9 +176,7 @@
       "dueDate": "2025-12-03",
       "status": "overdue",
       "priority": "medium",
-      "tags": [
-        "bug"
-      ],
+      "tags": ["bug"],
       "subtasks": [],
       "comments": [],
       "attachments": [],
@@ -210,9 +192,7 @@
       "dueDate": "2025-12-06",
       "status": "done",
       "priority": "medium",
-      "tags": [
-        "feature"
-      ],
+      "tags": ["feature"],
       "subtasks": [
         {
           "id": "1764905034703",
@@ -244,9 +224,7 @@
       "dueDate": "2025-12-07",
       "status": "done",
       "priority": "high",
-      "tags": [
-        "feature"
-      ],
+      "tags": ["feature"],
       "subtasks": [
         {
           "id": "1764906714881",
