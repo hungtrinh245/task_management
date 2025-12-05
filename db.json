@@ -74,28 +74,6 @@
       "comments": []
     },
     {
-      "id": "3",
-      "title": "Implement Ant Design",
-      "director": "Design",
-      "genre": "Design",
-      "description": "Integrate Ant Design components into the project",
-      "dueDate": "2025-12-22",
-      "completed": false,
-      "status": "todo",
-      "priority": "medium",
-      "tags": [
-        "feature",
-        "ui"
-      ],
-      "createdBy": "trịnh quốc hưng",
-      "approvalStatus": "rejected",
-      "createdAt": "2025-12-02T09:00:00Z",
-      "updatedAt": "2025-12-05T03:51:10.329Z",
-      "attachments": [],
-      "subtasks": [],
-      "comments": []
-    },
-    {
       "title": "fig bug edit form",
       "director": "Dev A",
       "genre": "Development",
@@ -392,6 +370,50 @@
       "approvalStatus": "approved",
       "createdAt": "2025-12-05T06:49:19.770Z",
       "updatedAt": "2025-12-05T06:51:01.362Z"
+    },
+    {
+      "title": "add new feature dark/light theme ",
+      "director": "Dev B",
+      "genre": "Development",
+      "description": "sdddff",
+      "dueDate": "2025-12-07",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "Nguyễn Trung Đán",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1764924266609",
+          "title": "ssddfd",
+          "completed": false
+        },
+        {
+          "id": "1764924268537",
+          "title": "dfdfdf",
+          "completed": false
+        },
+        {
+          "id": "1764924269841",
+          "title": "dfdf",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [
+        {
+          "id": "1764925077928",
+          "filename": "Trịnh Quốc Hưng_4-12_baocao.docx",
+          "filesize": 299545,
+          "uploadedAt": "2025-12-05T08:57:57.928Z"
+        }
+      ],
+      "completed": false,
+      "createdBy": "Nguyễn Trung Đán",
+      "approvalStatus": "pending",
+      "updatedAt": "2025-12-05T08:58:04.168Z",
+      "id": "bf64"
     }
   ],
   "users": [
@@ -401,7 +423,11 @@
       "email": "quang@gmail.com",
       "password": "$2b$10$ssau5YdLSbPXhW1b.ljhZeI5WhCIwASP0lF83AofLnqQWTvhAQc2q",
       "role": "employee",
-      "createdAt": "2025-12-04T08:23:22.226Z"
+      "createdAt": "2025-12-04T08:23:22.226Z",
+      "phone": "+84 123 456 789",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=quang",
+      "bio": "Nhân viên phát triển phần mềm với niềm đam mê công nghệ",
+      "department": "Development"
     },
     {
       "id": "aa52",
@@ -409,7 +435,25 @@
       "email": "trinhquochung222005@gmail.com",
       "password": "$2b$10$3wafEij91KPCE9Ix.P7QkekEOkIh2M.FWR3ifMNmZEYVfYKJ5ZWjS",
       "role": "manager",
-      "createdAt": "2025-12-05T03:19:13.914Z"
+      "createdAt": "2025-12-05T03:19:13.914Z",
+      "phone": "+84 987 654 321",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=hung",
+      "bio": "Quản lý dự án với kinh nghiệm 5 năm trong lĩnh vực phát triển phần mềm",
+      "department": "Management",
+      "updatedAt": "2025-12-05T09:58:59.162Z"
+    },
+    {
+      "id": "2a4c",
+      "name": "Nguyễn Trung Đán",
+      "email": "ronaldo@gmail.com",
+      "password": "$2b$10$01R0XLUi3YMlCcm.m/nBqusGWr55BsxBcFmuWX47HLIunYiNXubL.",
+      "role": "employee",
+      "createdAt": "2025-12-05T08:42:52.612Z",
+      "phone": "+84 555 123 456",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=dan",
+      "bio": "Developer FE ",
+      "department": "Development",
+      "updatedAt": "2025-12-05T09:56:30.103Z"
     }
   ],
   "comments": [],

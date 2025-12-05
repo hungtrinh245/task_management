@@ -71,6 +71,11 @@ export default function MainLayout({ children }) {
       label: <Link to="/my-tasks">My Tasks</Link>,
     },
     {
+      key: "/profile",
+      icon: <UserOutlined />,
+      label: <Link to="/profile">Profile</Link>,
+    },
+    {
       key: "/tasks/create",
       icon: <PlusOutlined />,
       label: <Link to="/tasks/create">Create Task</Link>,
@@ -97,7 +102,7 @@ export default function MainLayout({ children }) {
   }
 
   if (!AuthService.isAuthenticated()) {
- // Chỉ hiển thị liên kết đăng ký/đăng nhập khi chưa được xác thực
+    // Chỉ hiển thị liên kết đăng ký/đăng nhập khi chưa được xác thực
     menuItems.push({
       key: "/auth/register",
       icon: <ArrowRightOutlined />,
@@ -115,6 +120,8 @@ export default function MainLayout({ children }) {
     if (location.pathname === "/approvals") return "/approvals";
     //my-tasks
     if (location.pathname === "/my-tasks") return "/my-tasks";
+    //profile
+    if (location.pathname === "/profile") return "/profile";
     //tasks/create, /tasks/:id, /tasks/edit/:id
     if (location.pathname.startsWith("/tasks")) return "/tasks";
     // Exact match: /

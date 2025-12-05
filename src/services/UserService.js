@@ -1,4 +1,4 @@
-// UserService: Helper to fetch all users for assignee dropdowns
+// UserService: Helper to fetch all users for assignee dropdowns and profile management
 import apiClient from "./apiClient";
 
 const UserService = {
@@ -18,6 +18,19 @@ const UserService = {
       return await apiClient.get(`/users/${userId}`);
     } catch {
       return null;
+    }
+  },
+
+  // Update user profile
+  updateUserProfile: async (userId, profileData) => {
+    try {
+      const updatedUser = await apiClient.patch(`/users/${userId}`, {
+        ...profileData,
+        updatedAt: new Date().toISOString(),
+      });
+      return updatedUser;
+    } catch (error) {
+      throw new Error("Failed to update profile");
     }
   },
 };

@@ -14,6 +14,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -75,6 +76,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <EditTaskPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <ProfilePage />
                   </PrivateRoute>
                 }
               />
