@@ -3,7 +3,9 @@
 ## I. TỔNG QUAN TÍNH NĂNG
 
 ### Mục Tiêu
+
 Xây dựng một hệ thống quản lý dự án cho phép:
+
 - Manager tạo và quản lý **dự án (Projects)**
 - Gán **nhiều task** vào từng dự án
 - Theo dõi tiến độ dự án thông qua các metrics
@@ -11,6 +13,7 @@ Xây dựng một hệ thống quản lý dự án cho phép:
 - Quản lý thành viên dự án (team)
 
 ### Scope của Phase này
+
 - [x] Thiết kế Data Model cho Projects
 - [x] Thiết kế API & Database Schema
 - [x] Xác định Roles & Permissions
@@ -28,26 +31,26 @@ Xây dựng một hệ thống quản lý dự án cho phép:
   "id": "proj-001",
   "name": "Website Redesign 2024",
   "description": "Redesign company website with modern UI/UX",
-  "status": "active",           // active, on-hold, completed, archived
+  "status": "active", // active, on-hold, completed, archived
   "startDate": "2024-12-01",
   "endDate": "2025-03-31",
-  "budget": 50000,              // (optional) Budget tracking
-  "createdBy": "manager1",      // User name or ID
+  "budget": 50000, // (optional) Budget tracking
+  "createdBy": "manager1", // User name or ID
   "createdAt": "2024-12-05T10:00:00Z",
   "updatedAt": "2024-12-05T10:00:00Z",
   "teamMembers": [
     {
       "userId": "emp001",
       "userName": "John",
-      "role": "developer",       // developer, designer, tester, manager
+      "role": "developer", // developer, designer, tester, manager
       "joinedAt": "2024-12-05"
     }
   ],
-  "taskIds": ["task-001", "task-002", "task-003"],  // Array of task IDs
+  "taskIds": ["task-001", "task-002", "task-003"], // Array of task IDs
   "metadata": {
     "category": "web-development",
-    "priority": "high",          // high, medium, low
-    "visibility": "team"         // team, private, public
+    "priority": "high", // high, medium, low
+    "visibility": "team" // team, private, public
   }
 }
 ```
@@ -57,19 +60,19 @@ Xây dựng một hệ thống quản lý dự án cho phép:
 ```json
 {
   "id": "task-001",
-  "projectId": "proj-001",    // ⭐ NEW: Reference to project
+  "projectId": "proj-001", // ⭐ NEW: Reference to project
   "title": "Homepage redesign",
-  "status": "inprogress",
+  "status": "inprogress"
   // ... other existing fields
 }
 ```
 
 ### 2.3 Summary
 
-| Table | Fields | Purpose |
-|-------|--------|---------|
-| **projects** | id, name, description, status, startDate, endDate, teamMembers, taskIds, metadata | Core project info |
-| **tasks** | projectId (NEW) | Link task to project |
+| Table        | Fields                                                                            | Purpose              |
+| ------------ | --------------------------------------------------------------------------------- | -------------------- |
+| **projects** | id, name, description, status, startDate, endDate, teamMembers, taskIds, metadata | Core project info    |
+| **tasks**    | projectId (NEW)                                                                   | Link task to project |
 
 ---
 
@@ -96,16 +99,16 @@ employee         →   (No access)        ❌ Cannot create projects
 
 ### 3.2 Permission Matrix
 
-| Action | Manager | Employee | Notes |
-|--------|---------|----------|-------|
-| Create Project | ✅ | ❌ | Only managers can initiate projects |
-| Edit Project Details | ✅ | ❌ | Name, description, dates, budget |
-| Add Team Members | ✅ | ❌ | Invite employees to project |
-| Remove Team Members | ✅ | ❌ | Remove from project |
-| Assign Task to Project | ✅ | ❌ | Associate existing tasks |
-| Create Task in Project | ✅ | ✅* | Employee can create, manager must approve |
-| View Project Dashboard | ✅ | ✅ | See own project tasks & progress |
-| Archive Project | ✅ | ❌ | Close or archive project |
+| Action                 | Manager | Employee | Notes                                     |
+| ---------------------- | ------- | -------- | ----------------------------------------- |
+| Create Project         | ✅      | ❌       | Only managers can initiate projects       |
+| Edit Project Details   | ✅      | ❌       | Name, description, dates, budget          |
+| Add Team Members       | ✅      | ❌       | Invite employees to project               |
+| Remove Team Members    | ✅      | ❌       | Remove from project                       |
+| Assign Task to Project | ✅      | ❌       | Associate existing tasks                  |
+| Create Task in Project | ✅      | ✅\*     | Employee can create, manager must approve |
+| View Project Dashboard | ✅      | ✅       | See own project tasks & progress          |
+| Archive Project        | ✅      | ❌       | Close or archive project                  |
 
 ---
 
@@ -142,6 +145,7 @@ employee         →   (No access)        ❌ Cannot create projects
 ### 4.2 Project Lifecycle Rules
 
 #### Create Project
+
 - **Who**: Only `manager` role
 - **Requirements**:
   - Project name (required, min 3 chars)
@@ -157,6 +161,7 @@ employee         →   (No access)        ❌ Cannot create projects
   - `taskIds = []` (empty initially)
 
 #### Add/Remove Team Members
+
 - **Who**: Project owner/manager only
 - **Rules**:
   - Can add any user (manager/employee)
@@ -165,6 +170,7 @@ employee         →   (No access)        ❌ Cannot create projects
   - Cannot remove the project creator/owner
 
 #### Assign Task to Project
+
 - **Who**: Manager only
 - **Rules**:
   - Task must exist in the system
@@ -173,11 +179,13 @@ employee         →   (No access)        ❌ Cannot create projects
   - Task status should be independent of project status (can reassign even if project on-hold)
 
 #### Project Completion
+
 - **Auto-check**: System monitors if all project tasks are "done"
 - **Manual action**: Manager can manually mark as "completed" even if tasks remain
 - **Rule**: Once "completed", cannot add new tasks; can only "resume" or "archive"
 
 #### Archive Project
+
 - **Who**: Manager only
 - **Effect**:
   - Project becomes read-only
@@ -189,6 +197,7 @@ employee         →   (No access)        ❌ Cannot create projects
 ### 4.3 Task-Project Relationship Rules
 
 #### When Creating Task
+
 ```javascript
 // Scenario A: Create task without project
 - Create as before (existing behavior)
@@ -202,11 +211,13 @@ employee         →   (No access)        ❌ Cannot create projects
 ```
 
 #### When Moving Task to Another Project
+
 - Unassign from current project
 - Assign to new project
 - Preserve all task properties (status, subtasks, etc.)
 
 #### When Deleting Project
+
 - **Option 1**: Delete project only, tasks remain unassigned
 - **Option 2**: Delete project + prompt to reassign tasks
 - **Current Plan**: Option 1 (safer, preserves task history)
@@ -235,6 +246,7 @@ Current Menu:              New Menu:
 ### 5.2 Project Pages to Create
 
 #### Page 1: Projects List (`/projects`)
+
 - **For**: Managers to see all projects
 - **Components**:
   - Search & filter (by status, date, team member)
@@ -249,6 +261,7 @@ Current Menu:              New Menu:
     - Actions (View, Edit, Archive)
 
 #### Page 2: Create Project (`/projects/create`)
+
 - **For**: Manager to create new project
 - **Form Fields**:
   - Project Name (text, required)
@@ -265,32 +278,39 @@ Current Menu:              New Menu:
   - Cancel
 
 #### Page 3: Project Details (`/projects/:id`)
+
 - **For**: Manager to manage project, employee to see project info
 - **Sections**:
+
   1. **Project Header**
+
      - Project name, status (editable for manager)
      - Progress bar: X tasks done / Y tasks total
      - Timeline: start date → end date (with today marker)
 
   2. **Project Tabs**
+
      - **Overview Tab** (default)
+
        - Description, Category, Priority
        - Timeline & Budget info
        - Created by, Created date
-     
+
      - **Tasks Tab**
+
        - Table of all tasks in project
        - Filter: status, assignee
        - Columns: Task ID, Title, Status, Assignee, Due Date, Priority
        - Actions: View task, Remove from project (manager only)
        - Create Task button (manager only)
-     
+
      - **Team Tab**
+
        - List of team members
        - Columns: Name, Role (in project), Joined Date
        - Add Member button (manager only)
        - Remove Member button (manager only)
-     
+
      - **Progress Tab** (Analytics)
        - Task completion over time (line chart)
        - Tasks by status (pie/bar chart)
@@ -299,6 +319,7 @@ Current Menu:              New Menu:
        - Team productivity metrics
 
 #### Page 4: Edit Project (`/projects/:id/edit`)
+
 - **For**: Manager to edit project
 - **Editable Fields**:
   - Name, Description, Category
@@ -364,8 +385,8 @@ Add `projectId` field to tasks:
   "tasks": [
     {
       "id": "task-001",
-      "projectId": "proj-20241205-001",    // ⭐ NEW
-      "title": "Design homepage mockup",
+      "projectId": "proj-20241205-001", // ⭐ NEW
+      "title": "Design homepage mockup"
       // ... other existing fields
     }
   ]
@@ -388,17 +409,17 @@ class ProjectService {
   createProject(data)           // POST /projects
   updateProject(id, data)       // PUT /projects/:id
   deleteProject(id)             // DELETE /projects/:id
-  
+
   // Team Management
   addTeamMember(projectId, userId, role)      // POST /projects/:id/team
   removeTeamMember(projectId, userId)         // DELETE /projects/:id/team/:userId
   updateTeamMemberRole(projectId, userId, role) // PUT /projects/:id/team/:userId
-  
+
   // Task Management
   assignTaskToProject(projectId, taskId)      // POST /projects/:id/tasks/:taskId
   removeTaskFromProject(projectId, taskId)    // DELETE /projects/:id/tasks/:taskId
   getProjectTasks(projectId)                  // GET /projects/:id/tasks
-  
+
   // Analytics
   getProjectStats(projectId)    // GET /projects/:id/stats (task count, completion %, etc.)
   getProjectTeamStats(projectId) // GET /projects/:id/team-stats (tasks per member, etc.)
@@ -412,7 +433,7 @@ Add project-related methods:
 ```javascript
 class TaskService {
   // existing methods...
-  
+
   // NEW methods
   getTasksByProject(projectId)  // Filter tasks by projectId
   updateTaskProject(taskId, projectId) // Associate/move task to project
@@ -424,6 +445,7 @@ class TaskService {
 ## VIII. IMPLEMENTATION ROADMAP
 
 ### Phase 4A: Backend & Data Setup (Today)
+
 - [ ] Add `projects` collection to db.json with sample data
 - [ ] Update `tasks` collection: add `projectId` field to existing tasks
 - [ ] Create `ProjectService.js` with all CRUD operations
@@ -431,6 +453,7 @@ class TaskService {
 - [ ] Test API endpoints with json-server
 
 ### Phase 4B: Projects List & Create (Week 1)
+
 - [ ] Create `ProjectListPage.jsx`
 - [ ] Create `CreateProjectPage.jsx`
 - [ ] Implement filters & search on project list
@@ -438,6 +461,7 @@ class TaskService {
 - [ ] Display project stats (task count, completion %)
 
 ### Phase 4C: Project Details & Management (Week 2)
+
 - [ ] Create `ProjectDetailPage.jsx` with tabs:
   - Overview (project info)
   - Tasks (manage project tasks)
@@ -448,6 +472,7 @@ class TaskService {
 - [ ] Implement task add/remove from project
 
 ### Phase 4D: Integration & Analytics (Week 3)
+
 - [ ] Update `DashboardPage.jsx`:
   - Add project cards (active projects count, recently updated)
   - Add project health metrics
@@ -456,6 +481,7 @@ class TaskService {
 - [ ] Update menu navigation
 
 ### Phase 4E: Polish & Testing (Week 4)
+
 - [ ] Role-based access control (employees cannot create projects)
 - [ ] Permissions enforcement
 - [ ] UI/UX refinements
@@ -533,14 +559,14 @@ class TaskService {
 
 ## X. POTENTIAL CHALLENGES & SOLUTIONS
 
-| Challenge | Solution |
-|-----------|----------|
-| Task belongs to multiple projects | One-to-one relationship; must unassign first before assigning to another |
-| Deleting project with assigned tasks | Keep tasks, just remove projectId; preserve task history |
-| Employee creating task in project | Auto-populate projectId; approval workflow still applies |
-| Removed team member has assigned tasks | Reassign manually or leave as-is; don't cascade delete |
-| Project budget tracking | Optional feature; can be skipped in Phase 1 if time-constrained |
-| Real-time sync of project progress | Use Context API + manual refresh; consider real-time updates later |
+| Challenge                              | Solution                                                                 |
+| -------------------------------------- | ------------------------------------------------------------------------ |
+| Task belongs to multiple projects      | One-to-one relationship; must unassign first before assigning to another |
+| Deleting project with assigned tasks   | Keep tasks, just remove projectId; preserve task history                 |
+| Employee creating task in project      | Auto-populate projectId; approval workflow still applies                 |
+| Removed team member has assigned tasks | Reassign manually or leave as-is; don't cascade delete                   |
+| Project budget tracking                | Optional feature; can be skipped in Phase 1 if time-constrained          |
+| Real-time sync of project progress     | Use Context API + manual refresh; consider real-time updates later       |
 
 ---
 
@@ -560,6 +586,7 @@ class TaskService {
 ## XII. NOTES & CONSIDERATIONS
 
 ### Nice-to-Have Features (Phase 2+)
+
 - Project templates (pre-built projects)
 - Gantt chart view for timeline
 - Budget tracking & alerts
@@ -569,6 +596,7 @@ class TaskService {
 - Notifications when project status changes
 
 ### Technical Debt to Address
+
 - Consider separating ProjectContext from TaskContext
 - Plan for real-time updates if project is shared
 - Add data validation in ProjectService
