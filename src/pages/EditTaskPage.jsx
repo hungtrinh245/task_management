@@ -178,7 +178,17 @@ export default function EditTaskPage() {
     }
   };
 
+  // Only allow toggling subtasks if task is approved (or manager)
+  const canToggleSubtask =
+    isManager || task.approvalStatus === "approved";
+
   const handleToggleSubtask = (subtaskId) => {
+    if (!canToggleSubtask) {
+      message.warning(
+        "Task must be approved by manager before you can update checklist items."
+      );
+      return;
+    }
     const next = subtasks.map((s) =>
       s.id === subtaskId ? { ...s, completed: !s.completed } : s
     );
@@ -187,12 +197,26 @@ export default function EditTaskPage() {
   };
 
   const handleDeleteSubtask = (subtaskId) => {
+    if (!canToggleSubtask) {
+      message.warning(
+        "Task must be approved by manager before you can modify checklist items."
+      );
+      return;
+    }
     const next = subtasks.filter((s) => s.id !== subtaskId);
     setSubtasks(next);
     syncStatusWithSubtasks(next);
   };
 
   const handleAddComment = () => {
+    // Employees can only comment if task is approved
+    if (!isManager && task.approvalStatus !== "approved") {
+      message.warning(
+        "Task must be approved by manager before you can add comments."
+      );
+      return;
+    }
+
     const text = (newCommentText || "").trim();
     if (!text) return;
     const newComment = {
@@ -331,13 +355,24 @@ export default function EditTaskPage() {
           autoComplete="off"
         >
           {!isManager && (
-            <Alert
-              message="Limited Edit Permissions"
-              description="As an employee, you can only update the task status, subtasks, comments, and attachments. Other fields are managed by your manager."
-              type="info"
-              showIcon
-              style={{ marginBottom: 16 }}
-            />
+            <>
+              <Alert
+                message="Limited Edit Permissions"
+                description="As an employee, you can only update the task status, subtasks, comments, and attachments. Other fields are managed by your manager."
+                type="info"
+                showIcon
+                style={{ marginBottom: 16 }}
+              />
+              {task.approvalStatus !== "approved" && (
+                <Alert
+                  message="⏳ Awaiting Approval"
+                  description="This task is pending manager approval. You cannot update checklist, status, or comments until it is approved. Please contact your manager."
+                  type="warning"
+                  showIcon
+                  style={{ marginBottom: 16 }}
+                />
+              )}
+            </>
           )}
 
           {/* Basic Information Section */}
@@ -467,6 +502,7 @@ export default function EditTaskPage() {
               placeholder="Select status"
               options={optionsWithDisabled}
               size="large"
+              disabled={!isManager && task.approvalStatus !== "approved"}
             />
           </Form.Item>
 

@@ -50,7 +50,8 @@ export default function ApprovalPage() {
   const handleApprove = (taskId) => {
     Modal.confirm({
       title: "Approve Task",
-      content: "Are you sure you want to approve this task?",
+      content:
+        "Approving this task will allow the employee to update checklist items and progress. The task will be ready for work.",
       okText: "Approve",
       okType: "primary",
       cancelText: "Cancel",
@@ -58,14 +59,15 @@ export default function ApprovalPage() {
         try {
           setLoading(true);
           const task = tasks.find((t) => t.id === taskId);
-          // Mark approved and move to completed state
+          // Mark approved: only change approvalStatus, keep status as-is
+          // Employee can now update checklist and status
           await editTask(taskId, {
             ...task,
             approvalStatus: "approved",
-            status: "done",
-            completed: true,
           });
-          message.success("Task approved successfully!");
+          message.success(
+            "Task approved! Employee can now start working on it."
+          );
         } catch {
           message.error("Failed to approve task");
         } finally {
@@ -78,7 +80,8 @@ export default function ApprovalPage() {
   const handleReject = (taskId) => {
     Modal.confirm({
       title: "Reject Task",
-      content: "Are you sure you want to reject this task?",
+      content:
+        "Rejecting this task will send it back to the employee for revisions. They will not be able to update it until you approve it again.",
       okText: "Reject",
       okType: "danger",
       cancelText: "Cancel",
@@ -90,7 +93,7 @@ export default function ApprovalPage() {
             ...task,
             approvalStatus: "rejected",
           });
-          message.success("Task rejected successfully!");
+          message.success("Task rejected! Employee has been notified.");
         } catch {
           message.error("Failed to reject task");
         } finally {
