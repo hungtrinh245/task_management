@@ -58,9 +58,12 @@ export default function ApprovalPage() {
         try {
           setLoading(true);
           const task = tasks.find((t) => t.id === taskId);
+          // Mark approved and move to completed state
           await editTask(taskId, {
             ...task,
             approvalStatus: "approved",
+            status: "done",
+            completed: true,
           });
           message.success("Task approved successfully!");
         } catch {

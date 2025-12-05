@@ -88,9 +88,9 @@
         "ui"
       ],
       "createdBy": "trịnh quốc hưng",
-      "approvalStatus": "pending",
+      "approvalStatus": "rejected",
       "createdAt": "2025-12-02T09:00:00Z",
-      "updatedAt": "2025-12-04T04:09:39.339Z",
+      "updatedAt": "2025-12-05T03:51:10.329Z",
       "attachments": [],
       "subtasks": [],
       "comments": []
@@ -203,15 +203,13 @@
       "updatedAt": "2025-12-04T10:23:03.739Z"
     },
     {
-      "id": "134e",
       "title": "build feature,login, logout ",
       "director": "Dev A",
       "genre": "Development",
       "description": "fdfdg",
       "dueDate": "2025-12-06",
-      "status": "todo",
+      "status": "done",
       "priority": "medium",
-      "assignee": "phạm minh quang",
       "tags": [
         "feature"
       ],
@@ -219,21 +217,65 @@
         {
           "id": "1764905034703",
           "title": "writing docs, business analytis",
-          "completed": false
+          "completed": true
         },
         {
           "id": "1764905058199",
           "title": "create form",
-          "completed": false
+          "completed": true
+        },
+        {
+          "id": "1764906339911",
+          "title": "create login permissions by role",
+          "completed": true
         }
       ],
       "comments": [],
       "attachments": [],
-      "completed": false,
-      "createdBy": "trịnh quốc hưng",
-      "approvalStatus": "approved",
-      "createdAt": "2025-12-05T03:24:36.720Z",
-      "updatedAt": "2025-12-05T03:24:36.720Z"
+      "completed": true,
+      "updatedAt": "2025-12-05T03:46:19.640Z",
+      "id": "134e"
+    },
+    {
+      "title": "fdgfdh",
+      "director": "ffhgfh",
+      "genre": "Development",
+      "description": "ghgfhg",
+      "dueDate": "2025-12-07",
+      "status": "done",
+      "priority": "high",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1764906714881",
+          "title": "tgtrgt",
+          "completed": true
+        },
+        {
+          "id": "1764906716814",
+          "title": "tgtgth",
+          "completed": true
+        },
+        {
+          "id": "1764906719626",
+          "title": "fgfgfg",
+          "completed": true
+        }
+      ],
+      "comments": [
+        {
+          "id": "1764906731100",
+          "author": "gfg",
+          "text": "gfhg",
+          "createdAt": "2025-12-05T03:52:11.100Z"
+        }
+      ],
+      "attachments": [],
+      "completed": true,
+      "updatedAt": "2025-12-05T03:53:43.272Z",
+      "id": "7266"
     }
   ],
   "users": [

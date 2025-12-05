@@ -140,15 +140,18 @@ export default function EditTaskPage() {
     }
   };
 
-  // Whenever subtasks change, if all subtasks are completed we can auto-set
-  // the task status to `done`. This keeps status in sync with the checklist.
+  // Whenever subtasks change, if all subtasks are completed we move the
+  // task into the `review` status (not directly to `done`). Final
+  // completion must occur after manager approval. This keeps status in
+  // sync with the checklist while enforcing review/approval workflow.
+  const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
   const syncStatusWithSubtasks = (nextSubtasks) => {
     if (!nextSubtasks || nextSubtasks.length === 0) return;
     const allDone = nextSubtasks.every((s) => s.completed === true);
     if (allDone) {
       // Update the form field so user sees the change in the UI
-      form.setFieldsValue({ status: "done" });
-      // Persist change immediately: mark task as done on server
+      form.setFieldsValue({ status: "review" });
+      // Persist change immediately: move task to review (approval remains as-is)
       (async () => {
         try {
           const values = form.getFieldsValue();
@@ -158,17 +161,16 @@ export default function EditTaskPage() {
             genre: values.genre || task.genre,
             description: values.description || task.description || "",
             dueDate: values.dueDate || task.dueDate || "",
-            status: "done",
+            status: "review",
             priority: values.priority || task.priority || "medium",
             tags: values.tags || task.tags || [],
             subtasks: nextSubtasks,
             comments: comments,
             attachments: attachments,
-            completed: true,
+            completed: false, // not completed until manager approves
+            approvalStatus: task.approvalStatus || "pending",
           });
-          message.success(
-            "Task marked complete because all subtasks are done."
-          );
+          message.info("All subtasks completed — task moved to Review.");
         } catch (err) {
           console.error("Auto-save on subtasks completion failed:", err);
         }
@@ -228,17 +230,37 @@ export default function EditTaskPage() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Determine completed based on status or subtasks
-      let status = values.status || "todo";
+      // Determine status & completed with review/approval workflow
+      const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
+      const originalStatus = task.status || "todo";
+      let status = values.status || originalStatus;
       let completed = false;
+
+      // If there are subtasks and all are done, move to review (not done)
       if (subtasks && subtasks.length > 0) {
         const allDone = subtasks.every((s) => s.completed === true);
         if (allDone) {
-          status = "done";
-          completed = true;
+          status = "review";
+          completed = false; // final completion requires approval
         }
       } else {
+        // No subtasks: treat 'done' as completed
         completed = status === "done";
+      }
+
+      // Prevent moving backwards in status order (once progressed, cannot go back)
+      const originalIdx = statusOrder.indexOf(originalStatus);
+      const desiredIdx = statusOrder.indexOf(status);
+      if (desiredIdx < originalIdx) {
+        // ignore backward change and keep original
+        status = originalStatus;
+      }
+
+      // Do not allow marking as 'done' unless task has been approved
+      if (status === "done" && task.approvalStatus !== "approved") {
+        // If approval not granted, keep status at review (or original)
+        status = originalStatus === "review" ? "review" : originalStatus;
+        completed = false;
       }
 
       // If due date is in the past and task not completed, mark as overdue
@@ -276,6 +298,20 @@ export default function EditTaskPage() {
       setLoading(false);
     }
   };
+
+  // Compute which status options should be disabled so users cannot move
+  // backwards. Also, prevent selecting `done` until the task has been
+  // approved by a manager.
+  const currentTaskStatus = task.status || "todo";
+  const currentStatusIndex = statusOrder.indexOf(currentTaskStatus);
+  const optionsWithDisabled = statusOptions.map((opt) => {
+    const idx = statusOrder.indexOf(opt.value);
+    let disabled = idx < currentStatusIndex; // cannot go back
+    if (opt.value === "done" && task.approvalStatus !== "approved") {
+      disabled = true; // completed only after approval
+    }
+    return { ...opt, disabled };
+  });
 
   return (
     <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px" }}>
@@ -424,7 +460,7 @@ export default function EditTaskPage() {
           <Form.Item label="Status" name="status">
             <Select
               placeholder="Select status"
-              options={statusOptions}
+              options={optionsWithDisabled}
               size="large"
             />
           </Form.Item>

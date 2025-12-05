@@ -137,18 +137,28 @@ export default function CreateTaskPage() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Determine status based on subtasks: if we have subtasks and all are completed,
-      // consider the task complete automatically.
+      // Determine status based on subtasks and apply review/approval rules.
       let status = values.status || "todo";
       let completed = false;
+
       if (subtasks && subtasks.length > 0) {
         const allDone = subtasks.every((s) => s.completed === true);
         if (allDone) {
-          status = "done";
-          completed = true;
+          // Move to review when all checklist items are completed.
+          status = "review";
+          completed = false; // final completion requires manager approval
         }
       } else {
-        completed = status === "done";
+        // No subtasks: allow immediate completion only if creator is manager
+        if (status === "done") {
+          if (isManager) {
+            completed = true;
+          } else {
+            // Employees cannot mark as done without approval — put into review
+            status = "review";
+            completed = false;
+          }
+        }
       }
 
       // If due date is in the past and task not completed, mark as overdue
