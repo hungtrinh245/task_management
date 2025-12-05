@@ -1,4 +1,4 @@
-import { Layout, Menu, Button, Modal, Dropdown, Avatar } from "antd";
+import { Layout, Menu, Button, Modal, Dropdown, Avatar, Badge } from "antd";
 import {
   HomeOutlined,
   UnorderedListOutlined,
@@ -6,9 +6,11 @@ import {
   LoginOutlined,
   ArrowRightOutlined,
   UserOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
+import { useTasks } from "../../hooks/useTasks";
 // MainLayout: application shell containing Sider + Header + Content
 // - Shows navigation links in the Sider
 // - Displays a user menu in the Header when authenticated
@@ -20,6 +22,7 @@ const { Header, Sider, Content } = Layout;
 export default function MainLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { tasks } = useTasks();
 
   const showLogoutConfirm = () => {
     Modal.confirm({
@@ -37,6 +40,8 @@ export default function MainLayout({ children }) {
   // Get current user (may be null). We read this synchronously from localStorage.
   const user = AuthService.getUser();
   const userName = user?.name || user?.email || "User";
+  const userRole = user?.role || "employee";
+  const isManager = userRole === "manager";
 
   // Dropdown menu for user actions (profile, logout)
   // Use the `menu` prop with an items array (Antd v5) to avoid overlay children issues
@@ -47,6 +52,10 @@ export default function MainLayout({ children }) {
   ];
 
   // Build Sider menu items. We hide auth routes when the user is logged in
+  const pendingApprovalsCount = tasks.filter(
+    (t) => t.approvalStatus === "pending"
+  ).length;
+
   const menuItems = [
     { key: "/", icon: <HomeOutlined />, label: <Link to="/">Dashboard</Link> },
     {
@@ -66,6 +75,25 @@ export default function MainLayout({ children }) {
     },
   ];
 
+  // Add approval menu for managers
+  if (isManager && AuthService.isAuthenticated()) {
+    menuItems.push({
+      key: "/approvals",
+      icon: <CheckCircleOutlined />,
+      label: (
+        <span>
+          <Link to="/approvals">Approvals</Link>
+          {pendingApprovalsCount > 0 && (
+            <Badge
+              count={pendingApprovalsCount}
+              style={{ marginLeft: 8, backgroundColor: "#faad14" }}
+            />
+          )}
+        </span>
+      ),
+    });
+  }
+
   if (!AuthService.isAuthenticated()) {
     // Only show register/login links when not authenticated
     menuItems.push({
@@ -81,6 +109,8 @@ export default function MainLayout({ children }) {
   }
 
   const selectedKey = (() => {
+    // Exact match: /approvals
+    if (location.pathname === "/approvals") return "/approvals";
     // Exact match: /my-tasks
     if (location.pathname === "/my-tasks") return "/my-tasks";
     // Exact match: /tasks/create, /tasks/:id, /tasks/edit/:id

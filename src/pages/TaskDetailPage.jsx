@@ -168,6 +168,30 @@ export default function TaskDetailPage() {
               {task.completed ? "✓ Completed" : "Pending"}
             </Tag>
           </Descriptions.Item>
+
+          <Descriptions.Item label="Approval Status">
+            <Tag
+              color={
+                task.approvalStatus === "approved"
+                  ? "green"
+                  : task.approvalStatus === "rejected"
+                  ? "red"
+                  : "orange"
+              }
+            >
+              {task.approvalStatus === "approved"
+                ? "✅ Approved"
+                : task.approvalStatus === "rejected"
+                ? "❌ Rejected"
+                : "⏳ Pending"}
+            </Tag>
+          </Descriptions.Item>
+
+          {task.createdBy && (
+            <Descriptions.Item label="Created By">
+              <Tag color="blue">{task.createdBy}</Tag>
+            </Descriptions.Item>
+          )}
         </Descriptions>
 
         <Divider />

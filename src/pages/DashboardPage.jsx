@@ -11,6 +11,7 @@ import {
   Progress,
   Spin,
   Alert,
+  Badge,
 } from "antd";
 import {
   CheckCircleOutlined,
@@ -18,8 +19,10 @@ import {
   FileTextOutlined,
   DeleteOutlined,
   TeamOutlined,
+  CheckCircleOutlined as ApprovalIcon,
 } from "@ant-design/icons";
 import { useTasks } from "../hooks/useTasks";
+import AuthService from "../services/AuthService";
 import { Link } from "react-router-dom";
 import {
   BarChart,
@@ -34,6 +37,11 @@ import {
 
 export default function DashboardPage() {
   const { tasks, loading, error, deleteTask } = useTasks();
+  
+  // Get current user
+  const currentUser = AuthService.getUser();
+  const currentUserRole = currentUser?.role || "employee";
+  const isManager = currentUserRole === "manager";
 
   // Hiển thị loading khi đang lấy dữ liệu
   if (loading) {
@@ -75,6 +83,14 @@ export default function DashboardPage() {
   ).length;
   const completionRate =
     totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+  // Approval stats for managers
+  const pendingApprovalsCount = tasks.filter(
+    (t) => t.approvalStatus === "pending"
+  ).length;
+  const approvedTasksCount = tasks.filter(
+    (t) => t.approvalStatus === "approved"
+  ).length;
 
   const upcomingTasks = tasks
     .filter((t) => !t.completed && t.dueDate)
@@ -184,9 +200,24 @@ export default function DashboardPage() {
 
   return (
     <div style={{ background: "#f0f2f5", padding: "24px" }}>
+      {/* Manager Alert - Pending Approvals */}
+      {isManager && pendingApprovalsCount > 0 && (
+        <Alert
+          message={`You have ${pendingApprovalsCount} task(s) awaiting approval`}
+          description={
+            <Link to="/approvals">
+              <Button type="link">Review pending approvals →</Button>
+            </Link>
+          }
+          type="warning"
+          showIcon
+          style={{ marginBottom: 24 }}
+        />
+      )}
+
       {/* Stats Cards */}
       <Row gutter={16} style={{ marginBottom: 24 }}>
-        <Col xs={24} sm={12} lg={6}>
+        <Col xs={24} sm={12} lg={isManager ? 4 : 6}>
           <Card bordered={false} style={{ borderRadius: 8 }}>
             <Statistic
               title="Total Tasks"
@@ -196,7 +227,7 @@ export default function DashboardPage() {
             />
           </Card>
         </Col>
-        <Col xs={24} sm={12} lg={6}>
+        <Col xs={24} sm={12} lg={isManager ? 4 : 6}>
           <Card bordered={false} style={{ borderRadius: 8 }}>
             <Statistic
               title="Completed"
@@ -206,7 +237,7 @@ export default function DashboardPage() {
             />
           </Card>
         </Col>
-        <Col xs={24} sm={12} lg={6}>
+        <Col xs={24} sm={12} lg={isManager ? 4 : 6}>
           <Card bordered={false} style={{ borderRadius: 8 }}>
             <Statistic
               title="Pending"
@@ -216,7 +247,7 @@ export default function DashboardPage() {
             />
           </Card>
         </Col>
-        <Col xs={24} sm={12} lg={6}>
+        <Col xs={24} sm={12} lg={isManager ? 4 : 6}>
           <Card bordered={false} style={{ borderRadius: 8 }}>
             <Statistic
               title="Overdue"
@@ -226,6 +257,30 @@ export default function DashboardPage() {
             />
           </Card>
         </Col>
+        {isManager && (
+          <>
+            <Col xs={24} sm={12} lg={4}>
+              <Card bordered={false} style={{ borderRadius: 8 }}>
+                <Statistic
+                  title="Pending Approvals"
+                  value={pendingApprovalsCount}
+                  prefix={<ApprovalIcon />}
+                  valueStyle={{ color: "#faad14" }}
+                />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} lg={4}>
+              <Card bordered={false} style={{ borderRadius: 8 }}>
+                <Statistic
+                  title="Approved"
+                  value={approvedTasksCount}
+                  prefix={<ApprovalIcon />}
+                  valueStyle={{ color: "#52c41a" }}
+                />
+              </Card>
+            </Col>
+          </>
+        )}
       </Row>
 
       {/* Progress Bar */}

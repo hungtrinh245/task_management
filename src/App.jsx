@@ -4,6 +4,7 @@ import { TaskProvider } from "./contexts/TaskContext";
 import DashboardPage from "./pages/DashboardPage";
 import TaskListPage from "./pages/TaskListPage";
 import MyTasksPage from "./pages/MyTasksPage";
+import ApprovalPage from "./pages/ApprovalPage";
 import CreateTaskPage from "./pages/CreateTaskPage";
 import TaskDetailPage from "./pages/TaskDetailPage";
 import EditTaskPage from "./pages/EditTaskPage";
@@ -40,6 +41,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <MyTasksPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/approvals"
+              element={
+                <PrivateRoute>
+                  <ApprovalPage />
                 </PrivateRoute>
               }
             />
