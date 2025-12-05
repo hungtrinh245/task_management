@@ -72,3 +72,47 @@ button:focus-visible {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Dark mode styles */
+.dark {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.dark .ant-layout-sider {
+  background: linear-gradient(180deg, #141414 0%, #1f1f1f 100%);
+}
+
+.dark .ant-layout-header {
+  background: #141414 !important;
+  color: #ffffff;
+}
+
+.dark .ant-layout-content {
+  background: #1a1a1a;
+}
+
+.dark .ant-card {
+  background: #262626;
+  border-color: #434343;
+}
+
+.dark .ant-card-head {
+  color: #ffffff;
+}
+
+.dark .ant-card-body {
+  color: #ffffff;
+}
+
+.dark .ant-menu-dark {
+  background: linear-gradient(180deg, #141414 0%, #1f1f1f 100%);
+}
+
+.dark .ant-btn-text {
+  color: #ffffff;
+}
+
+.dark .ant-btn-text:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

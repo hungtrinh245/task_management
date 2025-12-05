@@ -351,9 +351,47 @@
       "attachments": [],
       "completed": false,
       "createdBy": "phạm minh quang",
-      "approvalStatus": "pending",
-      "updatedAt": "2025-12-05T06:40:24.263Z",
+      "approvalStatus": "approved",
+      "updatedAt": "2025-12-05T06:50:50.563Z",
       "id": "8f7a"
+    },
+    {
+      "id": "9294",
+      "title": "ddf",
+      "director": "dfdf",
+      "genre": "Development",
+      "description": "dfdf",
+      "dueDate": "2025-12-07",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "phạm minh quang",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1764917340632",
+          "title": "aaa",
+          "completed": false
+        },
+        {
+          "id": "1764917344224",
+          "title": "bbbb",
+          "completed": false
+        },
+        {
+          "id": "1764917346503",
+          "title": "cccc",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "phạm minh quang",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-05T06:49:19.770Z",
+      "updatedAt": "2025-12-05T06:51:01.362Z"
     }
   ],
   "users": [

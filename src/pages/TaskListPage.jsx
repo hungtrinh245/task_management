@@ -97,7 +97,14 @@ export default function TaskListPage() {
 
       return matchesSearch && matchesStatus && matchesAssignee && matchesRole;
     });
-  }, [tasks, searchText, filterStatus, filterAssignee, isManager, currentUserName]);
+  }, [
+    tasks,
+    searchText,
+    filterStatus,
+    filterAssignee,
+    isManager,
+    currentUserName,
+  ]);
 
   const completedCount = tasks.filter((t) => t.completed).length;
   const pendingCount = tasks.length - completedCount;

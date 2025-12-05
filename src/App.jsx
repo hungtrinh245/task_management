@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from "./components/layouts/MainLayout";
 import { TaskProvider } from "./contexts/TaskContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import DashboardPage from "./pages/DashboardPage";
 import TaskListPage from "./pages/TaskListPage";
 import MyTasksPage from "./pages/MyTasksPage";
@@ -16,87 +17,89 @@ import PublicRoute from "./components/PublicRoute";
 
 function App() {
   return (
-    <Router>
-      <TaskProvider>
-        <MainLayout>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <DashboardPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/tasks"
-              element={
-                <PrivateRoute>
-                  <TaskListPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/my-tasks"
-              element={
-                <PrivateRoute>
-                  <MyTasksPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/approvals"
-              element={
-                <PrivateRoute>
-                  <ApprovalPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/tasks/create"
-              element={
-                <PrivateRoute>
-                  <CreateTaskPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/tasks/:id"
-              element={
-                <PrivateRoute>
-                  <TaskDetailPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/tasks/edit/:id"
-              element={
-                <PrivateRoute>
-                  <EditTaskPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/auth/register"
-              element={
-                <PublicRoute>
-                  <RegisterPage />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path="/auth/login"
-              element={
-                <PublicRoute>
-                  <LoginPage />
-                </PublicRoute>
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </MainLayout>
-      </TaskProvider>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <TaskProvider>
+          <MainLayout>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <DashboardPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tasks"
+                element={
+                  <PrivateRoute>
+                    <TaskListPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/my-tasks"
+                element={
+                  <PrivateRoute>
+                    <MyTasksPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/approvals"
+                element={
+                  <PrivateRoute>
+                    <ApprovalPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tasks/create"
+                element={
+                  <PrivateRoute>
+                    <CreateTaskPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tasks/:id"
+                element={
+                  <PrivateRoute>
+                    <TaskDetailPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tasks/edit/:id"
+                element={
+                  <PrivateRoute>
+                    <EditTaskPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/auth/register"
+                element={
+                  <PublicRoute>
+                    <RegisterPage />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/auth/login"
+                element={
+                  <PublicRoute>
+                    <LoginPage />
+                  </PublicRoute>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </MainLayout>
+        </TaskProvider>
+      </Router>
+    </ThemeProvider>
   );
 }
 

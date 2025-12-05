@@ -140,18 +140,16 @@ export default function EditTaskPage() {
     }
   };
 
-  // Whenever subtasks change, if all subtasks are completed we move the
-  // task into the `review` status (not directly to `done`). Final
-  // completion must occur after manager approval. This keeps status in
-  // sync with the checklist while enforcing review/approval workflow.
+  // Bất cứ khi nào các nhiệm vụ phụ thay đổi, nếu tất cả các nhiệm vụ phụ đã hoàn thành,sẽ chuyển
+// nhiệm vụ sang trạng thái `xem xét` (không phải trực tiếp sang `hoàn thành`). Việc hoàn thành cuối
+// phải được thực hiện sau khi được quản lý phê duyệt. Điều này giúp duy trì trạng thái
+// đồng bộ với danh sách kiểm tra trong khi thực thi quy trình xem xét/phê duyệt.
   const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
   const syncStatusWithSubtasks = (nextSubtasks) => {
     if (!nextSubtasks || nextSubtasks.length === 0) return;
     const allDone = nextSubtasks.every((s) => s.completed === true);
     if (allDone) {
-      // Update the form field so user sees the change in the UI
       form.setFieldsValue({ status: "review" });
-      // Persist change immediately: move task to review (approval remains as-is)
       (async () => {
         try {
           const values = form.getFieldsValue();
@@ -179,8 +177,7 @@ export default function EditTaskPage() {
   };
 
   // Only allow toggling subtasks if task is approved (or manager)
-  const canToggleSubtask =
-    isManager || task.approvalStatus === "approved";
+  const canToggleSubtask = isManager || task.approvalStatus === "approved";
 
   const handleToggleSubtask = (subtaskId) => {
     if (!canToggleSubtask) {
@@ -254,8 +251,7 @@ export default function EditTaskPage() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Determine status & completed with review/approval workflow
-      const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
+// Xác định trạng thái & hoàn thành với quy trình đánh giá/phê duyệt      const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
       const originalStatus = task.status || "todo";
       let status = values.status || originalStatus;
       let completed = false;
@@ -323,9 +319,6 @@ export default function EditTaskPage() {
     }
   };
 
-  // Compute which status options should be disabled so users cannot move
-  // backwards. Also, prevent selecting `done` until the task has been
-  // approved by a manager.
   const currentTaskStatus = task.status || "todo";
   const currentStatusIndex = statusOrder.indexOf(currentTaskStatus);
   const optionsWithDisabled = statusOptions.map((opt) => {

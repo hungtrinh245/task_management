@@ -64,7 +64,10 @@ export default function MyTasksPage() {
       const genre = String(task.genre || "").toLowerCase();
 
       const matchesSearch =
-        q === "" || title.includes(q) || director.includes(q) || genre.includes(q);
+        q === "" ||
+        title.includes(q) ||
+        director.includes(q) ||
+        genre.includes(q);
 
       const isOverdue =
         task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
@@ -185,7 +188,9 @@ export default function MyTasksPage() {
         };
         return (
           <Tag color={colorMap[priority] || "blue"}>
-            {priority ? priority.charAt(0).toUpperCase() + priority.slice(1) : "N/A"}
+            {priority
+              ? priority.charAt(0).toUpperCase() + priority.slice(1)
+              : "N/A"}
           </Tag>
         );
       },
@@ -202,7 +207,9 @@ export default function MyTasksPage() {
       render: (_, record) => {
         if (record.completed) return <Tag color="green">✓ Completed</Tag>;
         const overdue =
-          record.dueDate && new Date(record.dueDate) < new Date() && !record.completed;
+          record.dueDate &&
+          new Date(record.dueDate) < new Date() &&
+          !record.completed;
         if (overdue) return <Tag color="red">Overdue</Tag>;
         return <Tag color="orange">Pending</Tag>;
       },

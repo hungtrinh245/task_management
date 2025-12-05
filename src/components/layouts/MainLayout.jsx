@@ -11,6 +11,7 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import { useTasks } from "../../hooks/useTasks";
+import { useTheme } from "../../contexts/ThemeContext";
 // MainLayout: application shell containing Sider + Header + Content
 // - Shows navigation links in the Sider
 // - Displays a user menu in the Header when authenticated
@@ -23,6 +24,7 @@ export default function MainLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { tasks } = useTasks();
+  const { isDarkMode, toggleTheme } = useTheme();
 
   const showLogoutConfirm = () => {
     Modal.confirm({
@@ -95,7 +97,7 @@ export default function MainLayout({ children }) {
   }
 
   if (!AuthService.isAuthenticated()) {
-    // Only show register/login links when not authenticated
+ // Chỉ hiển thị liên kết đăng ký/đăng nhập khi chưa được xác thực
     menuItems.push({
       key: "/auth/register",
       icon: <ArrowRightOutlined />,
@@ -109,11 +111,11 @@ export default function MainLayout({ children }) {
   }
 
   const selectedKey = (() => {
-    // Exact match: /approvals
+    //approvals
     if (location.pathname === "/approvals") return "/approvals";
-    // Exact match: /my-tasks
+    //my-tasks
     if (location.pathname === "/my-tasks") return "/my-tasks";
-    // Exact match: /tasks/create, /tasks/:id, /tasks/edit/:id
+    //tasks/create, /tasks/:id, /tasks/edit/:id
     if (location.pathname.startsWith("/tasks")) return "/tasks";
     // Exact match: /
     if (location.pathname === "/") return "/";
@@ -155,7 +157,7 @@ export default function MainLayout({ children }) {
       <Layout>
         <Header
           style={{
-            background: "#fff",
+            background: isDarkMode ? "#141414" : "#fff",
             padding: "0 24px",
             boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
             display: "flex",
@@ -167,12 +169,16 @@ export default function MainLayout({ children }) {
               margin: 0,
               fontSize: 20,
               fontWeight: 600,
-              color: "#001529",
+              color: isDarkMode ? "#ffffff" : "#001529",
             }}
           >
             Task Management System
           </h1>
           <div style={{ marginLeft: "auto", display: "flex", gap: 12 }}>
+            {/* Theme toggle button */}
+            <Button type="text" onClick={toggleTheme} style={{ fontSize: 18 }}>
+              {isDarkMode ? "☀️" : "🌙"}
+            </Button>
             {/* Show user avatar + dropdown when authenticated */}
             {AuthService.isAuthenticated() ? (
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
@@ -189,7 +195,7 @@ export default function MainLayout({ children }) {
           <div
             style={{
               padding: 24,
-              background: "#fff",
+              background: isDarkMode ? "#262626" : "#fff",
               borderRadius: 8,
               boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
             }}

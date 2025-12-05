@@ -37,7 +37,7 @@ import {
 
 export default function DashboardPage() {
   const { tasks, loading, error, deleteTask } = useTasks();
-  
+
   // Get current user
   const currentUser = AuthService.getUser();
   const currentUserRole = currentUser?.role || "employee";
@@ -115,9 +115,9 @@ export default function DashboardPage() {
   // Convert to array for chart
   const assigneeChartData = Object.values(tasksByAssignee).map((item) => ({
     name: item.assignee,
-    "Total": item.total,
-    "Completed": item.completed,
-    "Pending": item.pending,
+    Total: item.total,
+    Completed: item.completed,
+    Pending: item.pending,
   }));
 
   const columns = [
