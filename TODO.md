@@ -1,15 +1,18 @@
-# TODO: Implement Audit Log and Notification Feature
+# TODO: Improve Task Status Editing Logic in EditTaskPage.jsx
 
 ## Completed Tasks
 
-- [ ] Create TODO.md file
+- [x] Analyze EditTaskPage.jsx and create detailed plan
+- [x] Get user approval for the plan
 
 ## Pending Tasks
 
-- [ ] Update db.json and db.with-users.json: Add auditLogs field to existing tasks
-- [ ] Create NotificationService.js: Service to handle notifications
-- [ ] Update TaskService.js: Add audit logging to updateTask method
-- [ ] Update EditTaskPage.jsx: Integrate notifications after task updates
-- [ ] Create NotificationBell component: UI component to display notifications
-- [ ] Update MyTasksPage.jsx: Show notifications to employees
-- [ ] Test the implementation: Verify audit logs and notifications work correctly
+- [ ] Add missing imports: Modal and Tooltip from antd
+- [ ] Add state for confirmation modal: Add state variables for modal visibility, pending status change, and manager override
+- [ ] Modify status options: Update labels with clearer descriptions and add tooltips for disabled options
+- [ ] Enhance status select: Use Tooltip wrapper for disabled options with explanatory text
+- [ ] Add confirmation modal: Implement modal that appears when changing to "review" or "done", explaining implications
+- [ ] Add manager toggle: Add checkbox for managers to "Force status change" overriding restrictions
+- [ ] Update restrictions: Ensure employees can't select "done", and "review" only if approved, with proper tooltips
+- [ ] Update onFinish: Integrate modal confirmation and manager override logic
+- [ ] Test changes: Verify status changes work correctly for managers and employees

@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
+import SmartSuggestions from "../components/SmartSuggestions";
 
 export default function CreateTaskPage() {
   const [form] = Form.useForm();
@@ -208,6 +209,14 @@ export default function CreateTaskPage() {
         }
         style={{ borderRadius: 8 }}
       >
+        <SmartSuggestions
+          form={form}
+          onSuggestionApply={(type, value) => {
+            if (type === "subtasks") {
+              setSubtasks(value);
+            }
+          }}
+        />
         <Form
           form={form}
           layout="vertical"

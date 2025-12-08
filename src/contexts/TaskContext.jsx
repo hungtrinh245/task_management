@@ -94,24 +94,45 @@ export const TaskProvider = ({ children }) => {
   /**
    * Toggle trạng thái hoàn thành của task
    */
-  const toggleTask = useCallback(async (id, completed) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const updatedTask = await TaskService.toggleTaskCompletion(id, completed);
-      setTasks((prevTasks) =>
-        prevTasks.map((task) => (task.id === id ? updatedTask : task))
-      );
-    } catch (err) {
-      const errorMsg =
-        err.response?.data?.message || err.message || "Lỗi khi toggle task";
-      setError(errorMsg);
-      console.error("toggleTask error:", err);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const toggleTask = useCallback(
+    async (id, completed) => {
+      setLoading(true);
+      setError(null);
+      try {
+        // Check if trying to mark as completed but not all subtasks are done
+        if (completed) {
+          const task = tasks.find((t) => String(t.id) === String(id));
+          if (task && task.subtasks && task.subtasks.length > 0) {
+            const allSubtasksCompleted = task.subtasks.every(
+              (subtask) => subtask.completed
+            );
+            if (!allSubtasksCompleted) {
+              throw new Error(
+                "Cannot mark task as completed until all subtasks are finished"
+              );
+            }
+          }
+        }
+
+        const updatedTask = await TaskService.toggleTaskCompletion(
+          id,
+          completed
+        );
+        setTasks((prevTasks) =>
+          prevTasks.map((task) => (task.id === id ? updatedTask : task))
+        );
+      } catch (err) {
+        const errorMsg =
+          err.response?.data?.message || err.message || "Lỗi khi toggle task";
+        setError(errorMsg);
+        console.error("toggleTask error:", err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [tasks]
+  );
 
   /**
    * Lấy task từ state dựa trên ID (synchronous - từ state đã load)

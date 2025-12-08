@@ -7,11 +7,12 @@ import {
   Space,
   message,
   Empty,
-  Table,
   Divider,
   List,
   Upload,
   Alert,
+  Modal,
+  Tooltip,
 } from "antd";
 import {
   EditOutlined,
@@ -27,11 +28,23 @@ import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
 
 const statusOptions = [
-  { label: "📋 Todo", value: "todo" },
-  { label: "⏳ In Progress", value: "inprogress" },
-  { label: "🔍 Review", value: "review" },
-  { label: "✅ Complete", value: "done" },
-  { label: "⚠️ Quá hạn", value: "overdue" },
+  {
+    label: "📋 To Do - Task has been created but work hasn't started",
+    value: "todo",
+  },
+  {
+    label: "⏳ In Progress - Work is actively being done on this task",
+    value: "inprogress",
+  },
+  {
+    label: "🔍 Review - Task is ready for manager review and approval",
+    value: "review",
+  },
+  {
+    label: "✅ Done - Task is completed and all requirements met",
+    value: "done",
+  },
+  { label: "⚠️ Overdue - Task deadline has passed", value: "overdue" },
 ];
 
 const priorityOptions = [
@@ -63,6 +76,10 @@ export default function EditTaskPage() {
   const [newCommentText, setNewCommentText] = useState("");
   const [newCommentAuthor, setNewCommentAuthor] = useState("");
   const [attachments, setAttachments] = useState([]);
+  const [confirmationModalVisible, setConfirmationModalVisible] =
+    useState(false);
+  const [pendingStatusChange, setPendingStatusChange] = useState(null);
+  const [managerOverride, setManagerOverride] = useState(false);
 
   // Get current logged-in user
   const currentUser = AuthService.getUser();
@@ -140,39 +157,15 @@ export default function EditTaskPage() {
     }
   };
 
-  // Bất cứ khi nào các nhiệm vụ phụ thay đổi, nếu tất cả các nhiệm vụ phụ đã hoàn thành,sẽ chuyển
-// nhiệm vụ sang trạng thái `xem xét` (không phải trực tiếp sang `hoàn thành`). Việc hoàn thành cuối
-// phải được thực hiện sau khi được quản lý phê duyệt. Điều này giúp duy trì trạng thái
-// đồng bộ với danh sách kiểm tra trong khi thực thi quy trình xem xét/phê duyệt.
+  // Check if all subtasks are completed and suggest moving to review
   const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
   const syncStatusWithSubtasks = (nextSubtasks) => {
     if (!nextSubtasks || nextSubtasks.length === 0) return;
     const allDone = nextSubtasks.every((s) => s.completed === true);
     if (allDone) {
-      form.setFieldsValue({ status: "review" });
-      (async () => {
-        try {
-          const values = form.getFieldsValue();
-          await editTask(id, {
-            title: values.title || task.title,
-            director: values.director || task.director,
-            genre: values.genre || task.genre,
-            description: values.description || task.description || "",
-            dueDate: values.dueDate || task.dueDate || "",
-            status: "review",
-            priority: values.priority || task.priority || "medium",
-            tags: values.tags || task.tags || [],
-            subtasks: nextSubtasks,
-            comments: comments,
-            attachments: attachments,
-            completed: false, // not completed until manager approves
-            approvalStatus: task.approvalStatus || "pending",
-          });
-          message.info("All subtasks completed — task moved to Review.");
-        } catch (err) {
-          console.error("Auto-save on subtasks completion failed:", err);
-        }
-      })();
+      message.info(
+        "All subtasks completed. Consider moving the task to 'Review' status."
+      );
     }
   };
 
@@ -251,22 +244,28 @@ export default function EditTaskPage() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-// Xác định trạng thái & hoàn thành với quy trình đánh giá/phê duyệt      const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
+      const statusOrder = ["todo", "inprogress", "review", "done", "overdue"];
       const originalStatus = task.status || "todo";
       let status = values.status || originalStatus;
       let completed = false;
 
-      // If there are subtasks and all are done, move to review (not done)
-      if (subtasks && subtasks.length > 0) {
-        const allDone = subtasks.every((s) => s.completed === true);
-        if (allDone) {
-          status = "review";
-          completed = false; // final completion requires approval
-        }
-      } else {
-        // No subtasks: treat 'done' as completed
-        completed = status === "done";
+      // Check if all subtasks are completed before allowing 'done' status
+      const hasSubtasks = subtasks && subtasks.length > 0;
+      const allSubtasksCompleted =
+        hasSubtasks && subtasks.every((subtask) => subtask.completed);
+
+      // Prevent marking as 'done' if there are subtasks and not all are completed
+      if (status === "done" && hasSubtasks && !allSubtasksCompleted) {
+        message.error(
+          "Cannot mark task as complete until all subtasks are finished."
+        );
+        setLoading(false);
+        return;
       }
+
+      // Allow manual status selection - no forced changes based on subtasks
+      // No subtasks: treat 'done' as completed
+      completed = status === "done";
 
       // Prevent moving backwards in status order (once progressed, cannot go back)
       const originalIdx = statusOrder.indexOf(originalStatus);
@@ -802,6 +801,48 @@ export default function EditTaskPage() {
           </Form.Item>
         </Form>
       </Card>
+
+      {/* Confirmation Modal for Status Changes */}
+      <Modal
+        title="Confirm Status Change"
+        open={confirmationModalVisible}
+        onOk={() => {
+          if (pendingStatusChange) {
+            form.setFieldsValue({ status: pendingStatusChange });
+          }
+          setConfirmationModalVisible(false);
+          setPendingStatusChange(null);
+        }}
+        onCancel={() => {
+          setConfirmationModalVisible(false);
+          setPendingStatusChange(null);
+        }}
+        okText="Confirm"
+        cancelText="Cancel"
+      >
+        <p>
+          Are you sure you want to change the task status to{" "}
+          <strong>
+            {pendingStatusChange === "review"
+              ? "Review"
+              : pendingStatusChange === "done"
+              ? "Done"
+              : pendingStatusChange}
+          </strong>
+          ?
+        </p>
+        {pendingStatusChange === "review" && (
+          <p>
+            This will mark the task as ready for manager review and approval.
+          </p>
+        )}
+        {pendingStatusChange === "done" && (
+          <p>
+            This will mark the task as completed. Make sure all requirements are
+            met.
+          </p>
+        )}
+      </Modal>
     </div>
   );
 }
