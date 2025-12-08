@@ -29,8 +29,22 @@ const UserService = {
         updatedAt: new Date().toISOString(),
       });
       return updatedUser;
-    } catch (error) {
+    } catch {
       throw new Error("Failed to update profile");
+    }
+  },
+
+  // Upload avatar
+  uploadAvatar: async (userId, base64Data) => {
+    try {
+      // Update user with base64 avatar
+      const updatedUser = await apiClient.patch(`/users/${userId}`, {
+        avatar: base64Data,
+        updatedAt: new Date().toISOString(),
+      });
+      return updatedUser;
+    } catch {
+      throw new Error("Failed to upload avatar");
     }
   },
 };

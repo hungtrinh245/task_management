@@ -4,6 +4,7 @@ import { EditOutlined, SaveOutlined, CloseOutlined } from "@ant-design/icons";
 import AuthService from "../services/AuthService";
 import UserService from "../services/UserService";
 import { useTheme } from "../contexts/ThemeContext";
+import { useRef } from "react";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -12,7 +13,10 @@ export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [form] = Form.useForm();
+  const fileInputRef = useRef(null);
   const { isDarkMode } = useTheme();
 
   useEffect(() => {
@@ -27,7 +31,7 @@ export default function ProfilePage() {
         setUser(userData);
         form.setFieldsValue(userData);
       }
-    } catch (error) {
+    } catch {
       message.error("Không thể tải thông tin hồ sơ");
     }
   };
@@ -53,6 +57,53 @@ export default function ProfilePage() {
       message.error("Cập nhật hồ sơ thất bại");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      message.error("Chỉ chấp nhận file hình ảnh");
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      message.error("File không được vượt quá 5MB");
+      return;
+    }
+
+    // Set preview
+    const reader = new FileReader();
+    reader.onload = (e) => setAvatarPreview(e.target.result);
+    reader.readAsDataURL(file);
+
+    // Upload file
+    try {
+      setUploading(true);
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const updatedUser = await UserService.uploadAvatar(user.id, base64);
+      setUser(updatedUser);
+      setAvatarPreview(null);
+      message.success("Cập nhật avatar thành công");
+    } catch {
+      message.error("Cập nhật avatar thất bại");
+      setAvatarPreview(null);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -94,14 +145,31 @@ export default function ProfilePage() {
         <div className="flex flex-col md:flex-row gap-6">
           {/* Avatar Section */}
           <div className="flex flex-col items-center space-y-4">
-            <Avatar
-              size={120}
-              src={user.avatar}
-              alt={user.name}
-              className="border-4 border-blue-500"
-            >
-              {user.name?.charAt(0)?.toUpperCase()}
-            </Avatar>
+            <div className="relative">
+              <Avatar
+                size={120}
+                src={avatarPreview || user.avatar}
+                alt={user.name}
+                className={`border-4 border-blue-500 cursor-pointer hover:opacity-80 transition-opacity ${
+                  uploading ? "opacity-50" : ""
+                }`}
+                onClick={handleAvatarClick}
+              >
+                {user.name?.charAt(0)?.toUpperCase()}
+              </Avatar>
+              {uploading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+                  <div className="text-white text-sm">Đang tải...</div>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/png,image/jpeg,image/jpg"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </div>
             <div className="text-center">
               <h3 className="text-xl font-semibold">{user.name}</h3>
               <p className="text-gray-500">{user.email}</p>
@@ -180,10 +248,6 @@ export default function ProfilePage() {
                   maxLength={500}
                   showCount
                 />
-              </Form.Item>
-
-              <Form.Item label="Avatar URL" name="avatar">
-                <Input placeholder="Nhập URL avatar" />
               </Form.Item>
             </Form>
           </div>
