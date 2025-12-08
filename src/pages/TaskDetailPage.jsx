@@ -25,6 +25,7 @@ import {
 import { useTasks } from "../hooks/useTasks";
 import AuthService from "../services/AuthService";
 import { useNavigate, useParams } from "react-router-dom";
+import SmartPriorityEngine from "../components/SmartPriorityEngine";
 
 const statusOptions = [
   { label: "📋 Todo", value: "todo" },
@@ -86,6 +87,11 @@ export default function TaskDetailPage() {
         navigate("/tasks");
       },
     });
+  };
+
+  const handleApplySuggestion = (suggestion) => {
+    const updatedTask = { ...task, priority: suggestion.priority };
+    editTask(task.id, updatedTask);
   };
 
   return (
@@ -351,6 +357,13 @@ export default function TaskDetailPage() {
           </Col>
         </Row>
       </Card>
+
+      {/* Smart Priority Engine */}
+      <SmartPriorityEngine
+        task={task}
+        onApplySuggestion={handleApplySuggestion}
+        style={{ marginTop: 16 }}
+      />
 
       {/* Checklist - Display Only */}
       <Card
