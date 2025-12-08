@@ -12,6 +12,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import { useTasks } from "../../hooks/useTasks";
 import { useTheme } from "../../contexts/ThemeContext";
+import NotificationBell from "../NotificationBell";
 // MainLayout: application shell containing Sider + Header + Content
 // - Shows navigation links in the Sider
 // - Displays a user menu in the Header when authenticated
@@ -181,17 +182,29 @@ export default function MainLayout({ children }) {
           >
             Task Management System
           </h1>
-          <div style={{ marginLeft: "auto", display: "flex", gap: 12 }}>
+          <div
+            style={{
+              marginLeft: "auto",
+              display: "flex",
+              gap: 12,
+              alignItems: "center",
+            }}
+          >
             {/* Theme toggle button */}
             <Button type="text" onClick={toggleTheme} style={{ fontSize: 18 }}>
               {isDarkMode ? "☀️" : "🌙"}
             </Button>
+            {/* Notification Bell - only show when authenticated */}
+            {AuthService.isAuthenticated() && <NotificationBell />}
             {/* Show user avatar + dropdown when authenticated */}
             {AuthService.isAuthenticated() ? (
               <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
-                <Button>
+                <Button
+                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                >
                   <Avatar style={{ marginRight: 8 }}>{userName[0]}</Avatar>
-                  {userName}
+                  <span>{userName}</span>
+                  <NotificationBell />
                 </Button>
               </Dropdown>
             ) : null}

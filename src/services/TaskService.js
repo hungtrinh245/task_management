@@ -1,4 +1,5 @@
 import apiClient from "./apiClient";
+import AuditService from "./AuditService";
 
 const BASE_ENDPOINT = "/tasks";
 
@@ -62,10 +63,18 @@ const TaskService = {
    */
   async updateTask(id, updates) {
     try {
+      // Lấy task cũ để so sánh thay đổi
+      const oldTask = await this.getTaskById(id);
+
+      // Cập nhật task
       const response = await apiClient.put(`${BASE_ENDPOINT}/${id}`, {
         ...updates,
         updatedAt: new Date().toISOString(),
       });
+
+      // Ghi audit log và thông báo
+      await AuditService.logTaskUpdate(oldTask, response);
+
       return response;
     } catch (error) {
       console.error(`TaskService.updateTask(${id}) error:`, error);
