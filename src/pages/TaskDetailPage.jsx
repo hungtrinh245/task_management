@@ -26,6 +26,7 @@ import { useTasks } from "../hooks/useTasks";
 import AuthService from "../services/AuthService";
 import { useNavigate, useParams } from "react-router-dom";
 import SmartPriorityEngine from "../components/SmartPriorityEngine";
+import KnowledgePanel from "../components/KnowledgePanel";
 
 const statusOptions = [
   { label: "📋 Todo", value: "todo" },
@@ -364,6 +365,9 @@ export default function TaskDetailPage() {
         onApplySuggestion={handleApplySuggestion}
         style={{ marginTop: 16 }}
       />
+
+      {/* Knowledge Panel */}
+      <KnowledgePanel task={task} />
 
       {/* Checklist - Display Only */}
       <Card
