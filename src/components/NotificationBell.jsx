@@ -65,7 +65,7 @@ const NotificationBell = () => {
         }`}
       >
         <svg
-          className={`w-6 h-6 transition-transform duration-200 ${
+          className={`w-8 h-8 transition-transform duration-200 ${
             unreadCount > 0 ? "animate-bounce" : ""
           }`}
           fill="none"

@@ -24,17 +24,17 @@ const RegisterPage = () => {
         err?.response?.data?.message || err?.message || "Lỗi khi đăng ký";
       message.error(apiMessage);
     }
-  };
+  };  
 
   return (
-    <div className="flex items-center justify-center h-full p-6">
-      <Card title="Tạo tài khoản" style={{ width: 420 }}>
+  <div className="flex justify-center w-full py-10">
+      <Card title="Tạo tài khoản" style={{ width: "100%", maxWidth: 420 }}>
         <Alert
           message="Chọn role phù hợp"
           description="Manager: Có quyền tạo và gán task. Employee: Xem và cập nhật task của mình."
           type="info"
           showIcon
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 15 }}
         />
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item

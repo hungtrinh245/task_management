@@ -112,69 +112,79 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-2xl mx-auto p-4">
       <Card
-        title="Thông tin cá nhân"
-        extra={
-          !isEditing ? (
-            <Button type="primary" icon={<EditOutlined />} onClick={handleEdit}>
-              Chỉnh sửa
-            </Button>
-          ) : (
-            <div className="space-x-2">
+        title={
+          <div className="flex items-center justify-between">
+            <span>Thông tin cá nhân</span>
+            {!isEditing ? (
               <Button
                 type="primary"
-                icon={<SaveOutlined />}
-                loading={loading}
-                onClick={handleSave}
+                icon={<EditOutlined />}
+                onClick={handleEdit}
+                size="small"
               >
-                Lưu
+                Chỉnh sửa
               </Button>
-              <Button
-                icon={<CloseOutlined />}
-                onClick={handleCancel}
-                disabled={loading}
-              >
-                Hủy
-              </Button>
-            </div>
-          )
+            ) : (
+              <div className="space-x-2">
+                <Button
+                  type="primary"
+                  icon={<SaveOutlined />}
+                  loading={loading}
+                  onClick={handleSave}
+                  size="small"
+                >
+                  Lưu
+                </Button>
+                <Button
+                  icon={<CloseOutlined />}
+                  onClick={handleCancel}
+                  disabled={loading}
+                  size="small"
+                >
+                  Hủy
+                </Button>
+              </div>
+            )}
+          </div>
         }
         className={isDarkMode ? "bg-gray-800 border-gray-700" : ""}
+        bodyStyle={{ padding: "16px" }}
       >
-        <div className="flex flex-col md:flex-row gap-6">
-          {/* Avatar Section */}
-          <div className="flex flex-col items-center space-y-4">
-            <div className="relative">
-              <Avatar
-                size={120}
-                src={avatarPreview || user.avatar}
-                alt={user.name}
-                className={`border-4 border-blue-500 cursor-pointer hover:opacity-80 transition-opacity ${
-                  uploading ? "opacity-50" : ""
-                }`}
-                onClick={handleAvatarClick}
-              >
-                {user.name?.charAt(0)?.toUpperCase()}
-              </Avatar>
-              {uploading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
-                  <div className="text-white text-sm">Đang tải...</div>
-                </div>
-              )}
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/png,image/jpeg,image/jpg"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-            </div>
-            <div className="text-center">
-              <h3 className="text-xl font-semibold">{user.name}</h3>
-              <p className="text-gray-500">{user.email}</p>
+        {/* Header with Avatar and Basic Info */}
+        <div className="flex items-center space-x-4 mb-4">
+          <div className="relative">
+            <Avatar
+              size={80}
+              src={avatarPreview || user.avatar}
+              alt={user.name}
+              className={`border-2 border-blue-500 cursor-pointer hover:opacity-80 transition-opacity ${
+                uploading ? "opacity-50" : ""
+              }`}
+              onClick={handleAvatarClick}
+            >
+              {user.name?.charAt(0)?.toUpperCase()}
+            </Avatar>
+            {uploading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+                <div className="text-white text-xs">Đang tải...</div>
+              </div>
+            )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/png,image/jpeg,image/jpg"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold">{user.name}</h3>
+            <p className="text-gray-500 text-sm">{user.email}</p>
+            <div className="flex items-center space-x-2 mt-1">
               <span
-                className={`inline-block px-3 py-1 rounded-full text-sm ${
+                className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                   user.role === "manager"
                     ? "bg-blue-100 text-blue-800"
                     : "bg-green-100 text-green-800"
@@ -182,92 +192,82 @@ export default function ProfilePage() {
               >
                 {user.role === "manager" ? "Quản lý" : "Nhân viên"}
               </span>
+              <span className="text-xs text-gray-500">ID: {user.id}</span>
             </div>
-          </div>
-
-          {/* Profile Form */}
-          <div className="flex-1">
-            <Form
-              form={form}
-              layout="vertical"
-              initialValues={user}
-              disabled={!isEditing}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Form.Item
-                  label="Họ và tên"
-                  name="name"
-                  rules={[
-                    { required: true, message: "Vui lòng nhập họ và tên" },
-                  ]}
-                >
-                  <Input placeholder="Nhập họ và tên" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    { required: true, message: "Vui lòng nhập email" },
-                    { type: "email", message: "Email không hợp lệ" },
-                  ]}
-                >
-                  <Input placeholder="Nhập email" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Số điện thoại"
-                  name="phone"
-                  rules={[
-                    { required: true, message: "Vui lòng nhập số điện thoại" },
-                  ]}
-                >
-                  <Input placeholder="Nhập số điện thoại" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Phòng ban"
-                  name="department"
-                  rules={[
-                    { required: true, message: "Vui lòng chọn phòng ban" },
-                  ]}
-                >
-                  <Select placeholder="Chọn phòng ban">
-                    <Option value="Development">Development</Option>
-                    <Option value="Testing">Testing</Option>
-                    <Option value="Design">Design</Option>
-                    <Option value="Management">Management</Option>
-                  </Select>
-                </Form.Item>
-              </div>
-
-              <Form.Item label="Giới thiệu bản thân" name="bio">
-                <TextArea
-                  rows={4}
-                  placeholder="Viết một chút về bản thân..."
-                  maxLength={500}
-                  showCount
-                />
-              </Form.Item>
-            </Form>
           </div>
         </div>
 
+        {/* Profile Form */}
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={user}
+          disabled={!isEditing}
+          size="small"
+        >
+          <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Form.Item
+                label="Họ và tên"
+                name="name"
+                rules={[{ required: true, message: "Vui lòng nhập họ và tên" }]}
+              >
+                <Input placeholder="Nhập họ và tên" />
+              </Form.Item>
+
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Vui lòng nhập email" },
+                  { type: "email", message: "Email không hợp lệ" },
+                ]}
+              >
+                <Input placeholder="Nhập email" />
+              </Form.Item>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Form.Item
+                label="Số điện thoại"
+                name="phone"
+                rules={[
+                  { required: true, message: "Vui lòng nhập số điện thoại" },
+                ]}
+              >
+                <Input placeholder="Nhập số điện thoại" />
+              </Form.Item>
+
+              <Form.Item
+                label="Phòng ban"
+                name="department"
+                rules={[{ required: true, message: "Vui lòng chọn phòng ban" }]}
+              >
+                <Select placeholder="Chọn phòng ban">
+                  <Option value="Development">Development</Option>
+                  <Option value="Testing">Testing</Option>
+                  <Option value="Design">Design</Option>
+                  <Option value="Management">Management</Option>
+                </Select>
+              </Form.Item>
+            </div>
+
+            <Form.Item label="Giới thiệu bản thân" name="bio">
+              <TextArea
+                rows={3}
+                placeholder="Viết một chút về bản thân..."
+                maxLength={500}
+                showCount
+              />
+            </Form.Item>
+          </div>
+        </Form>
+
         {/* Additional Info */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
-            <div>
-              <span className="font-medium">Ngày tạo tài khoản:</span>
-              <p>{new Date(user.createdAt).toLocaleDateString("vi-VN")}</p>
-            </div>
-            <div>
-              <span className="font-medium">Vai trò:</span>
-              <p>{user.role === "manager" ? "Quản lý" : "Nhân viên"}</p>
-            </div>
-            <div>
-              <span className="font-medium">ID người dùng:</span>
-              <p>{user.id}</p>
-            </div>
+        <div className="mt-4 pt-3 border-t border-gray-200">
+          <div className="text-xs text-gray-500">
+            <span className="font-medium">Ngày tạo tài khoản:</span>{" "}
+            {new Date(user.createdAt).toLocaleDateString("vi-VN")}
           </div>
         </div>
       </Card>

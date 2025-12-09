@@ -27,8 +27,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-full p-6">
-      <Card title="Đăng nhập" style={{ width: 420 }}>
+    <div className="flex items-center justify-center min-h-screen p-6">
+      <Card title="Đăng nhập" style={{ width: "100%", maxWidth: 420 }}>
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
             label="Email"

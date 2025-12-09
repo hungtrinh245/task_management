@@ -69,9 +69,7 @@ button:focus-visible {
 
 
 /* src/index.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Dark mode styles */
 .dark {

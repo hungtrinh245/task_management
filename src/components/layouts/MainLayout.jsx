@@ -13,6 +13,8 @@ import AuthService from "../../services/AuthService";
 import { useTasks } from "../../hooks/useTasks";
 import { useTheme } from "../../contexts/ThemeContext";
 import NotificationBell from "../NotificationBell";
+import AuditService from "../../services/AuditService";
+import { useState, useEffect } from "react";
 // MainLayout: application shell containing Sider + Header + Content
 // - Shows navigation links in the Sider
 // - Displays a user menu in the Header when authenticated
@@ -204,7 +206,6 @@ export default function MainLayout({ children }) {
                 >
                   <Avatar style={{ marginRight: 8 }}>{userName[0]}</Avatar>
                   <span>{userName}</span>
-                  <NotificationBell />
                 </Button>
               </Dropdown>
             ) : null}
