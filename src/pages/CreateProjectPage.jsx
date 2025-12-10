@@ -24,13 +24,15 @@ const CreateProjectPage = () => {
   const [form] = Form.useForm();
 
   const currentUser = AuthService.getUser();
+  const currentRole = currentUser?.role || "employee";
+  const isManager = currentRole === "manager" || currentRole === "admin";
 
-  // Check if user is manager
-  if (!currentUser || currentUser.role !== "manager") {
+  // Check if user is manager/admin
+  if (!isManager) {
     return (
       <Card style={{ borderRadius: 8, textAlign: "center" }}>
         <h2>Access Denied</h2>
-        <p>Only managers can create projects.</p>
+        <p>Only managers/admin can create projects.</p>
         <Button
           icon={<ArrowLeftOutlined />}
           onClick={() => navigate("/projects")}
@@ -49,7 +51,11 @@ const CreateProjectPage = () => {
         startDate: values.startDate.format("YYYY-MM-DD"),
         endDate: values.endDate.format("YYYY-MM-DD"),
         status: "active",
-        createdBy: currentUser.username,
+        createdBy:
+          currentUser?.name ||
+          currentUser?.email ||
+          currentUser?.username ||
+          "manager",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         taskIds: [],
@@ -162,16 +168,6 @@ const CreateProjectPage = () => {
               />
             </Form.Item>
           </div>
-
-          <Form.Item name="budget" label="Budget (USD)">
-            <InputNumber
-              style={{ width: "100%" }}
-              placeholder="Enter budget amount"
-              min={0}
-              step={1000}
-            />
-          </Form.Item>
-
           <Form.Item name="priority" label="Priority">
             <Select>
               <Option value="low">Low</Option>

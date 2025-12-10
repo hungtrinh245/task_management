@@ -252,14 +252,6 @@ const EditProjectPage = () => {
             </Form.Item>
           </div>
 
-          <Form.Item name="budget" label="Budget (USD)">
-            <InputNumber
-              style={{ width: "100%" }}
-              placeholder="Enter budget amount"
-              min={0}
-              step={1000}
-            />
-          </Form.Item>
 
           <Form.Item name="priority" label="Priority">
             <Select>

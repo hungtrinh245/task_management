@@ -87,6 +87,23 @@ export default function EditTaskPage() {
   const isManager = currentUserRole === "manager";
   const currentUserName = currentUser?.name || currentUser?.email || "";
 
+  // Guard: only manager can access full edit form
+  if (!isManager) {
+    return (
+      <Card style={{ borderRadius: 8, textAlign: "center" }}>
+        <h2>Access Denied</h2>
+        <p>Only managers can edit tasks. You can update status/comments in task detail.</p>
+        <Button
+          icon={<ArrowLeftOutlined />}
+          onClick={() => navigate(`/tasks/${id}`)}
+          style={{ marginTop: 16 }}
+        >
+          Back to Task
+        </Button>
+      </Card>
+    );
+  }
+
   const task = getTaskById(id);
 
   const genreOptions = [

@@ -68,9 +68,12 @@ export default function ProjectDetailPage() {
     const [teamStats, setTeamStats] = useState(null);
     const [activeTab, setActiveTab] = useState("overview");
     const [assignTaskModalVisible, setAssignTaskModalVisible] = useState(false);
+    const [selectedTaskId, setSelectedTaskId] = useState(null);
+    const [selectedAssignee, setSelectedAssignee] = useState(null);
 
     const currentUser = AuthService.getUser();
-    const isManager = currentUser?.role === "manager";
+    const role = currentUser?.role || "employee";
+    const isManager = role === "manager" || role === "admin";
 
     useEffect(() => {
         loadProject();
@@ -195,16 +198,28 @@ export default function ProjectDetailPage() {
         }
     };
 
-    const handleAssignTask = async (taskId) => {
+    const handleAssignTask = async () => {
+        if (!selectedTaskId) {
+            message.warning("Please select a task to assign.");
+            return;
+        }
+        if (!selectedAssignee) {
+            message.warning("Please select an assignee from project team.");
+            return;
+        }
         try {
-            // Update task with projectId
-            await TaskService.updateTask(taskId, { projectId: id });
-            // Add task to project's taskIds
-            await ProjectService.assignTaskToProject(id, taskId);
+            await TaskService.updateTask(selectedTaskId, {
+                projectId: id,
+                assignee: selectedAssignee,
+            });
+            await ProjectService.assignTaskToProject(id, selectedTaskId);
             message.success("Task assigned to project successfully");
             loadProjectTasks();
             loadProject();
             loadStats();
+            setAssignTaskModalVisible(false);
+            setSelectedTaskId(null);
+            setSelectedAssignee(null);
         } catch (err) {
             message.error("Failed to assign task");
             console.error("Error assigning task:", err);
@@ -512,11 +527,6 @@ export default function ProjectDetailPage() {
                                     <Descriptions.Item label="Visibility">
                                         {project.visibility || "team"}
                                     </Descriptions.Item>
-                                    <Descriptions.Item label="Budget">
-                                        {project.budget
-                                            ? `$${project.budget.toLocaleString()}`
-                                            : "Not set"}
-                                    </Descriptions.Item>
                                     <Descriptions.Item label="Created By">
                                         {project.createdBy}
                                     </Descriptions.Item>
@@ -595,37 +605,63 @@ export default function ProjectDetailPage() {
                         <Modal
                             title="Assign Task to Project"
                             open={assignTaskModalVisible}
-                            onOk={() => setAssignTaskModalVisible(false)}
-                            onCancel={() => setAssignTaskModalVisible(false)}
-                            footer={null}
+                            onCancel={() => {
+                                setAssignTaskModalVisible(false);
+                                setSelectedTaskId(null);
+                                setSelectedAssignee(null);
+                            }}
+                            onOk={handleAssignTask}
+                            okText="Assign"
+                            okButtonProps={{ disabled: !selectedTaskId || !selectedAssignee }}
                         >
                             <div className="space-y-4">
-                                <p>Select a task to assign to this project:</p>
-                                <Select
-                                    placeholder="Select task"
-                                    style={{ width: "100%" }}
-                                    showSearch
-                                    filterOption={(input, option) =>
-                                        (option?.children ?? "")
-                                            .toLowerCase()
-                                            .includes(input.toLowerCase())
-                                    }
-                                    onChange={(taskId) => {
-                                        handleAssignTask(taskId);
-                                        setAssignTaskModalVisible(false);
-                                    }}
-                                >
-                                    {allTasks.map((task) => (
-                                        <Option key={task.id} value={task.id}>
-                                            {task.title} ({task.status})
-                                        </Option>
-                                    ))}
-                                </Select>
-                                {allTasks.length === 0 && (
-                                    <p className="text-gray-500 text-sm">
-                                        No available tasks to assign
-                                    </p>
-                                )}
+                                <div>
+                                    <p className="mb-2">Select a task to assign:</p>
+                                    <Select
+                                        placeholder="Select task"
+                                        style={{ width: "100%" }}
+                                        value={selectedTaskId}
+                                        showSearch
+                                        filterOption={(input, option) =>
+                                            (option?.children ?? "")
+                                                .toLowerCase()
+                                                .includes(input.toLowerCase())
+                                        }
+                                        onChange={(taskId) => setSelectedTaskId(taskId)}
+                                    >
+                                        {allTasks.map((task) => (
+                                            <Option key={task.id} value={task.id}>
+                                                {task.title} ({task.status})
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    {allTasks.length === 0 && (
+                                        <p className="text-gray-500 text-sm mt-2">
+                                            No available tasks to assign
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div>
+                                    <p className="mb-2">Assign to team member:</p>
+                                    <Select
+                                        placeholder="Select assignee"
+                                        style={{ width: "100%" }}
+                                        value={selectedAssignee}
+                                        onChange={(value) => setSelectedAssignee(value)}
+                                    >
+                                        {project.teamMembers?.map((member) => (
+                                            <Option key={member.userId} value={member.userName}>
+                                                {member.userName} ({member.role})
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    {(!project.teamMembers || project.teamMembers.length === 0) && (
+                                        <p className="text-gray-500 text-sm mt-2">
+                                            No team members available. Add team in Team tab first.
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         </Modal>
                     </TabPane>

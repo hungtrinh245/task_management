@@ -140,6 +140,9 @@ export default function TaskListPage() {
     );
   }
 
+  const canToggle = (record) =>
+    isManager || record.assignee === currentUserName;
+
   const columns = [
     {
       title: "",
@@ -149,6 +152,7 @@ export default function TaskListPage() {
       render: (_, record) => (
         <Checkbox
           checked={Boolean(record.completed)}
+          disabled={!canToggle(record)}
           onChange={(e) => toggleTask(record.id, e.target.checked)}
         />
       ),
@@ -215,19 +219,23 @@ export default function TaskListPage() {
           <Link to={`/tasks/${record.id}`}>
             <Button type="primary" icon={<EyeOutlined />} size="small" />
           </Link>
-          <Link to={`/tasks/edit/${record.id}`}>
-            <Button icon={<EditOutlined />} size="small" />
-          </Link>
-          <Button
-            danger
-            icon={<DeleteOutlined />}
-            size="small"
-            onClick={() => {
-              if (window.confirm("Delete this task?")) {
-                deleteTask(record.id);
-              }
-            }}
-          />
+          {isManager && (
+            <>
+              <Link to={`/tasks/edit/${record.id}`}>
+                <Button icon={<EditOutlined />} size="small" />
+              </Link>
+              <Button
+                danger
+                icon={<DeleteOutlined />}
+                size="small"
+                onClick={() => {
+                  if (window.confirm("Delete this task?")) {
+                    deleteTask(record.id);
+                  }
+                }}
+              />
+            </>
+          )}
         </Space>
       ),
     },
@@ -276,11 +284,13 @@ export default function TaskListPage() {
       <Card
         title="All Tasks"
         extra={
-          <Link to="/tasks/create">
-            <Button type="primary" icon={<PlusOutlined />}>
-              New Task
-            </Button>
-          </Link>
+          isManager && (
+            <Link to="/tasks/create">
+              <Button type="primary" icon={<PlusOutlined />}>
+                New Task
+              </Button>
+            </Link>
+          )
         }
         style={{ borderRadius: 8 }}
       >

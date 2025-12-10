@@ -182,11 +182,13 @@ const ProjectService = {
   async assignTaskToProject(projectId, taskId) {
     try {
       const project = await this.getProjectById(projectId);
-      if (!project.taskIds.includes(taskId)) {
-        const updatedTaskIds = [...project.taskIds, taskId];
-        return await this.updateProject(projectId, { taskIds: updatedTaskIds });
-      }
-      return project;
+      const currentIds = Array.isArray(project.taskIds)
+        ? project.taskIds.map((id) => String(id))
+        : [];
+      const nextIds = currentIds.includes(String(taskId))
+        ? currentIds
+        : [...currentIds, String(taskId)];
+      return await this.updateProject(projectId, { taskIds: nextIds });
     } catch (error) {
       console.error(
         `ProjectService.assignTaskToProject(${projectId}, ${taskId}) error:`,
@@ -205,7 +207,9 @@ const ProjectService = {
   async removeTaskFromProject(projectId, taskId) {
     try {
       const project = await this.getProjectById(projectId);
-      const updatedTaskIds = project.taskIds.filter((id) => id !== taskId);
+      const updatedTaskIds = (project.taskIds || [])
+        .map((id) => String(id))
+        .filter((id) => id !== String(taskId));
       return await this.updateProject(projectId, { taskIds: updatedTaskIds });
     } catch (error) {
       console.error(
@@ -231,7 +235,8 @@ const ProjectService = {
       // Import TaskService để tránh circular dependency
       const TaskService = (await import("./TaskService")).default;
       const allTasks = await TaskService.getTasks();
-      return allTasks.filter((task) => project.taskIds.includes(task.id));
+      const ids = project.taskIds.map((id) => String(id));
+      return allTasks.filter((task) => ids.includes(String(task.id)));
     } catch (error) {
       console.error(
         `ProjectService.getProjectTasks(${projectId}) error:`,
