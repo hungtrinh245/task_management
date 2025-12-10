@@ -8,7 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "init-tailwind": "tailwindcss init -p"
+    "init-tailwind": "tailwindcss init -p",
+    "json-server": "json-server --watch db.json --port 3001",
+    "dev:full": "concurrently \"npm run json-server\" \"npm run dev\""
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",

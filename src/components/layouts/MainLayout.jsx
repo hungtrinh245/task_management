@@ -7,6 +7,7 @@ import {
   ArrowRightOutlined,
   UserOutlined,
   CheckCircleOutlined,
+  ProjectOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
@@ -63,11 +64,17 @@ export default function MainLayout({ children }) {
 
   const menuItems = [
     { key: "/", icon: <HomeOutlined />, label: <Link to="/">Dashboard</Link> },
+   {
+      key: "/projects",
+      icon: <ProjectOutlined />,
+      label: <Link to="/projects">Projects</Link>,
+    },
     {
       key: "/tasks",
       icon: <UnorderedListOutlined />,
       label: <Link to="/tasks">All Tasks</Link>,
     },
+
     {
       key: "/my-tasks",
       icon: <UserOutlined />,

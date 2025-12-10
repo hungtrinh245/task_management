@@ -15,6 +15,10 @@ import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import ProfilePage from "./pages/ProfilePage";
+import ProjectListPage from "./pages/ProjectListPage";
+import CreateProjectPage from "./pages/CreateProjectPage";
+import ProjectDetailPage from "./pages/ProjectDetailPage";
+import EditProjectPage from "./pages/EditProjectPage";
 
 function App() {
   return (
@@ -28,6 +32,38 @@ function App() {
                 element={
                   <PrivateRoute>
                     <DashboardPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/projects"
+                element={
+                  <PrivateRoute>
+                    <ProjectListPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/projects/create"
+                element={
+                  <PrivateRoute>
+                    <CreateProjectPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/projects/:id"
+                element={
+                  <PrivateRoute>
+                    <ProjectDetailPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/projects/:id/edit"
+                element={
+                  <PrivateRoute>
+                    <EditProjectPage />
                   </PrivateRoute>
                 }
               />

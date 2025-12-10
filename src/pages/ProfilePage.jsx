@@ -247,6 +247,7 @@ export default function ProfilePage() {
                   <Option value="Development">Development</Option>
                   <Option value="Testing">Testing</Option>
                   <Option value="Design">Design</Option>
+                  <Option value="BA">BA</Option>
                   <Option value="Management">Management</Option>
                 </Select>
               </Form.Item>
