@@ -51,11 +51,7 @@ const CreateProjectPage = () => {
         startDate: values.startDate.format("YYYY-MM-DD"),
         endDate: values.endDate.format("YYYY-MM-DD"),
         status: "active",
-        createdBy:
-          currentUser?.name ||
-          currentUser?.email ||
-          currentUser?.username ||
-          "manager",
+        createdBy: currentUser.username,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         taskIds: [],
@@ -168,6 +164,16 @@ const CreateProjectPage = () => {
               />
             </Form.Item>
           </div>
+
+          <Form.Item name="budget" label="Budget (USD)">
+            <InputNumber
+              style={{ width: "100%" }}
+              placeholder="Enter budget amount"
+              min={0}
+              step={1000}
+            />
+          </Form.Item>
+
           <Form.Item name="priority" label="Priority">
             <Select>
               <Option value="low">Low</Option>

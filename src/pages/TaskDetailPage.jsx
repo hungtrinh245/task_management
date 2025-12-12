@@ -51,7 +51,7 @@ export default function TaskDetailPage() {
   // Get current user
   const currentUser = AuthService.getUser();
   const currentUserRole = currentUser?.role || "employee";
-  const isManager = currentUserRole === "manager" || currentUserRole === "admin";
+  const isManager = currentUserRole === "manager";
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -111,20 +111,20 @@ export default function TaskDetailPage() {
           </div>
         }
         extra={
-          isManager && (
-            <Space>
-              <Button
-                type="primary"
-                icon={<EditOutlined />}
-                onClick={() => navigate(`/tasks/edit/${task.id}`)}
-              >
-                Edit
-              </Button>
+          <Space>
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => navigate(`/tasks/edit/${task.id}`)}
+            >
+              Edit
+            </Button>
+            {isManager && (
               <Button danger icon={<DeleteOutlined />} onClick={handleDelete}>
                 Delete
               </Button>
-            </Space>
-          )
+            )}
+          </Space>
         }
         style={{ borderRadius: 8 }}
       >

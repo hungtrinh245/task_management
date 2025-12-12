@@ -70,226 +70,19 @@
       ]
     },
     {
-      "id": "11",
-      "title": "Code review and refactoring",
-      "description": "Review all code and refactor for better performance and maintainability",
-      "dueDate": "2025-01-25",
-      "status": "pending",
-      "priority": "medium",
-      "tags": [
-        "code-review",
-        "refactoring",
-        "quality"
-      ],
-      "projectId": "proj-demo",
-      "subtasks": [
-        {
-          "id": 28,
-          "title": "Review authentication code",
-          "completed": false
-        },
-        {
-          "id": 29,
-          "title": "Review API endpoints",
-          "completed": false
-        },
-        {
-          "id": 30,
-          "title": "Optimize database queries",
-          "completed": false
-        }
-      ],
-      "comments": [],
-      "attachments": []
-    },
-    {
-      "projectId": "c9b6",
+      "projectId": "7501",
       "assignee": "phạm minh quang",
-      "updatedAt": "2025-12-10T09:02:44.456Z",
-      "id": "1ed9",
-      "auditLogs": [
-        {
-          "id": "1765357364456",
-          "userId": "e19d",
-          "userEmail": "hung@gmail.com",
-          "userName": "trịnh quốc hưng",
-          "action": "update",
-          "timestamp": "2025-12-10T09:02:44.456Z",
-          "changes": []
-        }
-      ]
-    },
-    {
-      "projectId": "c9b6",
-      "assignee": "phạm minh quang",
-      "updatedAt": "2025-12-10T09:05:25.621Z",
-      "id": "4878",
-      "auditLogs": [
-        {
-          "id": "1765357525620",
-          "userId": "e19d",
-          "userEmail": "hung@gmail.com",
-          "userName": "trịnh quốc hưng",
-          "action": "update",
-          "timestamp": "2025-12-10T09:05:25.620Z",
-          "changes": [
-            {
-              "field": "title",
-              "oldValue": "Xây dựng RESTful API hoặc GraphQL"
-            },
-            {
-              "field": "description",
-              "oldValue": "API"
-            },
-            {
-              "field": "status",
-              "oldValue": "todo"
-            },
-            {
-              "field": "priority",
-              "oldValue": "medium"
-            },
-            {
-              "field": "dueDate",
-              "oldValue": "2025-12-14"
-            },
-            {
-              "field": "assignee",
-              "oldValue": "Nguyễn Trung Đán",
-              "newValue": "phạm minh quang"
-            },
-            {
-              "field": "completed",
-              "oldValue": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "projectId": "proj-002",
-      "assignee": "phạm minh quang",
-      "updatedAt": "2025-12-10T09:08:08.823Z",
-      "id": "8b30",
-      "auditLogs": [
-        {
-          "id": "1765357688822",
-          "userId": "e19d",
-          "userEmail": "hung@gmail.com",
-          "userName": "trịnh quốc hưng",
-          "action": "update",
-          "timestamp": "2025-12-10T09:08:08.822Z",
-          "changes": [
-            {
-              "field": "title",
-              "oldValue": "Xử lý authentication & authorization (JWT, OAuth)"
-            },
-            {
-              "field": "description",
-              "oldValue": "Bảo mật login, register"
-            },
-            {
-              "field": "status",
-              "oldValue": "todo"
-            },
-            {
-              "field": "priority",
-              "oldValue": "medium"
-            },
-            {
-              "field": "dueDate",
-              "oldValue": "2025-12-20"
-            },
-            {
-              "field": "completed",
-              "oldValue": false
-            }
-          ]
-        }
-      ]
-    },
-    {
+      "updatedAt": "2025-12-12T02:35:45.661Z",
       "id": "451e",
-      "title": "Tích hợp cổng thanh toán",
-      "director": "Dev A",
-      "genre": "Development",
-      "description": "dfdgfdgfdg",
-      "dueDate": "2025-12-30",
-      "status": "todo",
-      "priority": "medium",
-      "assignee": "phạm minh quang",
-      "tags": [
-        "feature"
-      ],
-      "subtasks": [
-        {
-          "id": "1765357083616",
-          "title": "frefrg",
-          "completed": false
-        },
-        {
-          "id": "1765357085613",
-          "title": "rfreg",
-          "completed": false
-        },
-        {
-          "id": "1765357087235",
-          "title": "rgreg",
-          "completed": false
-        }
-      ],
-      "comments": [],
-      "attachments": [],
-      "completed": false,
-      "createdBy": "trịnh quốc hưng",
-      "approvalStatus": "approved",
-      "createdAt": "2025-12-10T08:58:09.490Z",
-      "updatedAt": "2025-12-10T08:58:09.490Z"
-    },
-    {
-      "projectId": "e4a1",
-      "assignee": "phạm minh quang",
-      "updatedAt": "2025-12-10T09:35:48.173Z",
-      "id": "08d4",
       "auditLogs": [
         {
-          "id": "1765359348172",
+          "id": "1765506945660",
           "userId": "e19d",
           "userEmail": "hung@gmail.com",
           "userName": "trịnh quốc hưng",
           "action": "update",
-          "timestamp": "2025-12-10T09:35:48.172Z",
-          "changes": [
-            {
-              "field": "title",
-              "oldValue": "Xây dựng hệ thống quản lý đơn hàng"
-            },
-            {
-              "field": "description",
-              "oldValue": "dfdgfggh"
-            },
-            {
-              "field": "status",
-              "oldValue": "todo"
-            },
-            {
-              "field": "priority",
-              "oldValue": "medium"
-            },
-            {
-              "field": "dueDate",
-              "oldValue": "2025-12-24"
-            },
-            {
-              "field": "assignee",
-              "oldValue": "Nguyễn Trung Đán",
-              "newValue": "phạm minh quang"
-            },
-            {
-              "field": "completed",
-              "oldValue": false
-            }
-          ]
+          "timestamp": "2025-12-12T02:35:45.660Z",
+          "changes": []
         }
       ]
     },
@@ -623,20 +416,10 @@
       "id": "19f1"
     },
     {
-      "name": "Thiết kế website bán quần áo thể thao(Fashion Sports Clothes)",
-      "description": "Xây dựng một nền tảng thương mại điện tử trực tuyến nhằm tạo ra trải nghiệm mua sắm thời trang thuận tiện, dễ dàng cho khách hàng, đồng thời giúp doanh nghiệp mở rộng kênh phân phối, tiếp cận thị trường rộng hơn, tăng doanh số bán hàng và xây dựng thương hiệu trong lĩnh vực thời trang. Website hướng đến việc số hóa quy trình kinh doanh, tối ưu chi phí vận hành và nâng cao khả năng cạnh tranh trong thị trường bán lẻ hiện đại bậc nhất.",
-      "category": "web-development",
-      "startDate": "2025-12-12",
-      "endDate": "2026-02-02",
-      "budget": 400,
-      "priority": "medium",
-      "status": "active",
-      "visibility": "team",
-      "updatedAt": "2025-12-10T09:56:53.885Z",
-      "createdBy": "trịnh quốc hưng",
-      "createdAt": "2025-12-10T09:47:01.923Z",
-      "taskIds": [],
-      "teamMembers": [],
+      "taskIds": [
+        "451e"
+      ],
+      "updatedAt": "2025-12-12T02:35:45.841Z",
       "id": "7501"
     }
   ],
@@ -720,10 +503,10 @@
       "role": "employee",
       "createdAt": "2025-12-10T07:06:34.464Z",
       "avatar": "data:image/jpeg;base64,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",
-      "updatedAt": "2025-12-10T07:37:21.184Z",
+      "updatedAt": "2025-12-12T02:45:41.108Z",
       "phone": "0786549832",
-      "department": "Design",
-      "bio": "Là 1 designer lâu năm có rất nhiểu tác phẩm design kiệt tác "
+      "department": "Testing",
+      "bio": "Là 1 tester lâu năm có kinh nghiệm test mọi loại web, app..."
     },
     {
       "id": "900e",

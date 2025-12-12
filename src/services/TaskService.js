@@ -115,43 +115,6 @@ const TaskService = {
       throw error;
     }
   },
-
-  /**
-   * Lấy danh sách tasks theo projectId
-   * @param {string} projectId
-   * @returns {Promise<Task[]>}
-   */
-  async getTasksByProject(projectId) {
-    try {
-      const response = await this.getTasks({ projectId });
-      return response;
-    } catch (error) {
-      console.error(`TaskService.getTasksByProject(${projectId}) error:`, error);
-      throw error;
-    }
-  },
-
-  /**
-   * Cập nhật projectId của task (gán hoặc gỡ task khỏi project)
-   * @param {number|string} taskId
-   * @param {string|null} projectId - null để gỡ task khỏi project
-   * @returns {Promise<Task>}
-   */
-  async updateTaskProject(taskId, projectId) {
-    try {
-      const response = await this.updateTask(taskId, {
-        projectId,
-        updatedAt: new Date().toISOString(),
-      });
-      return response;
-    } catch (error) {
-      console.error(
-        `TaskService.updateTaskProject(${taskId}, ${projectId}) error:`,
-        error
-      );
-      throw error;
-    }
-  },
 };
 
 export default TaskService;

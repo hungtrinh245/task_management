@@ -33,7 +33,7 @@ function App() {
                   <PrivateRoute>
                     <DashboardPage />
                   </PrivateRoute>
-                }
+                }   
               />
               <Route
                 path="/projects"
@@ -51,19 +51,19 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route
+               <Route
+                path="/projects/edit/:id"
+                element={
+                  <PrivateRoute>
+                    <EditProjectPage />
+                  </PrivateRoute>
+                }
+              />
+               <Route
                 path="/projects/:id"
                 element={
                   <PrivateRoute>
                     <ProjectDetailPage />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/projects/:id/edit"
-                element={
-                  <PrivateRoute>
-                    <EditProjectPage />
                   </PrivateRoute>
                 }
               />

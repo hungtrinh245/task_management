@@ -39,17 +39,6 @@ export default function CreateTaskPage() {
   const currentUserRole = currentUser?.role || "employee"; // Default role is employee
   const isManager = currentUserRole === "manager";
 
-  // Guard: only manager can create task
-  if (!isManager) {
-    return (
-      <Card style={{ borderRadius: 8, textAlign: "center" }}>
-        <h2>Access Denied</h2>
-        <p>Only managers can create tasks.</p>
-        <Button onClick={() => navigate("/tasks")}>Back to Tasks</Button>
-      </Card>
-    );
-  }
-
   // Load assignee options from database
   useEffect(() => {
     const loadAssignees = async () => {
