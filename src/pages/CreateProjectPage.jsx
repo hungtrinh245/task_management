@@ -46,22 +46,28 @@ const CreateProjectPage = () => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
+      const createdByValue =
+        currentUser?.name ||
+        currentUser?.username ||
+        currentUser?.email ||
+        "manager";
+
       const projectData = {
         ...values,
         startDate: values.startDate.format("YYYY-MM-DD"),
         endDate: values.endDate.format("YYYY-MM-DD"),
         status: "active",
-        createdBy: currentUser.username,
+        createdBy: createdByValue,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         taskIds: [],
         teamMembers: values.teamMembers
           ? values.teamMembers.map((userId) => ({
-              userId,
-              userName: userId, // In a real app, you'd fetch user names
-              role: "developer", // Default role
-              joinedAt: new Date().toISOString().split("T")[0],
-            }))
+            userId,
+            userName: userId, // In a real app, you'd fetch user names
+            role: "developer", // Default role
+            joinedAt: new Date().toISOString().split("T")[0],
+          }))
           : [],
       };
 

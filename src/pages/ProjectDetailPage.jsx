@@ -263,6 +263,17 @@ export default function ProjectDetailPage() {
         return colors[priority] || "default";
     };
 
+    // Hiển thị người tạo với fallback để tránh rỗng
+    const createdByDisplay =
+        project?.createdBy?.name ||
+        project?.createdBy?.username ||
+        project?.createdBy?.email ||
+        project?.createdBy ||
+        project?.createdByName ||
+        project?.owner ||
+        project?.ownerName ||
+        "-";
+
     if (loading) {
         return (
             <div className="flex justify-center items-center h-64">
@@ -412,7 +423,7 @@ export default function ProjectDetailPage() {
                     <Space>
                         <Button
                             icon={<EditOutlined />}
-                            onClick={() => navigate(`/projects/${id}/edit`)}
+                            onClick={() => navigate(`/projects/edit/${id}`)}
                         >
                             Edit Project
                         </Button>
@@ -530,7 +541,7 @@ export default function ProjectDetailPage() {
                                         {project.visibility || "team"}
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Created By">
-                                        {project.createdBy}
+                                        {createdByDisplay}
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Created At">
                                         {new Date(project.createdAt).toLocaleString()}

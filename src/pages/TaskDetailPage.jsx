@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Button,
@@ -59,6 +59,35 @@ export default function TaskDetailPage() {
 
   const task = getTaskById(id);
 
+  // ==============================
+  // 🔥 SAFE CALCULATIONS BEFORE RETURN
+  // ==============================
+  const isOverdue =
+    task?.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
+
+  const allSubtasksDone =
+    task?.subtasks?.length > 0 &&
+    task.subtasks.every((s) => s.completed);
+
+  // ==============================
+  // 🔥 HOOK ALWAYS RUN — DO NOT RETURN FIRST
+  // ==============================
+  useEffect(() => {
+    if (!task) return;
+
+    const shouldMoveToReview =
+      allSubtasksDone &&
+      task.status &&
+      !["review", "completed", "done"].includes(task.status);
+
+    if (shouldMoveToReview) {
+      editTask(task.id, { ...task, status: "review" });
+    }
+  }, [task, allSubtasksDone, editTask]);
+
+  // ==============================
+  // 🔥 RETURN ONLY AFTER HOOKS
+  // ==============================
   if (!task) {
     return (
       <Card style={{ borderRadius: 8, textAlign: "center" }}>
@@ -74,8 +103,12 @@ export default function TaskDetailPage() {
     );
   }
 
-  const isOverdue =
-    task.dueDate && new Date(task.dueDate) < new Date() && !task.completed;
+  // ==============================
+  // 🔥 ORIGINAL UI (UNCHANGED)
+  // ==============================
+  const projectLabel = task.projectId
+    ? `Project: ${task.projectId}`
+    : "Not linked to any project";
 
   const handleDelete = () => {
     Modal.confirm({
@@ -128,7 +161,6 @@ export default function TaskDetailPage() {
         }
         style={{ borderRadius: 8 }}
       >
-        {/* Role-based Info Message */}
         {!isManager && (
           <Alert
             message="View Only"
@@ -139,7 +171,6 @@ export default function TaskDetailPage() {
           />
         )}
 
-        {/* Basic Info */}
         <Descriptions
           bordered
           column={{ xxl: 2, xl: 2, lg: 1, md: 1, sm: 1, xs: 1 }}
@@ -167,6 +198,12 @@ export default function TaskDetailPage() {
 
           <Descriptions.Item label="Director/Team">
             <Tag color="blue">{task.director || "Not assigned"}</Tag>
+          </Descriptions.Item>
+
+          <Descriptions.Item label="Project">
+            <Tag color={task.projectId ? "geekblue" : "default"}>
+              {projectLabel}
+            </Tag>
           </Descriptions.Item>
 
           <Descriptions.Item label="Assigned To">
@@ -223,15 +260,12 @@ export default function TaskDetailPage() {
 
         <Divider />
 
-        {/* Classification Section - READ-ONLY */}
+        {/* Classification Section */}
         <div style={{ marginBottom: 24 }}>
           <h4 style={{ marginBottom: 12 }}>📊 Classification</h4>
 
-          {/* Status */}
           <div style={{ marginBottom: 16 }}>
-            <label
-              style={{ display: "block", marginBottom: 8, fontWeight: 500 }}
-            >
+            <label style={{ display: "block", marginBottom: 8, fontWeight: 500 }}>
               Status
             </label>
             <Tag
@@ -250,11 +284,8 @@ export default function TaskDetailPage() {
             </Tag>
           </div>
 
-          {/* Priority */}
           <div style={{ marginBottom: 16 }}>
-            <label
-              style={{ display: "block", marginBottom: 8, fontWeight: 500 }}
-            >
+            <label style={{ display: "block", marginBottom: 8, fontWeight: 500 }}>
               Priority
             </label>
             <Tag
@@ -273,16 +304,13 @@ export default function TaskDetailPage() {
             </Tag>
           </div>
 
-          {/* Tags/Labels */}
           <div>
-            <label
-              style={{ display: "block", marginBottom: 8, fontWeight: 500 }}
-            >
+            <label style={{ display: "block", marginBottom: 8, fontWeight: 500 }}>
               Tags / Labels
             </label>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {(task.tags || []).length > 0 ? (
-                (task.tags || []).map((tag) => (
+                task.tags.map((tag) => (
                   <Tag key={tag} color="blue">
                     {tag}
                   </Tag>
@@ -296,7 +324,6 @@ export default function TaskDetailPage() {
 
         <Divider />
 
-        {/* Summary Stats */}
         <Row gutter={16} style={{ marginBottom: 24 }}>
           <Col xs={24} sm={12} lg={6}>
             <Card size="small" style={{ borderRadius: 4, textAlign: "center" }}>
@@ -308,6 +335,7 @@ export default function TaskDetailPage() {
               </div>
             </Card>
           </Col>
+
           <Col xs={24} sm={12} lg={6}>
             <Card size="small" style={{ borderRadius: 4, textAlign: "center" }}>
               <div style={{ fontSize: 14, color: "#666" }}>Last Updated</div>
@@ -318,6 +346,7 @@ export default function TaskDetailPage() {
               </div>
             </Card>
           </Col>
+
           <Col xs={24} sm={12} lg={6}>
             <Card size="small" style={{ borderRadius: 4, textAlign: "center" }}>
               <div style={{ fontSize: 14, color: "#666" }}>Status</div>
@@ -337,6 +366,7 @@ export default function TaskDetailPage() {
               </div>
             </Card>
           </Col>
+
           <Col xs={24} sm={12} lg={6}>
             <Card size="small" style={{ borderRadius: 4, textAlign: "center" }}>
               <div style={{ fontSize: 14, color: "#666" }}>Priority</div>
@@ -359,24 +389,20 @@ export default function TaskDetailPage() {
         </Row>
       </Card>
 
-      {/* Smart Priority Engine */}
       <SmartPriorityEngine
         task={task}
         onApplySuggestion={handleApplySuggestion}
         style={{ marginTop: 16 }}
       />
 
-      {/* Knowledge Panel */}
       <KnowledgePanel task={task} />
 
-      {/* Checklist - Display Only */}
       <Card
-        title={`Checklist (${
-          (task.subtasks || []).filter((s) => s.completed).length
-        }/${(task.subtasks || []).length})`}
+        title={`Checklist (${(task.subtasks || []).filter((s) => s.completed).length
+          }/${(task.subtasks || []).length})`}
         style={{ marginTop: 16 }}
       >
-        {task.subtasks && task.subtasks.length > 0 ? (
+        {task.subtasks?.length > 0 ? (
           <>
             <div style={{ marginBottom: 16, fontSize: 12, color: "#666" }}>
               Progress:{" "}
@@ -418,12 +444,9 @@ export default function TaskDetailPage() {
         ) : (
           <Empty description="No subtasks" style={{ margin: "16px 0" }} />
         )}
-        {/* Edit actions available on Edit page */}
       </Card>
 
-      {/* Comments - Display Only */}
       <Card title="Comments" style={{ marginTop: 16 }}>
-        {/* Add comment button in card header */}
         <div
           style={{
             display: "flex",
@@ -436,7 +459,8 @@ export default function TaskDetailPage() {
             Add Comment
           </Button>
         </div>
-        {task.comments && task.comments.length > 0 ? (
+
+        {task.comments?.length > 0 ? (
           <List
             dataSource={task.comments}
             renderItem={(comment) => (
@@ -474,10 +498,10 @@ export default function TaskDetailPage() {
         ) : (
           <Empty description="No comments yet" style={{ margin: "16px 0" }} />
         )}
-        {/* Comments are editable on the Edit page, or add quickly using the modal above */}
+
         <Modal
           title="Add Comment"
-          visible={isModalVisible}
+          open={isModalVisible}
           onCancel={() => {
             setIsModalVisible(false);
             form.resetFields();
@@ -500,7 +524,6 @@ export default function TaskDetailPage() {
                 createdAt: new Date().toISOString(),
               };
 
-              // merge with full task object to avoid partial updates
               const merged = {
                 ...task,
                 comments: [...(task.comments || []), newComment],
@@ -512,7 +535,6 @@ export default function TaskDetailPage() {
               setIsModalVisible(false);
               form.resetFields();
             } catch (err) {
-              // validation errors are handled by form; other errors:
               console.error(err);
               message.error("Failed to add comment");
             } finally {
@@ -536,9 +558,8 @@ export default function TaskDetailPage() {
         </Modal>
       </Card>
 
-      {/* Attachments - Display Only */}
       <Card title="Attachments" style={{ marginTop: 16 }}>
-        {task.attachments && task.attachments.length > 0 ? (
+        {task.attachments?.length > 0 ? (
           <List
             dataSource={task.attachments}
             renderItem={(attachment) => (
@@ -559,7 +580,6 @@ export default function TaskDetailPage() {
         ) : (
           <Empty description="No attachments" style={{ margin: "16px 0" }} />
         )}
-        {/* Attachments are managed on the Edit page */}
       </Card>
     </div>
   );

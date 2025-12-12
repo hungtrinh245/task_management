@@ -118,8 +118,24 @@ export const TaskProvider = ({ children }) => {
           id,
           completed
         );
+
+        // Nếu tất cả subtasks đã completed và task chưa có status phù hợp,
+        // tự động chuyển status sang 'review' (nghiệp vụ hợp lý sau khi hoàn thành checklist).
+        const allSubtasksDone =
+          updatedTask?.subtasks &&
+          updatedTask.subtasks.length > 0 &&
+          updatedTask.subtasks.every((s) => s.completed);
+
+        let finalTask = updatedTask;
+        if (allSubtasksDone) {
+          finalTask = await TaskService.updateTask(id, {
+            ...updatedTask,
+            status: "review",
+          });
+        }
+
         setTasks((prevTasks) =>
-          prevTasks.map((task) => (task.id === id ? updatedTask : task))
+          prevTasks.map((task) => (task.id === id ? finalTask : task))
         );
       } catch (err) {
         const errorMsg =

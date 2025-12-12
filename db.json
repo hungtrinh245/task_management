@@ -6,7 +6,7 @@
       "genre": "Development",
       "description": "Setup CI/CD pipeline and deploy application to production server",
       "dueDate": "2025-12-01",
-      "status": "overdue",
+      "status": "review",
       "priority": "high",
       "assignee": "Bob",
       "tags": [
@@ -33,10 +33,10 @@
       ],
       "comments": [],
       "attachments": [],
-      "completed": false,
+      "completed": true,
       "createdBy": "trịnh quốc hưng",
-      "approvalStatus": "pending",
-      "updatedAt": "2025-12-10T09:59:38.937Z",
+      "approvalStatus": "approved",
+      "updatedAt": "2025-12-12T08:12:30.776Z",
       "id": "10",
       "auditLogs": [
         {
@@ -66,6 +66,30 @@
               "newValue": false
             }
           ]
+        },
+        {
+          "id": "1765526866148",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T08:07:46.148Z",
+          "changes": [
+            {
+              "field": "status",
+              "oldValue": "overdue",
+              "newValue": "review"
+            }
+          ]
+        },
+        {
+          "id": "1765527150775",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T08:12:30.775Z",
+          "changes": []
         }
       ]
     },
@@ -76,7 +100,7 @@
       "genre": "Development",
       "description": "ergffhgtgrh",
       "dueDate": "2025-12-14",
-      "status": "todo",
+      "status": "done",
       "assignee": "phạm minh quang",
       "tags": [
         "feature"
@@ -85,21 +109,28 @@
         {
           "id": "1765511211931",
           "title": "ggh",
-          "completed": false
+          "completed": true
         },
         {
           "id": "1765511214720",
           "title": "ghgh",
-          "completed": false
+          "completed": true
         }
       ],
       "comments": [],
-      "attachments": [],
-      "completed": false,
+      "attachments": [
+        {
+          "id": "1765524285962",
+          "filename": "13c7e3b43288dac5f986d38d62f1b882.png",
+          "filesize": 2418153,
+          "uploadedAt": "2025-12-12T07:24:45.963Z"
+        }
+      ],
+      "completed": true,
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "approved",
       "createdAt": "2025-12-12T03:46:56.342Z",
-      "updatedAt": "2025-12-12T04:34:25.166Z",
+      "updatedAt": "2025-12-12T08:01:15.639Z",
       "projectId": "1724",
       "auditLogs": [
         {
@@ -142,6 +173,30 @@
               "field": "assignee",
               "oldValue": "trịnh quốc hưng",
               "newValue": "phạm minh quang"
+            }
+          ]
+        },
+        {
+          "id": "1765524308333",
+          "userId": "ad11",
+          "userEmail": "quang@gmail.com",
+          "userName": "phạm minh quang",
+          "action": "update",
+          "timestamp": "2025-12-12T07:25:08.333Z",
+          "changes": []
+        },
+        {
+          "id": "1765526383103",
+          "userId": "ad11",
+          "userEmail": "quang@gmail.com",
+          "userName": "phạm minh quang",
+          "action": "update",
+          "timestamp": "2025-12-12T07:59:43.103Z",
+          "changes": [
+            {
+              "field": "status",
+              "oldValue": "todo",
+              "newValue": "review"
             }
           ]
         }
@@ -265,8 +320,8 @@
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "approved",
       "createdAt": "2025-12-12T03:48:20.483Z",
-      "updatedAt": "2025-12-12T03:59:03.159Z",
-      "projectId": "1724",
+      "updatedAt": "2025-12-12T07:20:00.376Z",
+      "projectId": null,
       "auditLogs": [
         {
           "id": "1765511943158",
@@ -282,6 +337,15 @@
               "newValue": "Nguyễn Trung Đán"
             }
           ]
+        },
+        {
+          "id": "1765524000376",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T07:20:00.376Z",
+          "changes": []
         }
       ]
     },
@@ -294,7 +358,7 @@
       "dueDate": "2025-12-30",
       "status": "todo",
       "priority": "medium",
-      "assignee": "cao văn hướng",
+      "assignee": "nguyễn văn nam ",
       "tags": [
         "feature"
       ],
@@ -311,8 +375,8 @@
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "approved",
       "createdAt": "2025-12-12T03:48:51.743Z",
-      "updatedAt": "2025-12-12T04:02:10.427Z",
-      "projectId": "1724",
+      "updatedAt": "2025-12-12T07:20:15.810Z",
+      "projectId": null,
       "auditLogs": [
         {
           "id": "1765512130427",
@@ -326,6 +390,21 @@
               "field": "assignee",
               "oldValue": "trịnh quốc hưng",
               "newValue": "cao văn hướng"
+            }
+          ]
+        },
+        {
+          "id": "1765524015809",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T07:20:15.809Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "cao văn hướng",
+              "newValue": "nguyễn văn nam "
             }
           ]
         }
@@ -859,8 +938,8 @@
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "approved",
       "createdAt": "2025-12-12T03:55:25.827Z",
-      "updatedAt": "2025-12-12T04:02:17.632Z",
-      "projectId": "1724",
+      "updatedAt": "2025-12-12T07:20:09.011Z",
+      "projectId": null,
       "auditLogs": [
         {
           "id": "1765512137632",
@@ -876,6 +955,15 @@
               "newValue": "Lê Thúy hà"
             }
           ]
+        },
+        {
+          "id": "1765524009011",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T07:20:09.011Z",
+          "changes": []
         }
       ]
     },
@@ -1263,7 +1351,7 @@
     {
       "id": "1724",
       "name": "Thiết kế website bán quần áo thể thao(Fashion Sports Clothes)",
-      "description": "Xây dựng một nền tảng thương mại điện tử trực tuyến nhằm tạo ra trải nghiệm mua sắm thời trang thuận tiện, dễ dàng cho khách hàng, đồng thời giúp doanh nghiệp mở rộng kênh phân phối, tiếp cận thị trường rộng hơn, tăng doanh số bán hàng và xây dựng thương hiệu trong lĩnh vực thời trang. Website hướng đến việc số hóa quy trình kinh doanh, tối ưu chi phí vận hành và nâng cao khả năng cạnh tranh trong thị trường bán lẻ hiện đại.",
+      "description": "Xây dựng một nền tảng thương mại điện tử trực tuyến nhằm tạo ra trải nghiệm mua sắm thời trang thuận tiện, dễ dàng cho khách hàng, đồng thời giúp doanh nghiệp mở rộng kênh phân phối, tiếp cận thị trường rộng hơn, tăng doanh số bán hàng và xây dựng thương hiệu trong lĩnh vực thời trang. Website hướng đến việc số hóa quy trình kinh doanh, tối ưu chi phí vận hành và nâng cao khả năng cạnh tranh trong thị trường bán lẻ hiện đại bậc nhất.",
       "category": "web-development",
       "startDate": "2025-12-13",
       "endDate": "2026-02-02",
@@ -1310,7 +1398,7 @@
       ],
       "status": "active",
       "createdAt": "2025-12-12T03:44:42.392Z",
-      "updatedAt": "2025-12-12T04:02:59.100Z",
+      "updatedAt": "2025-12-12T07:14:02.523Z",
       "taskIds": [
         "de90",
         "27b1",
@@ -1330,6 +1418,47 @@
         "7b76",
         "856a"
       ]
+    },
+    {
+      "id": "78fb",
+      "name": "fggfhgfh",
+      "description": "gfhghh",
+      "category": "mobile",
+      "startDate": "2025-12-18",
+      "endDate": "2026-02-11",
+      "priority": "medium",
+      "visibility": "team",
+      "teamMembers": [
+        {
+          "userId": "ad11",
+          "userName": "phạm minh quang",
+          "role": "developer",
+          "joinedAt": "2025-12-12T08:33:33.202Z"
+        },
+        {
+          "userId": "aa0f",
+          "userName": "Lê Thúy hà",
+          "role": "tester",
+          "joinedAt": "2025-12-12T08:33:39.507Z"
+        },
+        {
+          "userId": "900e",
+          "userName": "nguyễn văn nam ",
+          "role": "developer",
+          "joinedAt": "2025-12-12T08:33:44.321Z"
+        },
+        {
+          "userId": "a30c",
+          "userName": "Nguyễn Trung Đán",
+          "role": "developer",
+          "joinedAt": "2025-12-12T08:33:49.378Z"
+        }
+      ],
+      "status": "active",
+      "createdBy": "trịnh quốc hưng",
+      "createdAt": "2025-12-12T08:33:24.462Z",
+      "updatedAt": "2025-12-12T08:33:49.383Z",
+      "taskIds": []
     }
   ],
   "users": [

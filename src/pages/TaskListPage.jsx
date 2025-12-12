@@ -24,7 +24,8 @@ import {
 import { useTasks } from "../hooks/useTasks";
 import AuthService from "../services/AuthService";
 import { Link } from "react-router-dom";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import ProjectService from "../services/ProjectService";
 
 export default function TaskListPage() {
   const { tasks, loading, error, deleteTask, toggleTask } = useTasks();
@@ -33,6 +34,8 @@ export default function TaskListPage() {
   const [filterAssignee, setFilterAssignee] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [projectMap, setProjectMap] = useState({});
+  const [filterProject, setFilterProject] = useState("all");
 
   // Get current user
   const currentUser = AuthService.getUser();
@@ -47,6 +50,25 @@ export default function TaskListPage() {
     { label: "👤 Phạm Hồng D", value: "Phạm Hồng D" },
     { label: "👤 Vũ Minh E", value: "Vũ Minh E" },
   ];
+
+  // Map projectId -> project name để hiển thị trong danh sách task
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const projects = await ProjectService.getProjects();
+        const map = {};
+        projects.forEach((p) => {
+          map[p.id] = p.name;
+        });
+        setProjectMap(map);
+      } catch (err) {
+        // Không block UI nếu lỗi, chỉ log
+        console.error("Failed to load projects for task list:", err);
+      }
+    };
+
+    loadProjects();
+  }, []);
 
   // Xử lý thay đổi search - reset trang về 1
   const handleSearch = useCallback((value) => {
@@ -92,16 +114,27 @@ export default function TaskListPage() {
       const matchesAssignee =
         filterAssignee === "all" || task.assignee === filterAssignee;
 
+      const matchesProject =
+        filterProject === "all" ||
+        (task.projectId && String(task.projectId) === String(filterProject));
+
       // Employee can only see tasks assigned to them
       const matchesRole = isManager || task.assignee === currentUserName;
 
-      return matchesSearch && matchesStatus && matchesAssignee && matchesRole;
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesAssignee &&
+        matchesProject &&
+        matchesRole
+      );
     });
   }, [
     tasks,
     searchText,
     filterStatus,
     filterAssignee,
+    filterProject,
     isManager,
     currentUserName,
   ]);
@@ -178,6 +211,15 @@ export default function TaskListPage() {
       dataIndex: "genre",
       key: "genre",
       render: (genre) => <Tag color="blue">{genre}</Tag>,
+    },
+    {
+      title: "Project",
+      dataIndex: "projectId",
+      key: "projectId",
+      render: (projectId) =>
+        projectId
+          ? projectMap[projectId] || projectId
+          : "Not assigned",
     },
     {
       title: "Due Date",
@@ -315,6 +357,19 @@ export default function TaskListPage() {
               ]}
             />
           )}
+          <Select
+            style={{ width: "200px" }}
+            value={filterProject}
+            onChange={setFilterProject}
+            options={[
+              { label: "All Projects", value: "all" },
+              ...Object.entries(projectMap).map(([id, name]) => ({
+                label: name,
+                value: id,
+              })),
+            ]}
+            placeholder="Filter by project"
+          />
         </Space>
 
         {filteredTasks.length > 0 ? (
