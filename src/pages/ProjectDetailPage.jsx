@@ -70,6 +70,8 @@ export default function ProjectDetailPage() {
     const [assignTaskModalVisible, setAssignTaskModalVisible] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [selectedAssignee, setSelectedAssignee] = useState(null);
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [selectedRole, setSelectedRole] = useState(null);
 
     const currentUser = AuthService.getUser();
     const role = currentUser?.role || "employee";
@@ -669,28 +671,66 @@ export default function ProjectDetailPage() {
                     {/* Team Tab */}
                     <TabPane tab={`Team (${project.teamMembers?.length || 0})`} key="team">
                         {isManager && (
-                            <div className="mb-4">
-                                <Select
-                                    placeholder="Select user to add"
-                                    style={{ width: "300px" }}
-                                    onChange={(userId) => {
-                                        const role = "developer"; // Default role
-                                        handleAddTeamMember(userId, role);
+                            <div className="mb-4 flex gap-2 items-end">
+                                <div style={{ flex: 1 }}>
+                                    <p className="mb-2 text-sm font-medium">Select user:</p>
+                                    <Select
+                                        placeholder="Select user to add"
+                                        style={{ width: "100%" }}
+                                        value={selectedUserId}
+                                        onChange={(userId) => {
+                                            setSelectedUserId(userId);
+                                        }}
+                                    >
+                                        {users
+                                            .filter(
+                                                (user) =>
+                                                    !project.teamMembers?.some(
+                                                        (member) => member.userId === user.id || member.userId === user.email
+                                                    )
+                                            )
+                                            .map((user) => (
+                                                <Option key={user.id || user.email} value={user.id || user.email}>
+                                                    {user.name || user.email} ({user.role || "employee"})
+                                                </Option>
+                                            ))}
+                                    </Select>
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <p className="mb-2 text-sm font-medium">Select role:</p>
+                                    <Select
+                                        placeholder="Select role"
+                                        style={{ width: "100%" }}
+                                        value={selectedRole}
+                                        onChange={(role) => {
+                                            setSelectedRole(role);
+                                        }}
+                                    >
+                                        <Option value="developer">Developer</Option>
+                                        <Option value="designer">Designer</Option>
+                                        <Option value="tester">Tester</Option>
+                                        <Option value="manager">Manager</Option>
+                                    </Select>
+                                </div>
+                                <Button
+                                    type="primary"
+                                    icon={<UserAddOutlined />}
+                                    onClick={() => {
+                                        if (!selectedUserId) {
+                                            message.warning("Please select a user");
+                                            return;
+                                        }
+                                        if (!selectedRole) {
+                                            message.warning("Please select a role");
+                                            return;
+                                        }
+                                        handleAddTeamMember(selectedUserId, selectedRole);
+                                        setSelectedUserId(null);
+                                        setSelectedRole(null);
                                     }}
                                 >
-                                    {users
-                                        .filter(
-                                            (user) =>
-                                                !project.teamMembers?.some(
-                                                    (member) => member.userId === user.id || member.userId === user.email
-                                                )
-                                        )
-                                        .map((user) => (
-                                            <Option key={user.id || user.email} value={user.id || user.email}>
-                                                {user.name || user.email} ({user.role || "employee"})
-                                            </Option>
-                                        ))}
-                                </Select>
+                                    Add Member
+                                </Button>
                                 {users.filter(
                                     (user) =>
                                         !project.teamMembers?.some(

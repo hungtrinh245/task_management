@@ -64,10 +64,17 @@ const ProjectService = {
    */
   async updateProject(id, updates) {
     try {
-      const response = await apiClient.put(`${BASE_ENDPOINT}/${id}`, {
+      // Lấy project hiện tại để merge với updates
+      const currentProject = await this.getProjectById(id);
+      
+      // Merge updates với project hiện tại để giữ lại tất cả các field
+      const mergedProject = {
+        ...currentProject,
         ...updates,
         updatedAt: new Date().toISOString(),
-      });
+      };
+      
+      const response = await apiClient.put(`${BASE_ENDPOINT}/${id}`, mergedProject);
       return response;
     } catch (error) {
       console.error(`ProjectService.updateProject(${id}) error:`, error);
@@ -108,7 +115,8 @@ const ProjectService = {
         joinedAt: new Date().toISOString(),
       };
 
-      const updatedTeamMembers = [...project.teamMembers, newMember];
+      const currentTeamMembers = project.teamMembers || [];
+      const updatedTeamMembers = [...currentTeamMembers, newMember];
 
       return await this.updateProject(projectId, {
         teamMembers: updatedTeamMembers,
@@ -131,7 +139,8 @@ const ProjectService = {
   async removeTeamMember(projectId, userId) {
     try {
       const project = await this.getProjectById(projectId);
-      const updatedTeamMembers = project.teamMembers.filter(
+      const currentTeamMembers = project.teamMembers || [];
+      const updatedTeamMembers = currentTeamMembers.filter(
         (member) => member.userId !== userId
       );
 
@@ -157,7 +166,8 @@ const ProjectService = {
   async updateTeamMemberRole(projectId, userId, newRole) {
     try {
       const project = await this.getProjectById(projectId);
-      const updatedTeamMembers = project.teamMembers.map((member) =>
+      const currentTeamMembers = project.teamMembers || [];
+      const updatedTeamMembers = currentTeamMembers.map((member) =>
         member.userId === userId ? { ...member, role: newRole } : member
       );
 
@@ -299,12 +309,13 @@ const ProjectService = {
         }
       });
 
+      const teamMembers = project.teamMembers || [];
       const stats = {
-        memberCount: project.teamMembers.length,
+        memberCount: teamMembers.length,
         tasksPerMember,
         productivityScore:
-          tasks.length > 0 && project.teamMembers.length > 0
-            ? Math.round(tasks.length / project.teamMembers.length)
+          tasks.length > 0 && teamMembers.length > 0
+            ? Math.round(tasks.length / teamMembers.length)
             : 0,
       };
 

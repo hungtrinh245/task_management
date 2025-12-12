@@ -63,14 +63,18 @@ const TaskService = {
    */
   async updateTask(id, updates) {
     try {
-      // Lấy task cũ để so sánh thay đổi
+      // Lấy task cũ để so sánh thay đổi và merge
       const oldTask = await this.getTaskById(id);
 
-      // Cập nhật task
-      const response = await apiClient.put(`${BASE_ENDPOINT}/${id}`, {
+      // Merge updates với task hiện tại để giữ lại tất cả các field
+      const mergedTask = {
+        ...oldTask,
         ...updates,
         updatedAt: new Date().toISOString(),
-      });
+      };
+
+      // Cập nhật task
+      const response = await apiClient.put(`${BASE_ENDPOINT}/${id}`, mergedTask);
 
       // Ghi audit log và thông báo
       await AuditService.logTaskUpdate(oldTask, response);

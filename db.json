@@ -70,49 +70,26 @@
       ]
     },
     {
-      "projectId": "7501",
-      "assignee": "phạm minh quang",
-      "updatedAt": "2025-12-12T02:35:45.661Z",
-      "id": "451e",
-      "auditLogs": [
-        {
-          "id": "1765506945660",
-          "userId": "e19d",
-          "userEmail": "hung@gmail.com",
-          "userName": "trịnh quốc hưng",
-          "action": "update",
-          "timestamp": "2025-12-12T02:35:45.660Z",
-          "changes": []
-        }
-      ]
-    },
-    {
-      "id": "9498",
-      "title": "Xây dựng UI/UX responsive theo design",
-      "director": "Dev B",
+      "id": "de90",
+      "title": "Thiết kế database schema (users, products, orders, categories...)",
+      "director": "Dev BE",
       "genre": "Development",
-      "description": "fgrfhrh",
-      "dueDate": "2025-12-23",
+      "description": "ergffhgtgrh",
+      "dueDate": "2025-12-14",
       "status": "todo",
-      "priority": "medium",
-      "assignee": "Nguyễn Trung Đán",
+      "assignee": "phạm minh quang",
       "tags": [
         "feature"
       ],
       "subtasks": [
         {
-          "id": "1765357168412",
-          "title": "ề",
+          "id": "1765511211931",
+          "title": "ggh",
           "completed": false
         },
         {
-          "id": "1765357170911",
-          "title": "rfgrg",
-          "completed": false
-        },
-        {
-          "id": "1765357172285",
-          "title": "rfgfg",
+          "id": "1765511214720",
+          "title": "ghgh",
           "completed": false
         }
       ],
@@ -121,26 +98,163 @@
       "completed": false,
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "approved",
-      "createdAt": "2025-12-10T08:59:33.886Z",
-      "updatedAt": "2025-12-10T08:59:33.886Z"
+      "createdAt": "2025-12-12T03:46:56.342Z",
+      "updatedAt": "2025-12-12T04:34:25.166Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765511876840",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T03:57:56.840Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "phạm minh quang"
+            }
+          ]
+        },
+        {
+          "id": "1765511898387",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T03:58:18.387Z",
+          "changes": []
+        },
+        {
+          "id": "1765514065165",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:34:25.165Z",
+          "changes": [
+            {
+              "field": "priority",
+              "newValue": "high"
+            },
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "phạm minh quang"
+            }
+          ]
+        }
+      ],
+      "priority": "high"
     },
     {
-      "id": "b1e3",
-      "title": "Viết unit test, integration test",
-      "director": "Tester",
-      "genre": "Testing",
-      "description": "test ",
-      "dueDate": "",
+      "id": "46f0",
+      "title": "Xây dựng RESTful API hoặc GraphQL",
+      "director": "Dev BE",
+      "genre": "Development",
+      "description": "sdfdgg",
+      "dueDate": "2025-12-24",
       "status": "todo",
       "priority": "medium",
-      "assignee": "Lê Thúy hà",
+      "assignee": "phạm minh quang",
       "tags": [
-        "bug",
         "feature"
       ],
       "subtasks": [
         {
-          "id": "1765357214842",
+          "id": "1765511252404",
+          "title": "sfdf",
+          "completed": false
+        },
+        {
+          "id": "1765511255217",
+          "title": "sdff",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:47:37.724Z",
+      "updatedAt": "2025-12-12T04:35:11.286Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765511956904",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T03:59:16.904Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "phạm minh quang"
+            }
+          ]
+        },
+        {
+          "id": "1765511983302",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T03:59:43.302Z",
+          "changes": [
+            {
+              "field": "dueDate",
+              "oldValue": "",
+              "newValue": "2025-12-24"
+            },
+            {
+              "field": "assignee",
+              "oldValue": "phạm minh quang",
+              "newValue": "trịnh quốc hưng"
+            }
+          ]
+        },
+        {
+          "id": "1765514111286",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:35:11.286Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "phạm minh quang"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "27b1",
+      "title": "Xử lý authentication & authorization (JWT, OAuth)",
+      "director": "Dev BE",
+      "genre": "Development",
+      "description": "sfeffdg",
+      "dueDate": "2025-12-20",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "Nguyễn Trung Đán",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511296508",
+          "title": "ededff",
+          "completed": false
+        },
+        {
+          "id": "1765511298795",
           "title": "dfdf",
           "completed": false
         }
@@ -150,8 +264,688 @@
       "completed": false,
       "createdBy": "trịnh quốc hưng",
       "approvalStatus": "approved",
-      "createdAt": "2025-12-10T09:00:17.329Z",
-      "updatedAt": "2025-12-10T09:00:17.329Z"
+      "createdAt": "2025-12-12T03:48:20.483Z",
+      "updatedAt": "2025-12-12T03:59:03.159Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765511943158",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T03:59:03.158Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "Nguyễn Trung Đán"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3da5",
+      "title": "Tích hợp cổng thanh toán",
+      "director": "Dev BE",
+      "genre": "Development",
+      "description": "ềg",
+      "dueDate": "2025-12-30",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "cao văn hướng",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511330022",
+          "title": "ưdef",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:48:51.743Z",
+      "updatedAt": "2025-12-12T04:02:10.427Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512130427",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:02:10.427Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "cao văn hướng"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6ccb",
+      "title": "Xây dựng hệ thống quản lý đơn hàng",
+      "director": "Dev BE",
+      "genre": "Development",
+      "description": "dsfdff",
+      "dueDate": "2025-12-26",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "cao văn hướng",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511360157",
+          "title": "ề",
+          "completed": false
+        },
+        {
+          "id": "1765511362053",
+          "title": "ffgffg",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:49:23.452Z",
+      "updatedAt": "2025-12-12T04:00:22.982Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512022982",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:00:22.982Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "cao văn hướng"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9148",
+      "title": "Upload và quản lý ảnh sản phẩm",
+      "director": "Dev BE",
+      "genre": "Development",
+      "description": "dsfdsffg",
+      "dueDate": "2025-12-24",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "cao văn hướng",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511395190",
+          "title": "ềdf",
+          "completed": false
+        },
+        {
+          "id": "1765511397280",
+          "title": "sfdffg",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:49:58.660Z",
+      "updatedAt": "2025-12-12T04:00:09.983Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512009983",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:00:09.983Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "cao văn hướng"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "91fb",
+      "title": "Gửi email xác nhận đơn hàng",
+      "director": "Dev BE",
+      "genre": "Development",
+      "description": "edfdfdgg",
+      "dueDate": "2025-12-22",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "cao văn hướng",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511423412",
+          "title": "rff",
+          "completed": false
+        },
+        {
+          "id": "1765511425218",
+          "title": "fdfgg",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:50:26.950Z",
+      "updatedAt": "2025-12-12T04:00:51.304Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512051304",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:00:51.304Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "cao văn hướng"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "35c2",
+      "title": "Xây dựng UI/UX responsive theo design",
+      "director": "Dev FE",
+      "genre": "Development",
+      "description": "sdffdgg",
+      "dueDate": "2025-12-17",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "nguyễn văn nam ",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511466024",
+          "title": "ểểg",
+          "completed": false
+        },
+        {
+          "id": "1765511468433",
+          "title": "gfgggg",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:51:09.685Z",
+      "updatedAt": "2025-12-12T04:01:19.827Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512079827",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:01:19.827Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "nguyễn văn nam "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8ee3",
+      "title": "Tích hợp API với backend",
+      "director": "Dev FE",
+      "genre": "Development",
+      "description": "dfdffgfg",
+      "dueDate": "2025-12-28",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "nguyễn văn nam ",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511501052",
+          "title": "ểtggg",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:51:42.477Z",
+      "updatedAt": "2025-12-12T04:01:31.933Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512091933",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:01:31.933Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "nguyễn văn nam "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a7ee",
+      "title": "Quản lý state (Redux, Vuex, Context API)",
+      "director": "Dev FE",
+      "genre": "Development",
+      "description": "dcdsfg",
+      "dueDate": "2025-12-25",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "Nguyễn Trung Đán",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511529733",
+          "title": "êfrgf",
+          "completed": false
+        },
+        {
+          "id": "1765511531718",
+          "title": "fdgfg",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:52:13.498Z",
+      "updatedAt": "2025-12-12T04:01:40.711Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512100711",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:01:40.711Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "Nguyễn Trung Đán"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c45f",
+      "title": "CRUD sản phẩm, categories, users",
+      "director": "Dev FE",
+      "genre": "Development",
+      "description": "sdfdg",
+      "dueDate": "2025-12-28",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "cao văn hướng",
+      "tags": [],
+      "subtasks": [
+        {
+          "id": "1765511562105",
+          "title": "dfdffd",
+          "completed": false
+        },
+        {
+          "id": "1765511563985",
+          "title": "dfdsfdf",
+          "completed": false
+        },
+        {
+          "id": "1765511565732",
+          "title": "dfdfdff",
+          "completed": false
+        },
+        {
+          "id": "1765511567387",
+          "title": "dfdfdf",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:53:03.942Z",
+      "updatedAt": "2025-12-12T04:01:52.595Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512112595",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:01:52.595Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "cao văn hướng"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "93d0",
+      "title": "Quản lý đơn hàng và trạng thái",
+      "director": "Dev FE",
+      "genre": "Development",
+      "description": "eddsffgrg",
+      "dueDate": "2025-12-30",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "nguyễn văn nam ",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:53:25.804Z",
+      "updatedAt": "2025-12-12T04:01:59.710Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512119710",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:01:59.710Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "nguyễn văn nam "
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8e04",
+      "title": "Dashboard thống kê, báo cáo doanh thu",
+      "director": "Dev FE ",
+      "genre": "Development",
+      "description": "èdfgf",
+      "dueDate": "2026-01-10",
+      "status": "overdue",
+      "assignee": "Nguyễn Trung Đán",
+      "tags": [
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511653415",
+          "title": "dèdsf",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:54:17.556Z",
+      "updatedAt": "2025-12-12T04:23:21.780Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512154475",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:02:34.475Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "Nguyễn Trung Đán"
+            }
+          ]
+        },
+        {
+          "id": "1765513401780",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:23:21.780Z",
+          "changes": []
+        }
+      ]
+    },
+    {
+      "id": "cb0e",
+      "title": "Viết unit test, integration test",
+      "director": "Tester",
+      "genre": "Testing",
+      "description": "ứdsfdsf",
+      "dueDate": "2026-01-10",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "Lê Thúy hà",
+      "tags": [
+        "bug",
+        "feature"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511690140",
+          "title": "sddsf",
+          "completed": false
+        },
+        {
+          "id": "1765511693368",
+          "title": "fdfdf",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:54:55.485Z",
+      "updatedAt": "2025-12-12T04:02:23.981Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512143981",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:02:23.981Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "Lê Thúy hà"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "84f6",
+      "title": "Testing bảo mật",
+      "director": "Tester",
+      "genre": "Testing",
+      "description": "sdsdfdf",
+      "dueDate": "2026-01-12",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "Lê Thúy hà",
+      "tags": [
+        "feature",
+        "bug",
+        "testing"
+      ],
+      "subtasks": [],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:55:25.827Z",
+      "updatedAt": "2025-12-12T04:02:17.632Z",
+      "projectId": "1724",
+      "auditLogs": [
+        {
+          "id": "1765512137632",
+          "userId": "e19d",
+          "userEmail": "hung@gmail.com",
+          "userName": "trịnh quốc hưng",
+          "action": "update",
+          "timestamp": "2025-12-12T04:02:17.632Z",
+          "changes": [
+            {
+              "field": "assignee",
+              "oldValue": "trịnh quốc hưng",
+              "newValue": "Lê Thúy hà"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7b76",
+      "title": "Deploy lên server,Monitoring và logging",
+      "director": "Manager",
+      "genre": "Development",
+      "description": "sdsff",
+      "dueDate": "2026-01-22",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "trịnh quốc hưng",
+      "tags": [
+        "enhancement",
+        "important"
+      ],
+      "subtasks": [],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:56:24.129Z",
+      "updatedAt": "2025-12-12T04:02:46.655Z",
+      "projectId": "1724"
+    },
+    {
+      "id": "856a",
+      "title": " Bảo trì & Tối ưu(Fix bugs,Tối ưu tốc độ tải trang,Cập nhật bảo mật",
+      "director": "Dev BE/ FE",
+      "genre": "Development",
+      "description": "ẻeg",
+      "dueDate": "2026-02-28",
+      "status": "todo",
+      "priority": "medium",
+      "assignee": "phạm minh quang",
+      "tags": [
+        "important",
+        "bug",
+        "feature",
+        "enhancement",
+        "documentation",
+        "testing"
+      ],
+      "subtasks": [
+        {
+          "id": "1765511841930",
+          "title": "dfdsfdf",
+          "completed": false
+        },
+        {
+          "id": "1765511843549",
+          "title": "dfdf",
+          "completed": false
+        },
+        {
+          "id": "1765511844802",
+          "title": "dfdf",
+          "completed": false
+        }
+      ],
+      "comments": [],
+      "attachments": [],
+      "completed": false,
+      "createdBy": "trịnh quốc hưng",
+      "approvalStatus": "approved",
+      "createdAt": "2025-12-12T03:57:26.241Z",
+      "updatedAt": "2025-12-12T04:02:58.879Z",
+      "projectId": "1724"
     }
   ],
   "projects": [
@@ -421,6 +1215,121 @@
       ],
       "updatedAt": "2025-12-12T02:35:45.841Z",
       "id": "7501"
+    },
+    {
+      "teamMembers": [
+        {
+          "userId": "e19d",
+          "userName": "trịnh quốc hưng",
+          "role": "developer",
+          "joinedAt": "2025-12-12T02:55:10.667Z"
+        },
+        {
+          "userId": "a30c",
+          "userName": "Nguyễn Trung Đán",
+          "role": "developer",
+          "joinedAt": "2025-12-12T02:55:18.698Z"
+        },
+        {
+          "userId": "aa0f",
+          "userName": "Lê Thúy hà",
+          "role": "developer",
+          "joinedAt": "2025-12-12T02:55:21.705Z"
+        },
+        {
+          "userId": "900e",
+          "userName": "nguyễn văn nam ",
+          "role": "developer",
+          "joinedAt": "2025-12-12T02:55:26.025Z"
+        }
+      ],
+      "updatedAt": "2025-12-12T02:55:26.025Z",
+      "id": "ee06"
+    },
+    {
+      "taskIds": [
+        "9498"
+      ],
+      "updatedAt": "2025-12-12T03:26:10.751Z",
+      "id": "32fa"
+    },
+    {
+      "taskIds": [
+        "b1e3"
+      ],
+      "updatedAt": "2025-12-12T03:28:19.607Z",
+      "id": "de8c"
+    },
+    {
+      "id": "1724",
+      "name": "Thiết kế website bán quần áo thể thao(Fashion Sports Clothes)",
+      "description": "Xây dựng một nền tảng thương mại điện tử trực tuyến nhằm tạo ra trải nghiệm mua sắm thời trang thuận tiện, dễ dàng cho khách hàng, đồng thời giúp doanh nghiệp mở rộng kênh phân phối, tiếp cận thị trường rộng hơn, tăng doanh số bán hàng và xây dựng thương hiệu trong lĩnh vực thời trang. Website hướng đến việc số hóa quy trình kinh doanh, tối ưu chi phí vận hành và nâng cao khả năng cạnh tranh trong thị trường bán lẻ hiện đại.",
+      "category": "web-development",
+      "startDate": "2025-12-13",
+      "endDate": "2026-02-02",
+      "budget": 400,
+      "priority": "medium",
+      "visibility": "team",
+      "teamMembers": [
+        {
+          "userId": "ad11",
+          "userName": "phạm minh quang",
+          "role": "developer",
+          "joinedAt": "2025-12-12T03:44:59.190Z"
+        },
+        {
+          "userId": "a30c",
+          "userName": "Nguyễn Trung Đán",
+          "role": "developer",
+          "joinedAt": "2025-12-12T03:45:06.100Z"
+        },
+        {
+          "userId": "aa0f",
+          "userName": "Lê Thúy hà",
+          "role": "tester",
+          "joinedAt": "2025-12-12T03:45:10.845Z"
+        },
+        {
+          "userId": "e19d",
+          "userName": "trịnh quốc hưng",
+          "role": "manager",
+          "joinedAt": "2025-12-12T03:45:15.808Z"
+        },
+        {
+          "userId": "b504",
+          "userName": "cao văn hướng",
+          "role": "developer",
+          "joinedAt": "2025-12-12T03:45:27.525Z"
+        },
+        {
+          "userId": "900e",
+          "userName": "nguyễn văn nam ",
+          "role": "developer",
+          "joinedAt": "2025-12-12T04:00:35.089Z"
+        }
+      ],
+      "status": "active",
+      "createdAt": "2025-12-12T03:44:42.392Z",
+      "updatedAt": "2025-12-12T04:02:59.100Z",
+      "taskIds": [
+        "de90",
+        "27b1",
+        "46f0",
+        "9148",
+        "6ccb",
+        "91fb",
+        "35c2",
+        "8ee3",
+        "a7ee",
+        "c45f",
+        "93d0",
+        "3da5",
+        "84f6",
+        "cb0e",
+        "8e04",
+        "7b76",
+        "856a"
+      ]
     }
   ],
   "users": [
